@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             // 登录基本信息
             $table->increments('id');
             $table->string('email')->unique();
+            $table->string('name')->unique();
             $table->string('phone_number')->unique()->nullable();  //可选
             $table->string('password');
             // 用户基本信息
@@ -26,6 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->unique()->nullable();
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
+            // 激活状态
+            $table->string('is_active')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });
