@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -36,4 +38,24 @@ class LoginController extends Controller
     {
         $this->middleware('guest', ['except' => 'logout']);
     }
+
+    /**
+     * Rewrite login credentials
+     *
+     * @param Request $request
+     * @return array
+     */
+   protected function credentials(Request $request){
+        $field = 'name';
+
+        if (is_numeric($request->input('name'))) {
+        $field = 'phone_number';
+        } elseif (filter_var($request->input('name'), FILTER_VALIDATE_EMAIL)) {
+        $field = 'email';
+    }
+ 
+        $request->merge([$field => $request->input('name')]);
+        return $request->only($field, 'password');
+    }
+
 }
