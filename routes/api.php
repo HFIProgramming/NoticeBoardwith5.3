@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
+
+Route::group(['middleware' => 'auth:api'], function(){
+    Route::post('/api/username', 'verifyUsername@ApiController');
+});

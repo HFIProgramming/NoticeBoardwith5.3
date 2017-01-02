@@ -23,7 +23,7 @@ Auth::routes();
 Route::get('/completion', function(){
     return view('user.completion');
 });
-Route::post('/completion', 'UserController@completion');
+Route::post('/completion', 'HomeController@completeUserInfo');
 
 // 登录后界面,发现用户登录没有补全信息将会自动跳转补全
 Route::group(['middleware' => 'active'], function(){

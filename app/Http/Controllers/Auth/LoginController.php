@@ -40,22 +40,31 @@ class LoginController extends Controller
     }
 
     /**
-     * Rewrite login credentials
+     * Override login credentials
      *
      * @param Request $request
      * @return array
      */
    protected function credentials(Request $request){
-        $field = 'name';
+        $field = 'chinese_name';
 
         if (is_numeric($request->input('name'))) {
         $field = 'phone_number';
         } elseif (filter_var($request->input('name'), FILTER_VALIDATE_EMAIL)) {
         $field = 'email';
     }
- 
+
         $request->merge([$field => $request->input('name')]);
         return $request->only($field, 'password');
+    }
+
+    /**
+     * Override name string
+     *
+     * @return string
+     */
+    public function username(){
+        return 'name';
     }
 
 }

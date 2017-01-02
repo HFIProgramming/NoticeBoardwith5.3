@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
             // 激活状态
-            $table->string('is_active')->default('0');
+            $table->string('active')->default('0');
             // 用户角色
             $table->string('role')->default('user');
             $table->rememberToken();
