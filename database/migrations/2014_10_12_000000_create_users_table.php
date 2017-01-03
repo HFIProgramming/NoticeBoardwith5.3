@@ -16,12 +16,12 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             // 登录基本信息
             $table->increments('id');
-            $table->string('email')->unique();
-            $table->string('name')->unique();
+            $table->string('chinese_name');
+            $table->string('email')->unique()->default('null');
+            $table->string('name')->unique()->nullable();
             $table->string('phone_number')->unique()->nullable();  //可选
             $table->string('password');
             // 用户基本信息
-            $table->string('chinese_name')->nullable();
             $table->string('english_name')->nullable();
             $table->string('wechat')->unique()->nullable();
             $table->string('avatar')->unique()->nullable();

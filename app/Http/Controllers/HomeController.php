@@ -55,22 +55,22 @@ class HomeController extends Controller
         $user = $request->user();
         if ($user && $user->active != 1) {
             $this->validator($data = $request->all())->validate();
-            $user->update(
-                ['name' => $data['name']],
-                ['email' => $data['email']],
-                ['password' => bcrypt($data['password'])],
-                ['english_name' => $data['english_name']],
-                ['phone_number' => $data['phone_number']],
-                ['wechat' => $data['wechat']],
-                ['active' => '1']
-            );
+            $user->update([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                'english_name' => $data['english_name'],
+                'phone_number' => $data['phone_number'],
+                'wechat' => $data['wechat'],
+                'active' => '1'
+                ]);
             if ($user->save()){
-                redirect('/home');
+                return redirect('/home');
             }else{
                 abort(500);
             }
         }else{
-            redirect()->route('login');
+            return redirect()->route('login');
         }
     }
 }

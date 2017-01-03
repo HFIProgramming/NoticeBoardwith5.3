@@ -29,7 +29,7 @@ class ApiController extends Controller
         if (is_numeric($name)) {
             $search = 'phone_number';
         } elseif (filter_var($request->name, FILTER_VALIDATE_EMAIL)) {
-            $search = 'name';
+            $search = 'email';
         }
         if($user = User::where($search,$name)->firstorfail()) {
             $result['status'] = 1;

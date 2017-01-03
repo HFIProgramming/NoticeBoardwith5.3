@@ -15,8 +15,8 @@ class ActiveVerify
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->is_active == 0){
-            return redirect('user.completion');
+        if ($request->user()->active == 0){
+            return redirect('/completion');
         }
         return $next($request);
     }
