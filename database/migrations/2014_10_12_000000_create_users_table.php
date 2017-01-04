@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             // 用户基本信息
             $table->string('english_name')->nullable();
             $table->string('wechat')->unique()->nullable();
-            $table->string('avatar')->unique()->nullable();
+            $table->string('avatar')->nullable();
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
             // 激活状态

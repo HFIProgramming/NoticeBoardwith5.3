@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'chinese_name', 'email', 'password', 'phone_number','wechat','name','active'
+        'chinese_name', 'email', 'password', 'phone_number','wechat','name','active','avatar'
     ];
 
     /**
@@ -26,4 +26,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * default avatar
+     *
+     * @param $value
+     * @return string
+     */
+    public function getAvatarAttribute($value)
+    {
+        return empty($value = ucfirst($value)) ? 'http://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : $value;
+    }
+
 }

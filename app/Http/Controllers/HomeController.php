@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-
+        $this->middleware('active');
     }
 
     /**
@@ -50,6 +50,7 @@ class HomeController extends Controller
      * Complete user info
      *
      * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function completeUserInfo(Request $request){
         $user = $request->user();
@@ -70,7 +71,7 @@ class HomeController extends Controller
                 abort(500);
             }
         }else{
-            return redirect()->route('login');
+            return redirect('/');  //回到主页
         }
     }
 }
