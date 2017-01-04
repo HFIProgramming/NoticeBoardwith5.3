@@ -24,20 +24,7 @@ class ApiController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function verifyUsername(Request $request){
-        $name = $request->name;
-        $search = 'name';
-        if (is_numeric($name)) {
-            $search = 'phone_number';
-        } elseif (filter_var($request->name, FILTER_VALIDATE_EMAIL)) {
-            $search = 'email';
-        }
-        if($user = User::where($search,$name)->firstorfail()) {
-            $result['status'] = 1;
-            $result['active'] = $user->active;
-        }else{
-            $result['status'] = 0;
-        }
-            return response()->json($result);
+        return response()->json(User::username($request->username));
     }
 
 }
