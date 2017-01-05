@@ -55,7 +55,12 @@ class HomeController extends Controller
     public function completeUserInfo(Request $request){
         $user = $request->user();
         if ($user && $user->active != 1) {
-            $this->validator($data = $request->all())->validate();
+            if ($errors = $this->validator($data = $request->all())->validate()->fails()){
+                return redirect()
+                    ->back()
+                    ->withErrors($errors)
+                    ->withInput();
+            };
             $user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
