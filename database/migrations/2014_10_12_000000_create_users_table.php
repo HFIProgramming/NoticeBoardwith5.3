@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             // 登录基本信息
             $table->increments('id');
             $table->string('chinese_name');
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique()->default('null');
             $table->string('name')->unique()->nullable();
             $table->string('phone_number')->unique()->nullable();  //可选
             $table->string('password');
