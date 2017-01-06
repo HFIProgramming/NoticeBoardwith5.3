@@ -13,11 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
+// 登录相关
+Route::post('/username', 'Auth/LoginController@verifyUsername');
 
-Route::post('/username', 'ApiController@verifyUsername');
-//Route::group(function(){
-
-//});

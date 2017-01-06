@@ -20,9 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 // 补全信息页
-Route::get('/completion', function(){
-    return view('user.completion');
-});
+Route::get('/completion', 'HomeController@showCompletionForm');
 Route::post('/completion', 'HomeController@completeUserInfo');
 
 // 登录后界面,发现用户登录没有补全信息将会自动跳转补全

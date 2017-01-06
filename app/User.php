@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'chinese_name', 'email', 'password', 'phone_number','wechat','name','active','avatar'
+        'chinese_name', 'english_name','name','email', 'password', 'phone_number','wechat','avatar'
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','active'
     ];
 
     /**
@@ -39,30 +39,28 @@ class User extends Authenticatable
     }
 
     /**
-     * Username verification before login.
-     * Status 1 found; 0 no found
-     * Active 1 already; 0 need further step
+     * identify the type of the username
+     *
+     * @param $username
+     * @return string
+     */
+    public function scopeDetermineUsernameField($username){
+        if (preg_match("/^[x7f-xff]+$/", $username)) return 'chinese_name';
+        if (filter_var($username, FILTER_VALIDATE_EMAIL)) return 'email';
+        if (is_numeric($username)) return 'phone_number';
+        return 'name';
+    }
+
+    /**
+     * scope username with this function
      *
      * @param $query
-     * @return \Illuminate\Http\JsonResponse
+     * @param $username
+     * @return mixed
      */
     public function scopeUsername($query,$username)
     {
-        $search = 'chinese_name';
-        if (is_numeric($username)) {
-            $search = 'phone_number';
-        } elseif (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-            $search = 'email';
-        }
-        if (!empty($user = $query->where($search,$username)->first())) {
-            $result['status'] = 1;
-            $result['active'] = $user->active;
-        } else {
-            $result['status'] = 0;
-        }
-        $result['username'] = $username;
-        $result['type'] = $search;
-        return $result;
+        return $query->where($this->scopeDetermineUsernameField($username),$username);
     }
 
 }

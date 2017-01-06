@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/notice';  // Default turn to noticeboard
 
     /**
      * Create a new controller instance.
@@ -40,22 +42,14 @@ class LoginController extends Controller
     }
 
     /**
-     * Override login credentials
+     * Override login credentials.
      *
      * @param Request $request
      * @return array
      */
    protected function credentials(Request $request){
-        $field = 'chinese_name';
-
-        if (is_numeric($request->input('name'))) {
-        $field = 'phone_number';
-        } elseif (filter_var($request->input('name'), FILTER_VALIDATE_EMAIL)) {
-        $field = 'email';
-    }
-
-        $request->merge([$field => $request->input('name')]);
-        return $request->only($field, 'password');
+       $request->merge([$field = User::determinedUsernameField($request->name) => $request->name]);
+       return $request->only($field, 'password');
     }
 
     /**
@@ -64,7 +58,23 @@ class LoginController extends Controller
      * @return string
      */
     public function username(){
-        return 'name';
+        return 'username';
     }
 
+    /**
+     * API to check user's condition before login.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function verifyUsername(Request $request)
+    {
+        if (!empty($user = User::username($request->username)->first())) {
+            $result['status'] = 1;
+            $result['active'] = $user->active; // Username found, return status.
+        } else {
+            $result['status'] = 0; // Username no found.
+        }
+        return Response()->json($result);
+    }
 }
