@@ -4,9 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f5f604def19bc3c97e33dcd1f6595161",
-    "content-hash": "7e0e05e84f3eb333685719e2006b48a7",
+    "hash": "7e4bdbb33255d553731b0b0f34088c3a",
+    "content-hash": "7e71bd4e200a58fda7ac4c69a9f3c674",
     "packages": [
+        {
+            "name": "browner12/helpers",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/browner12/helpers.git",
+                "reference": "bb0398c7ffed515f6693feb86e40bccbff28f4ac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/browner12/helpers/bb0398c7ffed515f6693feb86e40bccbff28f4ac.zip",
+                "reference": "bb0398c7ffed515f6693feb86e40bccbff28f4ac",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "~5.2",
+                "illuminate/contracts": "~5.2",
+                "illuminate/support": "~5.2",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "browner12\\helpers\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrew Brown",
+                    "email": "browner12@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "generic helpers",
+            "homepage": "https://github.com/browner12/helpers",
+            "keywords": [
+                "browner12",
+                "helpers"
+            ],
+            "time": "2016-10-22 01:30:58"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.1.0",

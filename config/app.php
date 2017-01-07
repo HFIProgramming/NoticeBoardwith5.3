@@ -177,7 +177,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        /*
+         * Helper Provider
+         */
+        browner12\helpers\HelperServiceProvider::class,
     ],
 
     /*

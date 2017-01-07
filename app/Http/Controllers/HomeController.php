@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+
     }
 
     /**
@@ -51,7 +51,7 @@ class HomeController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required','max:255','regex:(?=.*[a-z])(?=.*[A-Z])'],
+            'name' => ['required','max:255','regex:/([A-Za-z])/'],
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
             'english_name' => 'required|max:255',
@@ -69,7 +69,7 @@ class HomeController extends Controller
     public function completeUserInfo(Request $request){
         $user = $request->user(); // Get user first :)
         if ($user && $user->active != 1) {
-            if ($errors = $this->validator($data = $request->all())->validate()->fails()){
+            if ($errors = $this->validator($data = $request->all())->validate()){
                 return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
             }
             if ($user->update([

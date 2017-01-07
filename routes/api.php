@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 // 登录相关
-Route::post('/username', 'Auth/LoginController@verifyUsername');
+Route::post('/username', 'Auth\LoginController@verifyUsername');
 
