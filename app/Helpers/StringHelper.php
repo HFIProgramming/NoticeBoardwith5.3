@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('StringFunction')) {
+if (true && !function_exists('StringFunction')) {  // true to open the helper
 
     /**
      * description

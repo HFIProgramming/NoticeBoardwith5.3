@@ -1,12 +1,12 @@
 <?php
 
-if (!function_exists('UsernameIdentifier')) {
+if (true && !function_exists('UsernameIdentifier')) { // true to open the function
 
     /**
      * Identify which field the username should be
      *
-     * @param
-     * @return
+     * @param $username
+     * @return string
      */
     function UsernameIdentifier($username)
     {
