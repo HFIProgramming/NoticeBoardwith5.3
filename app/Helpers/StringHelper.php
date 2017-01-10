@@ -10,6 +10,6 @@ if (true && !function_exists('StringFunction')) {  // true to open the helper
      */
     function StringFunction()
     {
-        return 'hello';
+        return 'hello helper';
     }
 }
