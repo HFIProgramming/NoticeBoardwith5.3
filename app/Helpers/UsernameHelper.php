@@ -1,6 +1,6 @@
 <?php
 
-if (true && !function_exists('UsernameIdentifier')) { // true to open the function
+if (true && !function_exists('usernameIdentifier')) { // true to open the function
 
     /**
      * Identify which field the username should be
@@ -8,7 +8,7 @@ if (true && !function_exists('UsernameIdentifier')) { // true to open the functi
      * @param $username
      * @return string
      */
-    function UsernameIdentifier($username)
+    function usernameIdentifier($username)
     {
         if (preg_match("/^[\x{4e00}-\x{9fa5}]+$/u",$username)) return 'chinese_name';
         if (filter_var($username, FILTER_VALIDATE_EMAIL)) return 'email';

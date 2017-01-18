@@ -23,7 +23,17 @@ Auth::routes();
 Route::get('/completion', 'HomeController@showCompletionForm');
 Route::post('/completion', 'HomeController@completeUserInfo');
 
+// 访客区域
+Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote');
+
 // 登录后界面,发现用户登录没有补全信息将会自动跳转补全
 Route::group(['middleware' => 'active'], function(){
     Route::get('/home', 'HomeController@index');
+    Route::get('/vote/{id}', 'VoteController@showIndividualVote');
+});
+
+// 管理员区域
+Route::group(['middleware' => 'admin'], function(){
+    Route::get('/vote/ticket', 'VoteController@viewTickets');
+    Route::post('/vote/ticket', 'VoteController@generateTickets');
 });

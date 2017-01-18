@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             // 激活状态
             $table->string('active')->default('0');
             // 用户角色
-            $table->string('role')->default('user');
+            $table->string('role')->default('user'); // user,admin
             $table->rememberToken();
             $table->timestamps();
         });
