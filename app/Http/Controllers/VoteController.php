@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Ticket;
 use App\Vote;
 
+
 class VoteController extends Controller
 {
     //
@@ -28,7 +29,7 @@ class VoteController extends Controller
     public function showIndividualVote(Request $request)
     {
         if (!empty($request->ticket) || Auth::check()) {
-            if ($request->id && $vote = Vote::where('id', $request->id)->first()) {
+            if (!empty($request->id) && $vote = Vote::where('id', $request->id)->first()) {
                 if (strtotime($vote->ended_at) - strtotime("now") > 0) {
                     if (!empty($request->ticket)) {
                         return view('vote.individual')->withRequest($request); // Ticket User
@@ -37,19 +38,15 @@ class VoteController extends Controller
                         $ids = explode("|", $vote->user_id);
                         if (!in_array($userId, $ids)) {
                             return view('vote.individual')->withRequest($request); // Login User
-                        } else {
-                            return redirect('/vote'); // Login User Already Vote for this event
                         }
+                            return redirect('/vote'); // Login User Already Vote for this event
                     }
-                } else {
-                    return redirect('/vote'); // Vote Expired
                 }
-            } else {
-                abort(404); // No such vote
+                    return redirect('/vote'); // Vote Expired
             }
-        } else {
-            return redirect('/login'); // No ticket user need to login to vote.
+                abort(404); // No such vote
         }
+            return redirect('/login'); // No ticket user need to login to vote.
     }
 
     /**
@@ -66,18 +63,20 @@ class VoteController extends Controller
      * @param Request $request
      * @return $this|\Illuminate\Http\RedirectResponse
      */
-    public function generateTickets(Request $request){
+    public function generateTickets(Request $request)
+    {
         if ($errors = Validator::make($request->all(), [
             'prefix' => 'nullable|string',
-            'length' => 'required','numeric',
-            'vote_id' => 'required','numeric',
-            'number' => 'required','numeric',
-        ])->validate()){
+            'length' => 'required|numeric',
+            'vote_id' => 'required|numeric',
+            'number' => 'required|numeric',
+        ])->validate()
+        ) {
             return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
         }
-        for ($i = 1; $i <= $request->number; $i++){
+        for ($i = 1; $i <= $request->number; $i++) {
             Ticket::create([
-                'string' => randomString($request->length,$request->prefix),
+                'string' => randomString($request->length, $request->prefix),
                 'vote_id' => $request->vote_id,
             ]);
         }

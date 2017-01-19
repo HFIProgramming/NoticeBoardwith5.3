@@ -16,8 +16,7 @@ class CreateTicketTable extends Migration
         //
         Schema::create('tickets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('user_id')->default('0');
-            $table->string('vote_id');
+            $table->string('vote_id'); // Belong to specific vote
             $table->string('active')->default('0'); // only when 1 can be used
             $table->string('is_used')->default('0'); // used 1
             $table->string('string');

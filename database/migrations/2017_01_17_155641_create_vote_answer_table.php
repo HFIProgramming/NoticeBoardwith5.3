@@ -17,7 +17,6 @@ class CreateVoteAnswerTable extends Migration
         Schema::create('vote_answers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id')->default('0');
-            $table->string('question_id');
             $table->string('option_id')->nullable();
             $table->string('content')->nullable();
         });
