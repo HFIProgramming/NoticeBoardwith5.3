@@ -17,7 +17,8 @@ class VoteController extends Controller
     }
 
     public function showVotes(){
-
+        $votes = Post::with('hasManyComments','tagged')->orderBy('updated_at', 'desc')->get();
+        return view('vote.index')->withVotes($votes);
     }
 
     /**

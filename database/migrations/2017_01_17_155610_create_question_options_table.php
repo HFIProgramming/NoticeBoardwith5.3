@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateVoteQuestionTable extends Migration
+class CreateQuestionOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,13 +14,11 @@ class CreateVoteQuestionTable extends Migration
     public function up()
     {
         //
-        Schema::create('vote_questions', function (Blueprint $table) {
+        Schema::create('question_options', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('vote_id');
-            $table->string('type'); // string for anything or number for option
+            $table->string('type')->default('required'); // type: required, optional
+            $table->string('question_id');
             $table->string('content');
-            $table->string('explaination')->nullable();
-            $table->string('range')->nullable(); // check option is legal
         });
     }
 
@@ -32,6 +30,6 @@ class CreateVoteQuestionTable extends Migration
     public function down()
     {
         //
-        Schema::dropIfExists('vote_questions');
+        Schema::dropIfExists('question_options');
     }
 }
