@@ -17,10 +17,11 @@ class CreateVoteQuestionsTable extends Migration
         Schema::create('vote_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('vote_id');
-            $table->string('type'); // string for anything or number for option
+            $table->string('type'); // "string" for anything or "number" for option
             $table->string('content');
             $table->string('explanation')->nullable();
-            $table->string('range')->nullable(); // check option is legal
+            $table->string('optional')->default(0);
+            $table->string('range')->default(0); // choose how many options.
         });
     }
 

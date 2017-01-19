@@ -54,5 +54,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'active' => \App\Http\Middleware\ActiveVerify::class,
         'admin' => \App\Http\Middleware\AdminVerify::class,
+        'vote' => \App\Http\Middleware\VoteVerify::class,
     ];
 }

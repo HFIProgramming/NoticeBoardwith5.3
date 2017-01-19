@@ -21,4 +21,14 @@ class Ticket extends Model
     protected $hidden = [
         'active', 'is_used', 'string', 'vote_id',
     ];
+
+    /**
+     * popular search for ticket
+     * @param $query
+     * @param $string
+     * @return mixed
+     */
+    public function scopeTicket($query,$string){
+        return $query->where('string',$string);
+    }
 }

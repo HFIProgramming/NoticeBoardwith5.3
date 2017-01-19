@@ -16,9 +16,9 @@ class CreateQuestionOptionsTable extends Migration
         //
         Schema::create('question_options', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type')->default('required'); // type: required, optional
             $table->string('question_id');
             $table->string('content');
+
         });
     }
 

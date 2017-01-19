@@ -33,4 +33,8 @@ class Question extends Model
         return $this->hasMany('App\Option', 'question_id', 'id');
     }
 
+    public function vote(){
+        return $this->belongsTo('App\Vote');
+    }
+
 }
