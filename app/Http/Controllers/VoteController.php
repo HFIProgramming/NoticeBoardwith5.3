@@ -16,8 +16,9 @@ class VoteController extends Controller
     {
     }
 
-    public function showVotes(){
-        $votes = Post::with('hasManyComments','tagged')->orderBy('updated_at', 'desc')->get();
+    public function showVotes()
+    {
+        $votes = Vote::all()->orderBy('ended_at', 'desc')->get();
         return view('vote.index')->withVotes($votes);
     }
 
@@ -30,24 +31,25 @@ class VoteController extends Controller
     public function showIndividualVote(Request $request)
     {
         if (!empty($request->ticket) || Auth::check()) {
-            if (!empty($request->id) && $vote = Vote::where('id', $request->id)->first()) {
-                if (strtotime($vote->ended_at) - strtotime("now") > 0) {
+            $vote = Vote::find($request->id);
+            if (!empty($request->id) && $individualVote = $vote->first()) {
+                if (strtotime($individualVote->ended_at) - strtotime("now") > 0) {
                     if (!empty($request->ticket)) {
-                        return view('vote.individual')->withRequest($request); // Ticket User
+                        return view('vote.individual')->withVote($vote)->withRequest($request); // Ticket User
                     }
                     if ($userId = $request->user()->id) {
-                        $ids = explode("|", $vote->user_id);
+                        $ids = explode("|", $individualVote->user_id);
                         if (!in_array($userId, $ids)) {
-                            return view('vote.individual')->withRequest($request); // Login User
+                            return view('vote.individual')->withVote($vote)->withRequest($request); // Login User
                         }
-                            return redirect('/vote'); // Login User Already Vote for this event
+                        return redirect('/vote'); // Login User Already Vote for this event
                     }
                 }
-                    return redirect('/vote'); // Vote Expired
+                return redirect('/vote'); // Vote Expired
             }
-                abort(404); // No such vote
+            abort(404); // No such vote
         }
-            return redirect('/login'); // No ticket user need to login to vote.
+        return redirect('/login'); // No ticket user need to login to vote.
     }
 
     /**
@@ -55,7 +57,8 @@ class VoteController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function viewTickets(){
+    public function viewTickets()
+    {
         return view('vote.ticket');
     }
 

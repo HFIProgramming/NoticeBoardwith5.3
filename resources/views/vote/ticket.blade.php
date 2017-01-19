@@ -14,7 +14,8 @@
                                 <label for="length" class="col-md-4 control-label">Length</label>
 
                                 <div class="col-md-6">
-                                    <input id="length" type="text" class="form-control" name="length" value="{{ old('length') }}" required autofocus>
+                                    <input id="length" type="text" class="form-control" name="length"
+                                           value="{{ old('length') }}" required autofocus>
 
                                     @if ($errors->has('length'))
                                         <span class="help-block">
@@ -28,7 +29,8 @@
                                 <label for="english_name" class="col-md-4 control-label">Prefix</label>
 
                                 <div class="col-md-6">
-                                    <input id="prefix" type="prefix" class="form-control" name="prefix" value="{{ old('prefix') }}">
+                                    <input id="prefix" type="prefix" class="form-control" name="prefix"
+                                           value="{{ old('prefix') }}">
 
                                     @if ($errors->has('prefix'))
                                         <span class="help-block">
@@ -42,7 +44,8 @@
                                 <label for="email" class="col-md-4 control-label">Vote ID</label>
 
                                 <div class="col-md-6">
-                                    <input id="vote_id" type="number" class="form-control" name="vote_id" value="{{ old('vote_id') }}" required>
+                                    <input id="vote_id" type="number" class="form-control" name="vote_id"
+                                           value="{{ old('vote_id') }}" required>
 
                                     @if ($errors->has('vote_id'))
                                         <span class="help-block">
@@ -56,7 +59,8 @@
                                 <label for="number" class="col-md-4 control-label">Number</label>
 
                                 <div class="col-md-6">
-                                    <input id="number" type="text" class="form-control" name="number" value="{{ old('number') }}" placeholder="optional">
+                                    <input id="number" type="text" class="form-control" name="number"
+                                           value="{{ old('number') }}" placeholder="optional">
 
                                     @if ($errors->has('number'))
                                         <span class="help-block">

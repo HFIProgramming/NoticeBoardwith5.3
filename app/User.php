@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'chinese_name', 'english_name','name','email', 'password', 'phone_number','wechat','avatar','active'
+        'chinese_name', 'english_name', 'name', 'email', 'password', 'phone_number', 'wechat', 'avatar', 'active'
     ];
 
     /**
@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','active'
+        'password', 'remember_token', 'active'
     ];
 
     /**
@@ -45,9 +45,9 @@ class User extends Authenticatable
      * @param $username
      * @return mixed
      */
-    public function scopeUsername($query,$type,$username)
+    public function scopeUsername($query, $type, $username)
     {
-        return $query->where($type,$username);
+        return $query->where($type, $username);
     }
 
 }

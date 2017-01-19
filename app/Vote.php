@@ -23,7 +23,8 @@ class Vote extends Model
     ];
 
 
-    public function questions(){
+    public function questions()
+    {
         return $this->hasMany('App\Question');
     }
 
