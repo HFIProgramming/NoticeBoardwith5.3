@@ -25,15 +25,22 @@ class Question extends Model
     protected $table = 'vote_questions';
 
     /**
-     * related to options
+     * Related to options
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function options(){
+    public function options()
+    {
         return $this->hasMany('App\Option', 'question_id', 'id');
     }
 
-    public function vote(){
+    /**
+     * Trace back to the vote
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function vote()
+    {
         return $this->belongsTo('App\Vote');
     }
 

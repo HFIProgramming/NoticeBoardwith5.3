@@ -50,26 +50,26 @@ class VoteController extends Controller
     public function voteHandler(Request $request)
     {
         $this->voteVerify($request); // safety first :)
-            $answers = collect($request->answers);
-            switch ($request->type) {
-                case 'ticket':
-                    $answers->each(function ($answer, $key) {
-                        Answer::create([
-                            'option_id' => $answer,
-                            'content' => empty($answer->content) ? $answer->content : NULL,
-                        ]);
-                    });
-                    break;
-                case 'user':
-                    $answers->each(function ($answer, $key) use ($request) {
-                        Answer::create([
-                            'option_id' => $answer,
-                            'user_id' => $request->user()->id,
-                            'content' => empty($answer->content) ? $answer->content : NULL,
-                        ]);
-                    });
-                    break;
-            }
+        $answers = collect($request->answers);
+        switch ($request->type) {
+            case 'ticket':
+                $answers->each(function ($answer, $key) {
+                    Answer::create([
+                        'option_id' => $answer,
+                        'content' => empty($answer->content) ? $answer->content : NULL,
+                    ]);
+                });
+                break;
+            case 'user':
+                $answers->each(function ($answer, $key) use ($request) {
+                    Answer::create([
+                        'option_id' => $answer,
+                        'user_id' => $request->user()->id,
+                        'content' => empty($answer->content) ? $answer->content : NULL,
+                    ]);
+                });
+                break;
+        }
         abort(500); // Not gonna happen :(
     }
 

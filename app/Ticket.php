@@ -28,7 +28,8 @@ class Ticket extends Model
      * @param $string
      * @return mixed
      */
-    public function scopeTicket($query,$string){
-        return $query->where('string',$string);
+    public function scopeTicket($query, $string)
+    {
+        return $query->where('string', $string);
     }
 }

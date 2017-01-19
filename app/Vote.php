@@ -23,6 +23,11 @@ class Vote extends Model
     ];
 
 
+    /**
+     * Related to question
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function questions()
     {
         return $this->hasMany('App\Question');
