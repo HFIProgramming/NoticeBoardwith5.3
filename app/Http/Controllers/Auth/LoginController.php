@@ -77,6 +77,6 @@ class LoginController extends Controller
         }
         $result['field'] = $field;
         $result['username'] = $request->username;
-        return Response()->json($result);
+        return response()->json($result);
     }
 }

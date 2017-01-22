@@ -26,7 +26,7 @@ class VoteController extends Controller
      */
     public function showVotes()
     {
-        $votes = Vote::all()->orderBy('ended_at', 'desc')->get();
+        $votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
         return view('vote.index')->withVotes($votes);
     }
 

@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 use App\Vote;
+use App\Ticket;
 
 class VoteVerify
 {
@@ -25,20 +27,23 @@ class VoteVerify
                             $request->merge(['type' => 'ticket']);
                             return $next($request); // Vote is valid !
                         }
-                        return redirect('error.404')->withErrors('Credential No Found'); // Ticket No Found !
+                        return redirect('error.404')->withErrors('credential_error'); // Ticket No Valid !
                     }
-                }
-                if ($userId = $request->user()->id) {
-                    $ids = explode("|", $vote->voted_user);
-                    if (!in_array($userId, $ids)) {
-                        $request->merge(['type' => 'user']);
-                        return $next($request); // Vote is valid !
+                    if ($userId = $request->user()->id) {
+                        $ids = explode("|", $vote->voted_user);
+                        if (!in_array($userId, $ids)) {
+                            $request->merge(['type' => 'user']);
+                            return $next($request); // Vote is valid !
+                        }
                     }
                 }
                 return redirect('/vote'); // Vote Expired or User has already voted
             }
             abort(404); // No such vote
         }
-        return redirect('/login'); // No ticket or user need to login to vote.
+        return redirect('/login')
+            ->withErrors(['warning' => Lang::get('login.login_required', [
+                'process' => 'vote'
+            ]),]); // No ticket or user need to login to vote.
     }
 }

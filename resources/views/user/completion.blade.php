@@ -8,6 +8,7 @@
                     <div class="panel-heading">Complete your information before further action</div>
                     <div class="panel-body">
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/completion') }}">
+
                             {{ csrf_field() }}
 
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
