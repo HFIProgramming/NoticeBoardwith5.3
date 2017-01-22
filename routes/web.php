@@ -25,13 +25,14 @@ Route::post('/completion', 'HomeController@completeUserInfo');
 
 // 访客区域
 Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote');
-Route::get('/vote/{id}/{ticket}', 'VoteController@voteHandler');
+Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler');
 
 // 登录后界面,发现用户登录没有补全信息将会自动跳转补全
 Route::group(['middleware' => 'active'], function(){
     Route::get('/home', 'HomeController@index');
     Route::get('/vote/{id}', 'VoteController@showIndividualVote');
-    Route::get('/vote/{id}', 'VoteController@voteHandler');
+    Route::post('/vote/{id}', 'VoteController@voteHandler');
+    Route::get('/vote', 'VoteController@showVotes');
 });
 
 // 管理员区域
