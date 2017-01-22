@@ -20,22 +20,25 @@ class VoteVerify
         if (!empty($request->ticket) || Auth::check()) {
             if (!empty($request->id) && $vote = Vote::find($request->id)->first()) {
                 if (strtotime($vote->ended_at) - strtotime('now') > 0) {
-                    if (!empty($request->ticket)){
-                        $request->merge(['type' => 'ticket']);
-                        return $next($request); // Vote is valid !
-                    }
-                    if ($userId = $request->user()->id) {
-                        $ids = explode("|", $vote->voted_user);
-                        if (!in_array($userId, $ids)) {
-                            $request->merge(['type' => 'user']);
+                    if ($ticket = Ticket::ticket($request->ticket)->first()) {
+                        if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
+                            $request->merge(['type' => 'ticket']);
                             return $next($request); // Vote is valid !
                         }
+                        return redirect('error.404')->withErrors('Credential No Found'); // Ticket No Found !
                     }
-                    return redirect('/vote'); // Vote Expired or User has already voted
                 }
-                abort(404); // No such vote
+                if ($userId = $request->user()->id) {
+                    $ids = explode("|", $vote->voted_user);
+                    if (!in_array($userId, $ids)) {
+                        $request->merge(['type' => 'user']);
+                        return $next($request); // Vote is valid !
+                    }
+                }
+                return redirect('/vote'); // Vote Expired or User has already voted
             }
-            return redirect('/login'); // No ticket or user need to login to vote.
+            abort(404); // No such vote
         }
+        return redirect('/login'); // No ticket or user need to login to vote.
     }
 }

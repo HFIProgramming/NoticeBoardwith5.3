@@ -43,14 +43,16 @@ class VoteController extends Controller
 
 
     /**
-     * log the vote
+     * Vote handler :)
      *
      * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function voteHandler(Request $request)
     {
-        $this->voteVerify($request); // safety first :)
-        $answers = collect($request->answers);
+        $answers = collect($request->answer);
+        $vote = Vote::find($request->id);
+        if ($vote = $this->voteVerify($answers, $vote)) ;// Safety First :)
         switch ($request->type) {
             case 'ticket':
                 $answers->each(function ($answer, $key) {
@@ -59,6 +61,12 @@ class VoteController extends Controller
                         'content' => empty($answer->content) ? $answer->content : NULL,
                     ]);
                 });
+                $ticket = Ticket::ticket($request->ticket)->first();
+                $ticket->is_used = 1;  // Mark as used
+                if ($ticket->save()) {
+                    return view('vote.success');
+                }
+                abort(500); // Something goes wrong!
                 break;
             case 'user':
                 $answers->each(function ($answer, $key) use ($request) {
@@ -68,42 +76,45 @@ class VoteController extends Controller
                         'content' => empty($answer->content) ? $answer->content : NULL,
                     ]);
                 });
+                $vote = $vote->first();
+                $vote->voted_user .= '|' . $request->user()->id;
+                if ($vote->save()) {
+                    return view('vote.success');
+                }
+                abort(500);  // Something goes wrong !
                 break;
         }
         abort(500); // Not gonna happen :(
     }
 
+
     /**
-     * Verify the vote
+     * Check whether Vote is vaild !
      *
-     * @param $request
-     * @return $this|void
+     * @param $answers
+     * @param $vote
+     * @return $this|bool|void
      */
-    public function voteVerify($request)
+    public function voteVerify($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
     {
-        $answers = collect($request->answer);
-        $vote = Vote::find($request->id);
-        if ($ticket = Ticket::ticket($request->ticket)->first()) {
-            if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
-                $range = $vote->questions->options->id;
-                if (empty($answers->diff($range))) {  // Not out of range
-                    $verifyQuestions = $answers->map(function ($answer, $key) {
-                        return $answer->question->id;
-                    });
-                    $unique = $verifyQuestions->unique();
-                    $required = collect($vote->questions->where('optional', 0)->id);
-                    if (empty($required->diff($unique))) { // Required field has to be filled !
-                        $vote->questions->each(function ($question, $key) use ($verifyQuestions) {
-                            if ($verifyQuestions->search($question->id) != $question->range || $question->type == 'string') return abort(500); // illegal answers :(
-                        });
-                    }
-                    return redirect()->back()->withInput()->withErrors('Missing Requried');
-                }
-                return abort(500); // illegal answer :(
+        $range = $vote->questions->options->id;
+        if (empty($answers->diff($range))) {
+            $verifyQuestions = $answers->map(function ($answer, $key) {
+                return $answer->question->id;
+            });
+            $unique = $verifyQuestions->unique();
+            $required = collect($vote->questions->where('optional', 0)->id);
+            if (empty($required->diff($unique))) {
+                $vote->questions->each(function ($question, $key) use ($verifyQuestions) {
+                    if ($verifyQuestions->search($question->id) != $question->range || $question->type == 'string') abort(500); // illegal answers :( # of option of specific question is not match
+                });
+                // @TODO Have Not Yet Limited Chooing the Same Option Several time in One Question :(
+                return true;
             }
-            return redirect('error.404')->withErrors("Ticket is not activated or used already");
+            return redirect()->back()->withInput()->withErrors('Missing Requried field'); // Required field has to be filled !
         }
-        return redirect('error.404')->withErrors("Ticket No Found");
+        return abort(500); // illegal answer :( Out of Range: Choosing options that are not in this vote.
     }
+
 
 }
