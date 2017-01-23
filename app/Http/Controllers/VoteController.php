@@ -38,7 +38,7 @@ class VoteController extends Controller
      */
     public function showIndividualVote(Request $request)
     {
-        return view('vote.individual')->withVote(Vote::find($request->id))->withRequest($request);
+        return view('vote.individual')->withVote(Vote::find($request->id))->withUrl($request->url());
     }
 
 
@@ -53,10 +53,11 @@ class VoteController extends Controller
     {
         $answers = collect($request->answer);
         $vote = Vote::find($request->id);
-        if ($vote = $this->voteVerify($answers, $vote)) ;// Safety First :)
+        $id = 0; // set default
+        if ($this->voteVerify($answers, $vote)) ;// Safety First :)
         switch ($request->type) {
             case 'ticket':
-                $answers->each(function ($answer, $key) {
+                $answers->each(function ($answer) {
                     Answer::create([
                         'option_id' => $answer,
                         'content' => empty($answer->content) ? $answer->content : NULL,
@@ -64,33 +65,29 @@ class VoteController extends Controller
                 });
                 $ticket = Ticket::ticket($request->ticket)->first();
                 $ticket->is_used = 1;  // Mark as used
-                if ($ticket->save()) {
-                    return view('vote.success');
-                }
-                abort(500); // Something goes wrong!
                 break;
             case 'user':
-                $answers->each(function ($answer, $key) use ($request) {
+                $answers->each(function ($answer) use ($request) {
                     Answer::create([
                         'option_id' => $answer,
                         'user_id' => $request->user()->id,
                         'content' => empty($answer->content) ? $answer->content : NULL,
                     ]);
                 });
-                $vote = $vote->first();
-                $vote->voted_user .= '|' . $request->user()->id;
-                if ($vote->save()) {
-                    return view('vote.success');
-                }
-                abort(500);  // Something goes wrong !
+                $id = $request->user()->id;
                 break;
+        }
+        $vote = $vote->first();
+        $vote->voted_user .= $id .'|';
+        if ($vote->save()) {
+            return view('vote.success');
         }
         abort(500); // Not gonna happen :(
     }
 
 
     /**
-     * Check whether Vote is vaild !
+     *  Check whether Vote is valid !
      *
      * @param $answers
      * @param $vote

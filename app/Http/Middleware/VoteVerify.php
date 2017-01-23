@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Redirect;
 use App\Vote;
 use App\Ticket;
 
@@ -27,21 +28,23 @@ class VoteVerify
                             $request->merge(['type' => 'ticket']);
                             return $next($request); // Vote is valid !
                         }
-                        return redirect('error.404')->withErrors('credential_error'); // Ticket No Valid !
+                        return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
                     }
-                    if ($userId = $request->user()->id) {
-                        $ids = explode("|", $vote->voted_user);
-                        if (!in_array($userId, $ids)) {
-                            $request->merge(['type' => 'user']);
-                            return $next($request); // Vote is valid !
-                        }
+                    if (Auth::check()) {
+                        $userId = $request->user()->id;
+                            $ids = explode("|", $vote->voted_user);
+                            if (!in_array($userId, $ids)) {
+                                $request->merge(['type' => 'user']);
+                                return $next($request); // Vote is valid !
+                            }
+                     return view('errors.404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
                     }
                 }
-                return redirect('/vote'); // Vote Expired or User has already voted
+                return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
             }
-            abort(404); // No such vote
+            return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
         }
-        return redirect('/login')
+        return Redirect::guest(route('login'))
             ->withErrors(['warning' => Lang::get('login.login_required', [
                 'process' => 'vote'
             ]),]); // No ticket or user need to login to vote.

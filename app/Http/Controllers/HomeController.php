@@ -38,7 +38,7 @@ class HomeController extends Controller
         if ($request->user()->active == 0) {
             return view('user.completion'); // User is not active.
         }else{
-            redirect('/'); // User is active already.
+            return redirect('/'); // User is active already.
         }
     }
 

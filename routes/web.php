@@ -40,3 +40,8 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
     Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
 });
+
+// 错误信息
+Route::get('/404', function (){
+   return view('errors.404');
+});
