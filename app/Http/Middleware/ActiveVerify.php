@@ -10,13 +10,13 @@ class ActiveVerify
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->active == 0){ // Limits access to login page as well as check completion
+        if (Auth::check() && Auth::user()->active == 0) { // Limits access to login page as well as check completion
             return redirect('/completion');
         }
         return $next($request);

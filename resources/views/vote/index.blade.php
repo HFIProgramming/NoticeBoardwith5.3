@@ -19,7 +19,8 @@
                     <div class="col-md-8 col-md-offset-2">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h1>title{{$vote->title}}</h1><!--I Hate frontend ! SO THAT ALL-->
+                                <a href="{{url('/vote/'.$vote->id)}}">{{$vote->title}}</a>
+                                <!--I Hate frontend ! SO THAT ALL-->
                             </div>
                             <p>简介：{{empty($vote->intro) ? '暂不可用' : $vote->intro}}</p>
                             <p>结束时间：{{$vote->ended_at}}</p>   <!--结束时间客户端要学会自己判断-->
@@ -29,3 +30,4 @@
                 </div>
             </div>
     @endforeach
+@endsection

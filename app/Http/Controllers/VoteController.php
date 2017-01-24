@@ -51,7 +51,7 @@ class VoteController extends Controller
      */
     public function voteHandler(Request $request)
     {
-        $answers = collect(array_map('intval', explode(',',$request->answer)));  // turn string to int
+        $answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
         $vote = Vote::find($request->id);
         $id = 0; // set default
         $result = $this->voteVerify($answers, $vote);
@@ -85,7 +85,7 @@ class VoteController extends Controller
                 return view('vote.success');
             }
             abort(500);  // Something goes wrong :(
-        }else{
+        } else {
             return $result;
         }
     }
@@ -100,8 +100,8 @@ class VoteController extends Controller
      */
     public function voteVerify($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
     {
-        $range = $vote->questions->map(function ($question, $key){
-            return $question->options->map(function ($option,$key){
+        $range = $vote->questions->map(function ($question, $key) {
+            return $question->options->map(function ($option, $key) {
                 return $option->id;
             });
         })->flatten();
@@ -110,7 +110,7 @@ class VoteController extends Controller
                 return Option::find($answer)->question->id;
             });
             $unique = $verifyQuestions->unique();
-            $required = collect($vote->questions->where('optional', 0)->map(function ($question, $key){
+            $required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
                 return $question->id;
             }));
             if ($required->diff($unique)->isEmpty()) {
