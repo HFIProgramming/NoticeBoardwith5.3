@@ -18,7 +18,7 @@ class CreateQuestionOptionsTable extends Migration
             $table->increments('id');
             $table->string('question_id');
             $table->string('content');
-
+            $table->timestamps();
         });
     }
 

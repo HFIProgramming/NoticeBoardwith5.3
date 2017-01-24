@@ -51,43 +51,48 @@ class VoteController extends Controller
      */
     public function voteHandler(Request $request)
     {
-        $answers = collect($request->answer);
+        $answers = collect(array_map('intval', explode(',',$request->answer)));  // turn string to int
         $vote = Vote::find($request->id);
         $id = 0; // set default
-        if ($this->voteVerify($answers, $vote)) ;// Safety First :)
-        switch ($request->type) {
-            case 'ticket':
-                $answers->each(function ($answer) {
-                    Answer::create([
-                        'option_id' => $answer,
-                        'content' => empty($answer->content) ? $answer->content : NULL,
-                    ]);
-                });
-                $ticket = Ticket::ticket($request->ticket)->first();
-                $ticket->is_used = 1;  // Mark as used
-                break;
-            case 'user':
-                $answers->each(function ($answer) use ($request) {
-                    Answer::create([
-                        'option_id' => $answer,
-                        'user_id' => $request->user()->id,
-                        'content' => empty($answer->content) ? $answer->content : NULL,
-                    ]);
-                });
-                $id = $request->user()->id;
-                break;
+        $result = $this->voteVerify($answers, $vote);
+        if ($result === true) {  // Safety First :)
+            switch ($request->type) {  // Start Dash!
+                case 'ticket':
+                    $answers->each(function ($answer) {
+                        Answer::create([
+                            'option_id' => $answer,
+                            // 'content' => empty($answer->content) ? $answer->content : NULL,
+                        ]);
+                    });
+                    $ticket = Ticket::ticket($request->ticket)->first();
+                    $ticket->is_used = 1;  // Mark as used
+                    if (!$ticket->save()) abort(500); // Something goes wrong :(
+                    break;
+                case 'user':
+                    $answers->each(function ($answer) use ($request) {
+                        Answer::create([
+                            'option_id' => $answer,
+                            'user_id' => $request->user()->id,
+                            // 'content' => empty($answer->content) ? $answer->content : NULL,
+                        ]);
+                    });
+                    $id = $request->user()->id;
+                    break;
+            }
+            $vote = $vote->first();
+            $vote->voted_user .= $id . '|';
+            if ($vote->save()) {
+                return view('vote.success');
+            }
+            abort(500);  // Something goes wrong :(
+        }else{
+            return $result;
         }
-        $vote = $vote->first();
-        $vote->voted_user .= $id .'|';
-        if ($vote->save()) {
-            return view('vote.success');
-        }
-        abort(500); // Not gonna happen :(
     }
 
 
     /**
-     *  Check whether Vote is valid !
+     * Check whether Vote is valid !
      *
      * @param $answers
      * @param $vote
@@ -95,16 +100,25 @@ class VoteController extends Controller
      */
     public function voteVerify($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
     {
-        $range = $vote->questions->options->id;
-        if (empty($answers->diff($range))) {
+        $range = $vote->questions->map(function ($question, $key){
+            return $question->options->map(function ($option,$key){
+                return $option->id;
+            });
+        })->flatten();
+        if ($answers->diff($range)->isEmpty()) {
             $verifyQuestions = $answers->map(function ($answer, $key) {
-                return $answer->question->id;
+                return Option::find($answer)->question->id;
             });
             $unique = $verifyQuestions->unique();
-            $required = collect($vote->questions->where('optional', 0)->id);
-            if (empty($required->diff($unique))) {
+            $required = collect($vote->questions->where('optional', 0)->map(function ($question, $key){
+                return $question->id;
+            }));
+            if ($required->diff($unique)->isEmpty()) {
+                $verifyQuestions = array_count_values($verifyQuestions->flatten()->toArray()); // counting elements...
                 $vote->questions->each(function ($question, $key) use ($verifyQuestions) {
-                    if ($verifyQuestions->search($question->id) != $question->range || $question->type == 'string') abort(500); // illegal answers :( # of option of specific question is not match
+                    if ($verifyQuestions[$question->id] != $question->range
+                        //|| $question->type == 'string'
+                    ) abort(500); // illegal answers :( # of options for a specific question is not match
                 });
                 // @TODO Have Not Yet Limited Chooing the Same Option Several time in One Question :(
                 return true;

@@ -11,14 +11,14 @@ class Answer extends Model
      * @var array
      */
     protected $fillable = [
-        'option_id', 'content',
+        'user_id','option_id', 'content',
     ];
 
     /**
      * Hidden
      * @var array
      */
-    protected $hidden = ['user_id',
+    protected $hidden = [
     ];
 
 }

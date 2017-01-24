@@ -32,12 +32,12 @@ class VoteVerify
                     }
                     if (Auth::check()) {
                         $userId = $request->user()->id;
-                            $ids = explode("|", $vote->voted_user);
-                            if (!in_array($userId, $ids)) {
-                                $request->merge(['type' => 'user']);
-                                return $next($request); // Vote is valid !
-                            }
-                     return view('errors.404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
+                        $ids = explode("|", $vote->voted_user);
+                        if (!in_array($userId, $ids)) {
+                            $request->merge(['type' => 'user']);
+                            return $next($request); // Vote is valid !
+                        }
+                        return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
                     }
                 }
                 return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
