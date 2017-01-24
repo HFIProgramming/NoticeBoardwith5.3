@@ -22,7 +22,6 @@ class CreateVoteQuestionsTable extends Migration
             $table->string('explanation')->nullable();
             $table->string('optional')->default(0);
             $table->string('range')->default(0); // choose how many options.
-            $table->timestamps();
         });
     }
 

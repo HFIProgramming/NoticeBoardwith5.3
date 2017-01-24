@@ -22,7 +22,6 @@ class CreateVotesTable extends Migration
             $table->string('voted_user')->nullable();
             $table->string('started_at');
             $table->string('ended_at');
-            $table->timestamps();
         });
     }
 
