@@ -41,7 +41,7 @@ class Question extends Model
      */
     public function vote()
     {
-        return $this->belongsTo('App\Vote');
+        return $this->belongsTo('App\Vote', 'id', 'vote_id');
     }
 
 }

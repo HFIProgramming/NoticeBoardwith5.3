@@ -33,8 +33,14 @@ class Option extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function question(){
-        return $this->belongsTo('App\Question');
+    public function question()
+    {
+        return $this->belongsTo('App\Question', 'question_id', 'id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany('App\Answer', 'option_id', 'id');
     }
 
 }

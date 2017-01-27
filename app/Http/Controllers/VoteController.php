@@ -128,5 +128,4 @@ class VoteController extends Controller
         return abort(500); // illegal answer :( Out of Range: Choosing options that are not in this vote.
     }
 
-
 }

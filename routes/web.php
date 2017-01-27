@@ -24,24 +24,25 @@ Route::get('/completion', 'HomeController@showCompletionForm');
 Route::post('/completion', 'HomeController@completeUserInfo');
 
 // 访客区域
-Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote');
-Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler');
+Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 
 // 登录后界面,发现用户登录没有补全信息将会自动跳转补全
-Route::group(['middleware' => 'active'], function(){
+Route::group(['middleware' => 'active'], function () {
     Route::get('/home', 'HomeController@index');
-    Route::get('/vote/{id}', 'VoteController@showIndividualVote');
-    Route::post('/vote/{id}', 'VoteController@voteHandler');
+    Route::get('/vote/{id}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+']);
+    Route::post('/vote/{id}', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
     Route::get('/vote', 'VoteController@showVotes');
 });
 
 // 管理员区域
-Route::group(['middleware' => 'admin'], function(){
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
     Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
+    Route::get('/vote/result/{id}', 'Admin\VoteController@showVoteResult')->where(['id' => '[0-9]+']);
 });
 
 // 错误信息
-Route::get('/404', function (){
-   return view('errors.404');
+Route::get('/404', function () {
+    return view('errors.404');
 });

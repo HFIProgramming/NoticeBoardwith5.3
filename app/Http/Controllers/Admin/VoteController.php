@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Option;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Ticket;
 use App\Vote;
+
 
 class VoteController extends Controller
 {
@@ -50,5 +52,23 @@ class VoteController extends Controller
             ]);
         }
         return redirect()->back();
+    }
+
+    public function showVoteResult(Request $request)
+    {
+        $vote = Vote::find($request->id);
+        $counts = array_count_values($vote->questions->map(function ($question) {
+            return $question->options->map(function ($option) {
+                return $option->answers->map(function ($answer) {
+                    return $answer->option_id;  // Escape Numeric
+                })->flatten();
+            })->flatten();
+        })->flatten()->toArray());
+        // fallback :(
+        $results = array();
+        foreach ($counts as $key => $count){
+            $results[$key] = ['questionId' => Option::find($key)->question->id,'count' => $count];
+        }
+        return view('vote.result')->withResults($results)->withVote($vote);
     }
 }
