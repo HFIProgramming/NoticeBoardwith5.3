@@ -17,13 +17,13 @@ class CreateUsersTable extends Migration
             // 登录基本信息
             $table->increments('id');
             $table->string('chinese_name');
-            $table->string('email')->unique()->default('null');
-            $table->string('name')->unique()->nullable();
-            $table->string('phone_number')->unique()->nullable();  //可选
+            $table->string('email')->default('null');
+            $table->string('name')->unique()->default('visitor');
+            $table->string('phone_number')->nullable();  //可选
             $table->string('password');
             // 用户基本信息
             $table->string('english_name')->nullable();
-            $table->string('wechat')->unique()->nullable();
+            $table->string('wechat')->nullable();
             $table->string('avatar')->nullable();
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包

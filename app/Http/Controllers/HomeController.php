@@ -34,10 +34,11 @@ class HomeController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showCompletionForm(Request $request){
+    public function showCompletionForm(Request $request)
+    {
         if ($request->user()->active == 0) {
             return view('user.completion'); // User is not active.
-        }else{
+        } else {
             return redirect('/'); // User is active already.
         }
     }
@@ -48,15 +49,15 @@ class HomeController extends Controller
      * @param array $data
      * @return mixed
      */
-    protected function validator(array $data)
+    protected function validatorCompletion(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required','max:255','regex:/([A-Za-z])/'],
+            'name' => ['required', 'max:255', 'regex:/([A-Za-z])/', 'unique:users'],
             'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-            'english_name' => 'required|max:255',
-            'phone_number' => ['nullable','numeric','regex:^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$'],
-            'wechat' => 'nullable|string'
+            'password' => 'required|min:8|confirmed',
+            'english_name' => ['required', 'max:255', 'regex:/([A-Za-z])/'],
+            'phone_number' => ['nullable', 'numeric', 'regex:^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\\d{8}$', 'unique:users'],
+            'wechat' => 'nullable|string|unique:users'
         ]);
     }
 
@@ -66,12 +67,14 @@ class HomeController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function completeUserInfo(Request $request){
+    public function completeUserInfo(Request $request)
+    {
         $user = $request->user(); // Get user first :)
         if ($user && $user->active != 1) {
-            if ($errors = $this->validator($data = $request->all())->validate()){
+            if ($errors = $this->validatorCompletion($data = $request->all())->validate()) {
                 return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
             }
+            // Looks good!
             if ($user->update([
                 'name' => $data['name'],
                 'email' => $data['email'],
@@ -80,13 +83,10 @@ class HomeController extends Controller
                 'phone_number' => $data['phone_number'],
                 'wechat' => $data['wechat'],
                 'active' => '1'
-                ])){
-                return redirect('/notice'); // Success! turn to notice
-            }else{
-                abort(500); // Fails to save info, abort with 500
-            }
-        }else{
-            return redirect('/login');  // Fail to get user, turn to login page
+            ])
+            ) return redirect('/notice'); // Success! turn to notice
+            abort(500); // Fails to save info, abort with 500
         }
+        return redirect('/login');  // Fail to get user, turn to login page
     }
 }
