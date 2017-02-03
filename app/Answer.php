@@ -21,12 +21,23 @@ class Answer extends Model
      * @var array
      */
     protected $hidden = [
+
     ];
 
+    /**
+     * Trace back the option
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function option(){
         return $this->belongsTo('App\Option', 'id', 'option_id');
     }
 
+    /**
+     * Trace back the user
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user(){
         return $this->belongsTo('App\User', 'id', 'user_id');
     }

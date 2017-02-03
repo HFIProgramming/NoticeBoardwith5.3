@@ -32,4 +32,5 @@ class Ticket extends Model
     {
         return $query->where('string', $string);
     }
+
 }

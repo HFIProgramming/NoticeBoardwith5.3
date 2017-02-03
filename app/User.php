@@ -50,4 +50,13 @@ class User extends Authenticatable
         return $query->where($type, $username);
     }
 
+    /**
+     * List the Posts from a specific user
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     *
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
 }

@@ -27,10 +27,13 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->nullable();
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
+            $table->string('grade'); // xx学年，从学年判断年级
+            $table->string('powerschool_id')->nullable()->unique();
+            $table->text('self_intro')->nullable();
             // 激活状态
             $table->string('active')->default('0');
             // 用户角色
-            $table->string('role')->default('user'); // user,admin
+            $table->string('role')->default('student'); // student,teacher,admin
             $table->rememberToken();
             $table->timestamps();
         });

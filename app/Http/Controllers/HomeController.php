@@ -44,24 +44,6 @@ class HomeController extends Controller
     }
 
     /**
-     * Get a validator for an incoming completion request.
-     *
-     * @param array $data
-     * @return mixed
-     */
-    protected function validatorCompletion(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'max:255', 'regex:/([A-Za-z])/', 'unique:users'],
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:8|confirmed',
-            'english_name' => ['required', 'max:255', 'regex:/([A-Za-z])/'],
-           // 'phone_number' => ['nullable', 'numeric', 'regex:^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])', 'unique:users'], // @TODO Something goes wrong here :(
-            'wechat' => 'nullable|string|unique:users'
-        ]);
-    }
-
-    /**
      * Complete user info
      *
      * @param Request $request
@@ -71,7 +53,15 @@ class HomeController extends Controller
     {
         $user = $request->user(); // Get user first :)
         if ($user && $user->active != 1) {
-            if ($errors = $this->validatorCompletion($data = $request->all())->validate()) {
+            if ($errors = Validator::make($data = $request->all(), [
+                'name' => ['required', 'max:255', 'regex:/([A-Za-z])/', 'unique:users'],
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:8|confirmed',
+                'english_name' => ['required', 'max:255', 'regex:/([A-Za-z])/'],
+                // 'phone_number' => ['nullable', 'numeric', 'regex:^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])', 'unique:users'], // @TODO Something goes wrong here :(
+                'wechat' => 'nullable|string|unique:users'
+            ])->validate()
+            ) {
                 return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
             }
             // Looks good!
