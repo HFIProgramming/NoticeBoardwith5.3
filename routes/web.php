@@ -16,12 +16,15 @@ Auth::routes();
 
 // 访客区域
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
-Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
-Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/vote', 'VoteController@showVotes');
+Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+
+Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
 
 // 以下页面都需要登录才能访问
 Route::group(['middleware' => 'auth'], function () {
@@ -40,7 +43,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/vote/{id}', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
 
         // 帖子相关
-        Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
         Route::get('/post', function () {
             return view('post/create');
         });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Lang;
 use App\Post;
 use App\Comment;
 
@@ -12,25 +13,44 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'showIndividualPost']);
+        $this->middleware('auth', ['except' => 'showIndividualPost']);
         $this->user = Auth::user();
     }
 
     /**
      * Show post for specific post id
+     *
      * @param $id
      * @return $this
      */
     public function showIndividualPost($id)
     {
-        if (!Auth::check() && Post::find($id)->firstOrFail()->is_public == 0) {
-            return view('post/show')->withPost(Post::with('hasManyComments', 'tagged')->find($id));
-        } // eager load cannot throw 404 exception :(
-
-        return Redirect::guest(route('login'))
-            ->withErrors(['warning' => Lang::get('login.login_required', [
-                'process' => 'vote'
-            ]),]);
+        if ($post = Post::Id($id)->first()) {
+            switch ($post->is_public) {
+                case 1:
+                    return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
+                    // eager load cannot throw 404 exception :(
+                    break;
+                case 0:
+                    if (Auth::check()) {
+                        $roles = explode("|", $post->is_hidden);
+                        if (!in_array($this->user->role, $roles)) {
+                            $grades = explode("|", $post->level_limitation);
+                            if (!in_array($this->user->grade, $roles)) {
+                                return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
+                            }
+                            return redirect('/403')->withErrors(['warning' => Lang::get('auth.level_limitation')]);
+                        }
+                        return redirect('/403')->withErrors(['warning' => Lang::get('auth.role_limitation')]);
+                    }
+                    return Redirect::guest(route('login'))
+                        ->withErrors(['warning' => Lang::get('login.login_required', [
+                            'process' => 'Post Viewing'
+                        ]),]);
+                    break;
+            }
+        }
+        return redirect('/404')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Vote No Found
     }
 
     /**
@@ -46,7 +66,7 @@ class PostController extends Controller
         ) {
             return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
         }
-        if ($post = Post::find($request->id)->first()) {
+        if ($post = Post::Id($request->id)->first()) {
             if (Comment::create([
                 'user_id' => $this->user->id,
                 'password' => $request['content'],

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Ticket;
@@ -38,7 +37,7 @@ class VoteController extends Controller
      */
     public function showIndividualVote(Request $request)
     {
-        return view('vote.individual')->withVote(Vote::find($request->id))->withUrl($request->url());
+        return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
     }
 
 
@@ -52,7 +51,7 @@ class VoteController extends Controller
     public function voteHandler(Request $request)
     {
         $answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
-        $vote = Vote::find($request->id);
+        $vote = Vote::Id($request->id);
         $id = 0; // set default
         $result = $this->voteVerify($answers, $vote);
         if ($result === true) {  // Safety First :)
@@ -107,7 +106,7 @@ class VoteController extends Controller
         })->flatten();
         if ($answers->diff($range)->isEmpty()) {
             $verifyQuestions = $answers->map(function ($answer, $key) {
-                return Option::find($answer)->question->id;
+                return Option::Id($answer)->question->id;
             });
             $unique = $verifyQuestions->unique();
             $required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {

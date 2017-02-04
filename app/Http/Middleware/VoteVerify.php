@@ -21,7 +21,7 @@ class VoteVerify
     public function handle($request, Closure $next)
     {
         if (!empty($request->ticket) || Auth::check()) {
-            if (!empty($request->id) && $vote = Vote::find($request->id)->first()) {
+            if (!empty($request->id) && $vote = Vote::Id($request->id)->first()) {
                 if (strtotime($vote->ended_at) - strtotime('now') > 0) {
                     if ($ticket = Ticket::ticket($request->ticket)->first()) {
                         if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good

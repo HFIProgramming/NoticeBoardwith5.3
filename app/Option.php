@@ -38,9 +38,25 @@ class Option extends Model
         return $this->belongsTo('App\Question', 'question_id', 'id');
     }
 
+    /**
+     * Option Counts
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function answers()
     {
         return $this->hasMany('App\Answer', 'option_id', 'id');
     }
 
+    /**
+     * Popular search Id
+     *
+     * @param $query
+     * @param $Id
+     * @return mixed
+     */
+    public function scopeId($query, $Id)
+    {
+        return $query->where('id', $Id);
+    }
 }

@@ -33,4 +33,15 @@ class Vote extends Model
         return $this->hasMany('App\Question');
     }
 
+    /**
+     * Popular search ID
+     *
+     * @param $query
+     * @param $id
+     * @return mixed
+     */
+    public function scopeId($query, $id)
+    {
+        return $query->where('id', $id);
+    }
 }

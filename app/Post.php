@@ -57,4 +57,16 @@ class Post extends Model
         return $this->belongsTo('App\User', 'last_user', 'id');
     }
 
+    /**
+     * Popular search Id
+     *
+     * @param $query
+     * @param $Id
+     * @return mixed
+     */
+    public function scopeId($query, $Id)
+    {
+        return $query->where('id', $Id);
+    }
+
 }
