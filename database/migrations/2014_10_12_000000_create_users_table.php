@@ -28,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
             $table->string('grade'); // xx学年，从学年判断年级
-            $table->string('powerschool_id')->nullable()->unique();
+            $table->string('powerschool_id')->nullable();
             $table->text('self_intro')->nullable();
             // 激活状态
             $table->string('active')->default('0');

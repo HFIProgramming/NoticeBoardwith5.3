@@ -72,7 +72,8 @@ class HomeController extends Controller
                 'english_name' => $data['english_name'],
                 'phone_number' => $data['phone_number'],
                 'wechat' => $data['wechat'],
-                'active' => '1'
+                'active' => '1',
+                //@TODO 数据库加了表项但是没有添加输入方式
             ])
             ) return redirect('/notice'); // Success! turn to notice
             abort(500); // Fails to save info, abort with 500

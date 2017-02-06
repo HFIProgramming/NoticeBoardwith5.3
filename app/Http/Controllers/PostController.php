@@ -36,7 +36,7 @@ class PostController extends Controller
                         $roles = explode("|", $post->is_hidden);
                         if (!in_array($this->user->role, $roles)) {
                             $grades = explode("|", $post->level_limitation);
-                            if (!in_array($this->user->grade, $roles)) {
+                            if (!in_array($this->user->grade, $grades)) {
                                 return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
                             }
                             return redirect('/403')->withErrors(['warning' => Lang::get('auth.level_limitation')]);
