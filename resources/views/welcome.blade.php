@@ -81,6 +81,7 @@
         <div class="title m-b-md">
             Laravel
         </div>
+	<img src="http://hfinotice-file.nos-eastchina1.126.net/photo_2017-02-06_01-20-24.jpg"></img>
 
         <div class="links">
             <a href="https://laravel.com/docs">Documentation</a>
