@@ -29,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/notice';  // Default turn to noticeboard
+    protected $redirectTo = '/home';  // Default turn to noticeboard
 
     /**
      * Create a new controller instance.
@@ -48,7 +48,7 @@ class LoginController extends Controller
      * @return array
      */
    protected function credentials(Request $request){
-       $request->merge([$field = User::determinedUsernameField($request->name) => $request->name]);
+       $request->merge([$field = usernameIdentifier($request->username) => $request->username]);
        return $request->only($field, 'password');
     }
 
@@ -69,12 +69,14 @@ class LoginController extends Controller
      */
     public function verifyUsername(Request $request)
     {
-        if (!empty($user = User::username($request->username)->first())) {
+        if (!empty($user = User::username($field = usernameIdentifier($request->username),$request->username)->first())) {
             $result['status'] = 1;
             $result['active'] = $user->active; // Username found, return status.
         } else {
             $result['status'] = 0; // Username no found.
         }
-        return Response()->json($result);
+        $result['field'] = $field;
+        $result['username'] = $request->username;
+        return response()->json($result);
     }
 }

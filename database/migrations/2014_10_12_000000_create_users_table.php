@@ -17,20 +17,23 @@ class CreateUsersTable extends Migration
             // 登录基本信息
             $table->increments('id');
             $table->string('chinese_name');
-            $table->string('email')->unique()->default('null');
-            $table->string('name')->unique()->nullable();
-            $table->string('phone_number')->unique()->nullable();  //可选
+            $table->string('email')->default('null');
+            $table->string('name')->default('visitor');
+            $table->string('phone_number')->nullable();  //可选
             $table->string('password');
             // 用户基本信息
             $table->string('english_name')->nullable();
-            $table->string('wechat')->unique()->nullable();
+            $table->string('wechat')->nullable();
             $table->string('avatar')->nullable();
             $table->string('class')->nullable();
             $table->string('organization')->nullable(); // 社团归属；json打包
+            $table->string('grade'); // xx学年，从学年判断年级
+            $table->string('powerschool_id')->nullable();
+            $table->text('self_intro')->nullable();
             // 激活状态
             $table->string('active')->default('0');
             // 用户角色
-            $table->string('role')->default('user');
+            $table->string('role')->default('student'); // student,teacher,admin
             $table->rememberToken();
             $table->timestamps();
         });

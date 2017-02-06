@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
-class ActiveVerify
+class AdminVerify
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,7 @@ class ActiveVerify
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user()->active == 0) { // Limits access to login page as well as check completion
-            return redirect('/completion');
-        }
-        return $next($request);
+        if (Auth::check() && Auth::user()->role == 'admin') return $next($request);
+        return abort(403);
     }
 }

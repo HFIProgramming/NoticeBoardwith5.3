@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Access Deny
+    Page No Found
 @endsection
 
 @section('content')
@@ -23,12 +23,11 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>{{Lang::get('auth.403_sorry')}}</strong>
+                        <strong>{{Lang::get('error.404_sorry')}}</strong>
                     </div>
+                    <p>{{Lang::get('error.404_action')}}</p>
                 </div>
-                <p>{{Lang::get('auth.403_action')}}</p>
             </div>
-            @endif
         </div>
     </div>
 @endsection
