@@ -81,7 +81,6 @@ class VoteController extends Controller
 					break;
 				}
 				$vote = $vote->first();
-				// $vote->voted_user .= $id . '|';
 				if ($vote->save()) {
 					return view('vote.success');
 				}

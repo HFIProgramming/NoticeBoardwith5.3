@@ -15,15 +15,6 @@ class Vote extends Model
     ];
 
     /**
-     * Hidden
-     * @var array
-     */
-    // protected $hidden = [
-    //     'voted_user',
-    // ];
-
-
-    /**
      * Related to question
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
