@@ -19,7 +19,7 @@ class CreateVotesTable extends Migration
             $table->string('title');
             $table->string('intro');
             $table->string('type')->default('0'); // 0 Login to vote; 1 only tickets; 2 both can.
-            $table->string('voted_user')->nullable();
+            // $table->string('voted_user')->nullable();
             $table->string('started_at');
             $table->string('ended_at');
             $table->timestamps();

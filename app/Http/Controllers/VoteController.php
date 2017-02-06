@@ -53,7 +53,7 @@ class VoteController extends Controller
 		$answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
 		$vote = Vote::Id($request->id);
 		$id = 0; // set default
-		$result = $this->voteVerify($answers, $vote);
+		$result = $this->verifyAnswers($answers, $vote);
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
@@ -65,7 +65,9 @@ class VoteController extends Controller
 				});
 				$ticket = Ticket::ticket($request->ticket)->first();
 				$ticket->is_used = 1;  // Mark as used
-				if (!$ticket->save()) abort(500); // Something goes wrong :(
+				if (!$ticket->save()){
+					abort(500); // Something goes wrong :(
+					}
 					break;
 					case 'user':
 					$answers->each(function ($answer) use ($request) {
@@ -79,7 +81,7 @@ class VoteController extends Controller
 					break;
 				}
 				$vote = $vote->first();
-				$vote->voted_user .= $id . '|';
+				// $vote->voted_user .= $id . '|';
 				if ($vote->save()) {
 					return view('vote.success');
 				}
@@ -97,7 +99,7 @@ class VoteController extends Controller
 			* @param $vote
 			* @return $this|bool|void
 			*/
-			public function voteVerify($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
+			private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
 			{
 				$range = $vote->questions->map(function ($question, $key) {
 					return $question->options->map(function ($option, $key) {
@@ -120,7 +122,6 @@ class VoteController extends Controller
 								//|| $question->type == 'string'
 								) abort(500); // illegal answers :( # of options for a specific question is not match
 							});
-							// @TODO Have Not Yet Limited Chooing the Same Option Several time in One Question :(
 							return true;
 						}
 						return redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($unique)); // Required field has to be filled !
