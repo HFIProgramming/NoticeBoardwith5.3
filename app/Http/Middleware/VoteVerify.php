@@ -33,7 +33,7 @@ class VoteVerify
                     }
                     if (Auth::check()) {
                         $userId = $request->user()->id;
-						$votedIds = $vote->votedUserIds;
+						$votedIds = $vote->votedUserIds();
 						if (!in_array($userId, $votedIds)) {
                             $request->merge(['type' => 'user']);
                             return $next($request); // Vote is valid !
