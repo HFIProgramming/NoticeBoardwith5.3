@@ -33,19 +33,16 @@ class Vote extends Model
         return $this->hasMany('App\Question');
     }
 
-	public function votedUserIds()
-	{
-		return $this->questions->map(function($question, $key)
-		{
-			return $question->options->map(function($option, $key)
-			{
-				return $option->answers->map(function($answer, $key)
-				{
-					return $answer->user_id;
-				});
-			});
-		})->flatten()->unique();
-	}
+    public function votedUserIds()
+    {
+        return $this->questions->map(function ($question, $key) {
+            return $question->options->map(function ($option, $key) {
+                return $option->answers->map(function ($answer, $key) {
+                    return $answer->user_id;
+                });
+            });
+        })->flatten()->unique();
+    }
 
     /**
      * Popular search ID
