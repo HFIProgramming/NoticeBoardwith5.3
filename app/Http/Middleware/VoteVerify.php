@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Redirect;
 use App\Vote;
 use App\Ticket;
+use App\Answer;
 
 class VoteVerify
 {
@@ -32,8 +33,8 @@ class VoteVerify
                     }
                     if (Auth::check()) {
                         $userId = $request->user()->id;
-                        $ids = explode("|", $vote->voted_user);
-                        if (!in_array($userId, $ids)) {
+						$votedIds = $vote->votedUserIds();
+						if (!in_array($userId, $votedIds)) {
                             $request->merge(['type' => 'user']);
                             return $next($request); // Vote is valid !
                         }

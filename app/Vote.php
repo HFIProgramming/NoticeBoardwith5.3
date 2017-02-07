@@ -19,7 +19,7 @@ class Vote extends Model
      * @var array
      */
     protected $hidden = [
-        'voted_user',
+        
     ];
 
 
@@ -32,6 +32,20 @@ class Vote extends Model
     {
         return $this->hasMany('App\Question');
     }
+
+	public function votedUserIds()
+	{
+		return $this->questions->map(function($question, $key)
+		{
+			return $question->options->map(function($option, $key)
+			{
+				return $option->answers->map(function($answer, $key)
+				{
+					return $answer->user_id;
+				});
+			});
+		})->flatten()->unique();
+	}
 
     /**
      * Popular search ID

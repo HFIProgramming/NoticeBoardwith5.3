@@ -30,6 +30,7 @@ class CreateClubUsersTable extends Migration
      */
     public function down()
     {
-        //
+		//
+		Schema::dropIfExists('club_users');
     }
 }
