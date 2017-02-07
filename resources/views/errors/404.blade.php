@@ -23,9 +23,9 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>{{Lang::get('error.404_sorry')}}</strong>
+                        <strong>{{trans('error.404_sorry')}}</strong>
                     </div>
-                    <p>{{Lang::get('error.404_action')}}</p>
+                    <p>{{trans('error.404_action')}}</p>
                 </div>
             </div>
         </div>
