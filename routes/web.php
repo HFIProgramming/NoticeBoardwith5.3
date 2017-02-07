@@ -63,3 +63,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::get('/404', function () {
     return view('errors.404');
 });
+
