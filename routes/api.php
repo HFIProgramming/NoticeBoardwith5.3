@@ -13,8 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-// 登录相关
-Route::post('/username', 'Auth\LoginController@verifyUsername');
+// Sample test case
 Route::get('now', function () {
 	return date("Y-m-d H:i:s");
 });
+Route::post('echo', function (Request $request) {
+	return $request->all();
+});
+
+// 登录相关
+Route::post('/username', 'Auth\LoginController@verifyUsername');
+
