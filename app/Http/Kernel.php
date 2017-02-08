@@ -55,5 +55,7 @@ class Kernel extends HttpKernel
 		'active'     => \App\Http\Middleware\ActiveVerify::class,
 		'admin'      => \App\Http\Middleware\AdminVerify::class,
 		'vote'       => \App\Http\Middleware\VoteVerify::class,
+    'file'       => \App\Http\Middleware\FileVerify::class,
+
 	];
 }
