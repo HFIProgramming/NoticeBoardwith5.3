@@ -23,4 +23,6 @@ Route::post('echo', function (Request $request) {
 
 // 登录相关
 Route::post('/username', 'Auth\LoginController@verifyUsername');
-
+Route::get('now', function () {
+	return date("Y-m-d H:i:s");
+});
