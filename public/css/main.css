@@ -1,0 +1,357 @@
+/* Google Material Design icons */
+
+@font-face {
+	font-family: 'Material Icons';
+	font-style: normal;
+	font-weight: 400;
+	src: url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
+	/* For IE6-8 */
+	src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 24px;
+	/* Preferred icon size */
+	display: inline-block;
+	line-height: 1;
+	text-transform: none;
+	letter-spacing: normal;
+	word-wrap: normal;
+	white-space: nowrap;
+	direction: ltr;
+	/* Support for all WebKit browsers. */
+	-webkit-font-smoothing: antialiased;
+	/* Support for Safari and Chrome. */
+	text-rendering: optimizeLegibility;
+	/* Support for Firefox. */
+	-moz-osx-font-smoothing: grayscale;
+	/* Support for IE. */
+	font-feature-settings: 'liga';
+}
+
+/*General Properties*/
+
+body {
+	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
+}
+
+.subheader {
+	color: #999;
+}
+
+.add-file-btn {
+	border: none;
+	box-shadow: none;
+	background: #2d4186;
+}
+
+.add-file-btn:hover {
+	border: none;
+	box-shadow: none;
+}
+
+.input-field {
+	padding: 0!important;
+}
+
+.italic {
+		font-style: italic;
+}
+
+
+
+/*Nav bar*/
+		
+#navbar-container nav {
+	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr);
+}
+
+#navbar {
+	/*max-width: 62.5rem;*/
+	margin: auto;
+}
+
+.nb-logo {
+	margin-top: 0.25rem;
+	height: 4rem;
+	vertical-align: middle;
+}
+
+.menu-button {
+	display: inline-block!important;
+	margin-left: 1rem;
+	font-size: 2.5rem;
+}
+
+.add-button {
+	font-size: 2.5rem!important;
+}
+
+nav {
+	background: none;
+	box-shadow: none;
+}
+/*Side nav*/
+
+.side-nav a {
+	color: #fff!important;
+}
+
+#slide-out-panel {
+	overflow-y: hidden;
+}
+
+.side-background {
+	height: 150%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.side-nav a i {
+	color: #fff!important;
+}
+
+.side-nav .subheader {
+	color: #ddd!important;
+}
+
+.side-nav .divider {
+	color: #ddd!important;
+}
+/*Search bar*/
+
+.search-bar {
+	max-width: 62.5rem;
+	margin: auto;
+}
+
+
+/*Post cards*/
+
+.card {
+	border-radius: none;
+	box-shadow: none;
+}
+
+.post-card {
+	opacity: 0.95;
+	margin: auto;
+}
+
+@media only screen and (min-width: 992px) {
+	.post-card {
+		opacity: 0.97;
+	}
+	.post-card:not(.article-card) {
+		max-width: 62.5rem;
+		margin-bottom: 2rem;
+		background: #fff;
+	}
+	.about {
+		background: #ddd!important;
+		margin-bottom: 0!important;
+	}
+}
+/*Fix a bug on larger screens*/
+
+@media only screen and (min-width: 1200px) {
+	.post-card,
+	.article-card {
+		margin-top: -1px;
+	}
+}
+
+.post-card .card {
+	background: none;
+}
+
+.post-card-content {
+	max-width: 62.5rem;
+	margin: auto;
+}
+
+.card .card-image {
+	padding: 2%;
+}
+
+.card .card-content {
+	padding-left: 30px;
+	padding-right: 30px;
+	max-height: 15rem;
+	overflow-y: hidden;
+	text-overflow: ellipsis;
+	overflow-wrap: normal;
+}
+
+.card .card-action {
+	text-align: right;
+	border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+}
+
+.card .card-action a {
+	color: #2d4186!important;
+}
+
+.post-card .card-image .circle {
+	padding: 10px;
+	width: 8rem;
+	border-radius: 50%;
+}
+
+.post-user-profile {
+	display: flex;
+}
+
+.post-header {
+	margin: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.post-card .card-stacked {
+	margin-top: -30px;
+}
+
+.post-header.subheader.hide-on-med-and-down {
+	margin-right: 32.5rem;
+	display: inline;
+}
+
+.post-header-container {
+	display: flex;
+}
+
+.post-white {
+	background: #fff;
+}
+
+.post-grey {
+	background: #eee;
+}
+
+.tag-btn {
+	color: #039be5!important;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.post-comment-card {
+	border-top: 1px solid rgba(160, 160, 160, 0.2);
+	padding-top: 0!important;
+	padding-bottom: 0!important;
+	background: #f7ffff;
+}
+
+.post-comment-card .circle {
+	width: 4rem!important;
+}
+/*About Card*/
+
+.about {
+	padding: 1rem;
+	background: #ddd;
+}
+
+.about h5 {
+	margin: 0;
+}
+/*Article Cards*/
+
+.railway {
+	font-family: 'RailwayRegular';
+}
+
+.article-author {
+	color: #66cccc;
+	font-size: 1.1rem;
+}
+
+.article-card .card-content {
+	max-height: 10000rem;
+	padding-top: 11px;
+}
+
+.article-card .card-content .subheader.post-header {
+	display: block;
+	margin: auto;
+}
+
+.article-card .card-stacked {
+	margin-top: -5px;
+}
+
+.article-card .title-container {
+	margin-top: -10px;
+}
+
+.article-card .post-header-container h3,
+.article-card .post-header-container h5,
+.article-card .post-header-container h6 {
+	font-weight: 300;
+	padding-left: 30px;
+	padding-right: 30px;
+	line-height: 1.2;
+}
+
+.article-avatar {
+	margin: auto;
+	margin-top: 10px;
+}
+
+.article-card-text {
+	line-height: 2;
+	font-size: 1.25rem;
+	font-weight: 300;
+	max-width: 42.5rem;
+	margin: auto!important;
+}
+/*Comment Card*/
+
+.comment-card {
+	padding-top: 0.375rem;
+}
+
+.comment-card .card-image {
+	margin: 0;
+}
+
+.comment-card .post-card-content {
+	max-width: 47.5rem;
+}
+.comment-card .post-card-content .card-content{
+	padding-top:0!important;
+}
+.comment-card p {
+	margin-top: -1.5rem!important;
+}
+
+.comment-card .article-card-text {
+	margin: 0!important;
+}
+
+.comment-caption {
+	padding: 1rem;
+}
+
+.comment {
+	background: #eee;
+	opacity: 0.97;
+}
+
+.comment-placeholder {
+	text-align: center;
+	display: none;
+}
+
+.comment-placeholder h4 {
+	color: #444;
+	margin: 0;
+	font-weight: 300;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}

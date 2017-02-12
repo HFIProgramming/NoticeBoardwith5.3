@@ -12,6 +12,6 @@ if (!function_exists('CleanContent') && true) {
 	{
 		$antiXss = new \voku\helper\AntiXSS();
 
-		return $antiXss->xss_clean($content);
+		return $antiXss->xss_clean($content,array('HTML.Allowed' => ''));
 	}
 }

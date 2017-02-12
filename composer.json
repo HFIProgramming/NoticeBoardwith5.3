@@ -9,6 +9,7 @@
         "browner12/helpers": "^1.0",
         "laravel/framework": "5.3.*",
         "predis/predis": "^1.1",
+        "rtconner/laravel-tagging": "~2.2",
         "voku/anti-xss": "^2.1"
     },
     "require-dev": {

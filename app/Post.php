@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+	use \Conner\Tagging\Taggable;
+
 	/**
 	 * The attributes that are mass assignable.
 	 *

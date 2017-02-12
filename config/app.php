@@ -181,6 +181,10 @@ return [
          * Helper Provider
          */
         browner12\helpers\HelperServiceProvider::class,
+	    /*
+	     * Tag Provider
+	     */
+	    \Conner\Tagging\Providers\TaggingServiceProvider::class,
     ],
 
     /*
