@@ -63,7 +63,7 @@ class PostController extends Controller
 	 * @param Request $request
 	 * @return $this
 	 */
-	public function getReply(Request $request)
+	public function createReply(Request $request)
 	{
 		if ($errors = Validator::make($request, [
 			'content' => 'required|max:255',

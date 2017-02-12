@@ -1,87 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh_CN">
 <head>
+    <!--Let browser know website is optimized for mobile-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta content="telephone=no" name="format-detection"/>
+    {{--
+    #Wechat Repost Image
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+        <img src='logo.jpg' />
+    </div>
+    -->--}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title') - NoticeBoard</title>
 
-    <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
+    <!--Import Style Sheets from external source-->
+    <link type="text/css" rel="stylesheet" href="//cdn.bootcss.com/materialize/0.98.0/css/materialize.min.css"
+          media="screen,projection"/>
+    <!--self-->
+    <link rel="stylesheet" href="/css/external/railwaysans/stylesheet.css" type="text/css" charset="utf-8"/>
+    <link rel="stylesheet" href="/css/main.css" type="text/css" charset="utf-8"/>
+@yield('style')
+<!--End Import Styles-->
 </head>
+
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
+<!--Side Nav-->
+<ul id="slide-out-panel" class="side-nav">
+    <img class="side-background" src="https://ws1.sinaimg.cn/large/006dLiLIgy1fcnq8jyve9j31hc0zmdqr"></img>
+    <li>
+        <div class="userView">
+            @if ($user = Auth::user())
+                <a href="/me/edit"><img class="circle" src="{{url($user->avatar)}}"></a>
+                <a href="/me"><span class="white-text name">{{$user->name}}</span></a>
+                <span class="white-text email">{{$user->email}}</span>
+            @else
+                <a href="/login"><img class="circle" src="https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg"></a>
+                <a href="/login"><span class="white-text name">Please Login and Enjoy.</span></a>
+            @endif
+            {{--<img class="background" src="assets/images/avatar-background.jpg">-->--}}
+        </div>
+    </li>
+    <li><a href="/me/notification" class="waves-effect"><i class="material-icons">view_stream</i>My Notification</a></li>
+    <li><a href="/powerschool" class="waves-effect"><i class="material-icons">school</i>Powerschool</a></li>
+    <li><a href="/more/selling-books" class="waves-effect"><i class="material-icons">shop_basket</i>Marketplace</a></li>
+    <li><a href="/clubs" class="waves-effect"><i class="material-icons">cloud</i>Clubs</a></li>
+    <li><a href="/more/danmaku" class="waves-effect"><i class="material-icons">comment</i>Danmaku</a></li>
+    <li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    @if ($user = Auth::user())
+        <li><a class="subheader">Account</a></li>
+        <li><a class="waves-effect" href="/me"><i class="material-icons">settings</i>Settings</a></li>
+        <li><a class="waves-effect" href="/logout"><i class="material-icons">exit_to_app</i>Sign out</a></li>
+    @else
+        <li><a class="subheader">Actions</a></li>
+        <li><a class="waves-effect" href="/login"><i class="material-icons">open_in_browser</i>Login</a></li>
+        <li><a class="waves-effect" href="/aboutus"><i class="material-icons">info_outline</i>About us</a></li>
+    @endif
+</ul>
+<!--Nav bar-->
+<div class="navbar" id="navbar-container">
+    <nav style="box-shadow: none">
+        <div class="nav-wrapper" id="navbar">
+            <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
+                        class="material-icons">menu</i></a>
+            <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/logo.png"></img></a>
+            <ul id="nav-mobile" class="right">
+                <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-
-                    <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ url('/login') }}">Login</a></li>
-                            <li><a href="{{ url('/register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ url('/logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        @yield('content')
-    </div>
-
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
+<!--Content-->
+@yield('content')
+<!--end Content-->
+<div class="post-card article-card about">
+    <h5 class="subheader center-align">©2015-{{date('Y')}} HFIProgramming</h5>
+</div>
 </body>
+
+<!--Scripts from external source-->
+<script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/materialize/0.98.0/js/materialize.min.js"></script>
+<script src="//cdn.bootcss.com/tinymce/4.5.2/tinymce.min.js"></script>
+<!--self-->
+<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/search.js"></script>
+<script type="text/javascript" src="/js/post.js"></script>
+@yield('Script')
+<!--End Scripts-->
+
 </html>

@@ -1,0 +1,81 @@
+
+/*Club Cards*/
+
+.club-card {
+	padding-bottom: 0.375rem;
+}
+
+.club-card .card-stacked {
+	margin-top: -10px;
+}
+
+.club-card .card-content {
+	max-height: 10000rem;
+}
+
+.club-card-text {
+	line-height: 2;
+	font-size: 1.1rem;
+	font-weight: 300;
+	max-width: 42.5rem;
+	margin: auto!important;
+}
+
+@media only screen and (min-width: 992px) {
+	.club-card {
+		border: 1px solid #66cccc;
+	}
+	.club-list {
+		border: 1px solid #66cccc;
+	}
+}
+
+.club-card-container {
+	max-width: 62.5rem;
+	margin: auto;
+}
+
+.club-list .collection,
+.club-list .collection .collection-header,
+.club-list .collection .collection-item {
+	border: none;
+	background: none;
+}
+
+.club-list .collection {
+	margin-bottom: 0;
+}
+
+.club-list .collection-item .title {
+	font-size: 1.2rem;
+	font-weight: 300;
+}
+
+.club-event-list .collection-header {
+	font-size: 1.2rem;
+	padding-left: 30px!important;
+}
+
+.club-member-list {
+	height: 100%;
+	margin-bottom: 0!important;
+}
+
+.club-member-list .collection-header {
+	font-size: 1.2rem;
+	padding-left: 15px!important;
+}
+/*General Properties*/
+.member-list-container {
+	margin-top: -0.5rem;
+	padding: 0!important;
+}
+
+@media only screen and (min-width: 992px) {
+	.member-list-container {
+		margin-top: 0;
+		padding-right: 30px!important;
+		padding-left: 0!important;
+		margin-bottom: 30px;
+	}
+}
