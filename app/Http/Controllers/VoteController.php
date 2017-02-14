@@ -62,6 +62,7 @@ class VoteController extends Controller
 					$answers->each(function ($answer) {
 						Answer::create([
 							'option_id' => $answer,
+							'user_id'   => 0
 							// 'content' => empty($answer->content) ? $answer->content : NULL,
 						]);
 					});
