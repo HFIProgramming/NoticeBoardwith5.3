@@ -130,5 +130,44 @@ class VoteController extends Controller
 			return abort(500); // illegal answer :( Out of Range: Choosing options that are not in this vote.
 		}
 		return abort(500); // Answers repeating options
+		checkIfRepeatingOptions($answers);
+		checkIfAllFilled($answers, $vote);
+		checkIfOptionsFilledMatch($answers, $vote);
+		return true;
+	}
+
+	private function checkIfRepeatingOptions($answers)
+	{
+		if ($answers->diff($answers->unique())->isEmpty()){
+			return;
+		}
+		abort(500);
+	}
+
+	private function checkIfAllFilled($answers, $vote)
+	{
+		$filled = $answers->map(function ($answer, $key) {
+			return Option::Id($answer)->question->id;
+		})->unique();// Get all filled questions
+		$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
+			return $question->id;
+		}));
+		if($required->diff(filled)->isEmpty()){
+			return;
+		}
+		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($unique));
+	}
+
+	private function checkIfOptionsFilledMatch($answers, $vote)
+	{
+		$optionsFilled = array_count_values($answers->map(function ($answer, $key) {
+			return Option::Id($answer)->question->id;
+		})->flatten()->toArray());
+		$vote->questions->each(function ($question, $key) use ($optionsFilled) {
+			if ($optionsFilled[$question->id] != $question->range) {
+				abort(500);
+			} // illegal answers :( # of options for a specific question is not match
+		});
+		return;
 	}
 }
