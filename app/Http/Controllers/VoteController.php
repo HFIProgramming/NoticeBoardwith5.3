@@ -100,36 +100,6 @@ class VoteController extends Controller
 	*/
 	private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
 	{
-		$range = $vote->questions->map(function ($question, $key) {
-			return $question->options->map(function ($option, $key) {
-				return $option->id;
-			});
-		})->flatten();// Get available options range
-		if ($answers->diff($answers->unique())->isEmpty()) {
-			if ($answers->diff($range)->isEmpty()) {
-				$verifyQuestions = $answers->map(function ($answer, $key) {
-					return Option::Id($answer)->question->id;
-				});// Get all filled questions
-				$unique = $verifyQuestions->unique();
-				$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
-					return $question->id;
-				}));
-				if ($required->diff($unique)->isEmpty()) {
-					$verifyQuestions = array_count_values($verifyQuestions->flatten()->toArray()); // counting elements...
-					$vote->questions->each(function ($question, $key) use ($verifyQuestions) {
-						if ($verifyQuestions[$question->id] != $question->range
-						//|| $question->type == 'string'
-						) {
-							abort(500);
-						} // illegal answers :( # of options for a specific question is not match
-					});
-					return true;
-				}
-				return redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($unique)); // Required field has to be filled !
-			}
-			return abort(500); // illegal answer :( Out of Range: Choosing options that are not in this vote.
-		}
-		return abort(500); // Answers repeating options
 		checkIfRepeatingOptions($answers);
 		checkIfAllFilled($answers, $vote);
 		checkIfOptionsFilledMatch($answers, $vote);
