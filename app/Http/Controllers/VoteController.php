@@ -38,58 +38,62 @@ class VoteController extends Controller
 	public function showIndividualVote(Request $request)
 	{
 		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
+    
+	/**
+	 * show vote pages
+	 *
+	 * @param Request $request
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function showIndividualVote(Request $request)
+	{
+		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
 	}
 
-
 	/**
-	* Vote handler :)
-	*
-	* @TODO String type Answer still Need Further Step
-	* @param Request $request
-	* @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-	*/
+	 * Vote handler :)
+	 *
+	 * @TODO String type Answer still Need Further Step
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
 	public function voteHandler(Request $request)
 	{
 		$answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
 		$vote = Vote::Id($request->id);
-		$id = 0; // set default
 		$result = $this->verifyAnswers($answers, $vote);
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
-				$answers->each(function ($answer) {
-					Answer::create([
-						'option_id' => $answer,
-						// 'content' => empty($answer->content) ? $answer->content : NULL,
-					]);
-				});
-				$ticket = Ticket::ticket($request->ticket)->first();
-				$ticket->is_used = 1;  // Mark as used
-				if (!$ticket->save()) {
-					abort(500); // Something goes wrong :(
-				}
+					$answers->each(function ($answer) {
+						Answer::create([
+							'option_id' => $answer,
+              'user_id' => 0,
+							// 'content' => empty($answer->content) ? $answer->content : NULL,
+						]);
+					});
+					$ticket = Ticket::ticket($request->ticket)->first();
+					$ticket->is_used = 1;  // Mark as used
+					if (!$ticket->save()) {
+						abort(500); // Something goes wrong :(
+					}
 					break;
-					case 'user':
+				case 'user':
 					$answers->each(function ($answer) use ($request) {
 						Answer::create([
 							'option_id' => $answer,
-							'user_id' => $request->user()->id,
+							'user_id'   => $request->user()->id,
 							// 'content' => empty($answer->content) ? $answer->content : NULL,
 						]);
 					});
 					$id = $request->user()->id;
 					break;
-				}
-			$vote = $vote->first();
-			if ($vote->save()) {
-				return view('vote.success');
 			}
-			abort(500);  // Something goes wrong :(
+				return view('vote.success');
 		} else {
 			return $result;
 		}
 	}
-
 
 	/**
 	* Check whether Vote is valid !

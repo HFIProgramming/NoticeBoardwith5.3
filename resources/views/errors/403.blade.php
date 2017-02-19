@@ -23,10 +23,10 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>{{Lang::get('auth.403_sorry')}}</strong>
+                        <strong>{{trans('auth.403_sorry')}}</strong>
                     </div>
                 </div>
-                <p>{{Lang::get('auth.403_action')}}</p>
+                <p>{{trans('auth.403_action')}}</p>
             </div>
             @endif
         </div>

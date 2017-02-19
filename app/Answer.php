@@ -10,6 +10,7 @@ class Answer extends Model
 
 	/**
 	 * Massive assign
+	 *
 	 * @var array
 	 */
 	protected $fillable = [
@@ -18,6 +19,7 @@ class Answer extends Model
 
 	/**
 	 * Hidden
+	 *
 	 * @var array
 	 */
 	protected $hidden = [
@@ -29,7 +31,8 @@ class Answer extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	public function option(){
+	public function option()
+	{
 		return $this->belongsTo('App\Option', 'id', 'option_id');
 	}
 
@@ -38,7 +41,8 @@ class Answer extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	public function user(){
+	public function user()
+	{
 		return $this->belongsTo('App\User', 'id', 'user_id');
 	}
 

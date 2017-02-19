@@ -6,57 +6,59 @@ use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
-    /**
-     * Massive assign
-     * @var array
-     */
-    protected $fillable = [
-        'type', 'content',
-    ];
+	/**
+	 * Massive assign
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'type', 'content',
+	];
 
-    /**
-     * Hidden
-     * @var array
-     */
-    protected $hidden = ['question_id',
-    ];
+	/**
+	 * Hidden
+	 *
+	 * @var array
+	 */
+	protected $hidden = ['question_id',
+	];
 
-    /**
-     * Table name plz
-     *
-     * @var string
-     */
-    protected $table = 'question_options';
+	/**
+	 * Table name plz
+	 *
+	 * @var string
+	 */
+	protected $table = 'question_options';
 
-    /**
-     * Trace back to the question
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function question()
-    {
-        return $this->belongsTo('App\Question', 'question_id', 'id');
-    }
+	/**
+	 * Trace back to the question
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function question()
+	{
+		return $this->belongsTo('App\Question', 'question_id', 'id');
+	}
 
-    /**
-     * Option Counts
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function answers()
-    {
-        return $this->hasMany('App\Answer', 'option_id', 'id');
-    }
+	/**
+	 * Option Counts
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function answers()
+	{
+		return $this->hasMany('App\Answer', 'option_id', 'id');
+	}
 
-    /**
-     * Popular search Id
-     *
-     * @param $query
-     * @param $Id
-     * @return mixed
-     */
-    public function scopeId($query, $Id)
-    {
-        return $query->where('id', $Id);
-    }
+	/**
+	 * Popular search Id
+	 *
+	 * @param $query
+	 * @param $Id
+	 * @return mixed
+	 */
+	public function scopeId($query, $Id)
+	{
+		return $query->where('id', $Id);
+	}
 }
