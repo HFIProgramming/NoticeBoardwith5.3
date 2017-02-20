@@ -100,9 +100,9 @@ class VoteController extends Controller
 	*/
 	private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
 	{
-		checkIfRepeatingOptions($answers);
-		checkIfAllFilled($answers, $vote);
-		checkIfOptionsFilledMatch($answers, $vote);
+		$this->checkIfRepeatingOptions($answers);
+		$this->checkIfAllFilled($answers, $vote);
+		$this->checkIfOptionsFilledMatch($answers, $vote);
 		return true;
 	}
 
