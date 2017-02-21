@@ -16,9 +16,7 @@ Auth::routes();
 
 // 访客区域
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Route::get('/vote', 'VoteController@showVotes');
 Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
@@ -63,3 +61,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::get('/404', function () {
     return view('errors.404');
 });
+

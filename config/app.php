@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'zh_cn',
 
     /*
     |--------------------------------------------------------------------------
@@ -181,6 +181,10 @@ return [
          * Helper Provider
          */
         browner12\helpers\HelperServiceProvider::class,
+	    /*
+	     * Tag Provider
+	     */
+	    \Conner\Tagging\Providers\TaggingServiceProvider::class,
     ],
 
     /*

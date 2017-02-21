@@ -19,7 +19,7 @@ class Vote extends Model
 	 * @var array
 	 */
 	protected $hidden = [
-		
+
 	];
 
 

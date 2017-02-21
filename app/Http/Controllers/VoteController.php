@@ -40,6 +40,50 @@ class VoteController extends Controller
 		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
 	}
 
+	/**
+	 * Vote handler :)
+	 *
+	 * @TODO String type Answer still Need Further Step
+	 * @param Request $request
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function voteHandler(Request $request)
+	{
+		$answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
+		$vote = Vote::Id($request->id);
+		$result = $this->verifyAnswers($answers, $vote);
+		if ($result === true) {  // Safety First :)
+			switch ($request->type) {  // Start Dash!
+				case 'ticket':
+					$answers->each(function ($answer) {
+						Answer::create([
+							'option_id' => $answer,
+			  'user_id' => 0,
+							// 'content' => empty($answer->content) ? $answer->content : NULL,
+						]);
+					});
+					$ticket = Ticket::ticket($request->ticket)->first();
+					$ticket->is_used = 1;  // Mark as used
+					if (!$ticket->save()) {
+						abort(500); // Something goes wrong :(
+					}
+					break;
+				case 'user':
+					$answers->each(function ($answer) use ($request) {
+						Answer::create([
+							'option_id' => $answer,
+							'user_id'   => $request->user()->id,
+							// 'content' => empty($answer->content) ? $answer->content : NULL,
+						]);
+					});
+					$id = $request->user()->id;
+					break;
+			}
+				return view('vote.success');
+		} else {
+			return $result;
+		}
+	}
 
 	/**
 	* Vote handler :)
@@ -88,8 +132,31 @@ class VoteController extends Controller
 		} else {
 			return $result;
 		}
+
+	 /* Check whether Vote is valid !
+	 *
+	 * @param $answers
+	 * @param $vote
+	 * @return bool
+	 */
+	private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
+	{
+		$this->checkIfRepeatingOptions($answers);
+		$this->checkIfAllFilled($answers, $vote);
+		$this->checkIfOptionsFilledMatch($answers, $vote);
+		return true;
 	}
 
+	/**
+	 * @param $answers
+	 */
+	private function checkIfRepeatingOptions($answers)
+	{
+		if ($answers->diff($answers->unique())->isEmpty()){
+			return;
+		}
+		abort(500);
+	}
 
 	/**
 	* Check whether Vote is valid !
@@ -114,6 +181,10 @@ class VoteController extends Controller
 		abort(500);
 	}
 
+	/*
+	 * @param $answers
+	 * @param $vote
+	 */
 	private function checkIfAllFilled($answers, $vote)
 	{
 		$filled = $answers->map(function ($answer, $key) {
@@ -122,11 +193,16 @@ class VoteController extends Controller
 		$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
 			return $question->id;
 		}));
-		if($required->diff(filled)->isEmpty()){
+		if($required->diff($filled)->isEmpty()){
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($unique));
+		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled));
 	}
+
+	/**
+	 * @param $answers
+	 * @param $vote
+	 */
 
 	private function checkIfOptionsFilledMatch($answers, $vote)
 	{
