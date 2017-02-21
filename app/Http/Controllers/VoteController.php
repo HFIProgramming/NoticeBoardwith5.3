@@ -38,16 +38,6 @@ class VoteController extends Controller
 	public function showIndividualVote(Request $request)
 	{
 		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
-    
-	/**
-	 * show vote pages
-	 *
-	 * @param Request $request
-	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-	 */
-	public function showIndividualVote(Request $request)
-	{
-		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
 	}
 
 	/**
@@ -96,20 +86,23 @@ class VoteController extends Controller
 	}
 
 	/**
-	* Check whether Vote is valid !
-	*
-	* @param $answers
-	* @param $vote
-	* @return $this|bool|void
-	*/
+	 * Check whether Vote is valid !
+	 *
+	 * @param $answers
+	 * @param $vote
+	 * @return bool
+	 */
 	private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
 	{
-		checkIfRepeatingOptions($answers);
-		checkIfAllFilled($answers, $vote);
-		checkIfOptionsFilledMatch($answers, $vote);
+		$this->checkIfRepeatingOptions($answers);
+		$this->checkIfAllFilled($answers, $vote);
+		$this->checkIfOptionsFilledMatch($answers, $vote);
 		return true;
 	}
 
+	/**
+	 * @param $answers
+	 */
 	private function checkIfRepeatingOptions($answers)
 	{
 		if ($answers->diff($answers->unique())->isEmpty()){
@@ -118,6 +111,10 @@ class VoteController extends Controller
 		abort(500);
 	}
 
+	/**
+	 * @param $answers
+	 * @param $vote
+	 */
 	private function checkIfAllFilled($answers, $vote)
 	{
 		$filled = $answers->map(function ($answer, $key) {
@@ -126,12 +123,16 @@ class VoteController extends Controller
 		$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
 			return $question->id;
 		}));
-		if($required->diff(filled)->isEmpty()){
+		if($required->diff($filled)->isEmpty()){
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($unique));
+		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled));
 	}
 
+	/**
+	 * @param $answers
+	 * @param $vote
+	 */
 	private function checkIfOptionsFilledMatch($answers, $vote)
 	{
 		$optionsFilled = array_count_values($answers->map(function ($answer, $key) {
