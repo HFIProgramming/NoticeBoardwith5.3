@@ -55,13 +55,13 @@
                         </p>
                     </div>
                     <div class="card-content post-comment-card">
+                        @if ($post->last_user != NULL)
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
-                                @if ($post->last_user != NULL)
                                     <div class="card-image"><img class="circle" src="{{$post->getLastUser->avatar}}"/></div>
                                     <div class="post-header-container">
                                         <h6 class="header post-header"><span>{{$post->getLast_user->name}}<span
-                                                        class="blue-text">commented</span></span> </br>
+                                                        class="blue-text">commented</span></span> <br>
                                             <span>{{$post->updated_at}}</span></h6>
                                     </div>
                             </div>
