@@ -8,7 +8,7 @@ class Vote extends Model
 {
 	/**
 	 * Massive assign
-	 *
+   *
 	 * @var array
 	 */
 	protected $fillable = [
@@ -17,11 +17,10 @@ class Vote extends Model
 
 	/**
 	 * Hidden
-	 *
 	 * @var array
 	 */
 	protected $hidden = [
-
+	
 	];
 
 
