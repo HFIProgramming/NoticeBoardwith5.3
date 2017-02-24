@@ -24,14 +24,14 @@ class VoteVerify
 		if (!empty($request->ticket) || Auth::check()) {
 			if (!empty($request->id) && $vote = Vote::Id($request->id)->first()) {
 				if (strtotime($vote->ended_at) - strtotime('now') > 0) {
-					if ($ticket = Ticket::ticket($request->ticket)->first()) {
+					if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == '1' || $vote->type == '2') {
 						if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
-							$request->merge(['type' => 'ticket']);
+							$request->merge(['type' => 'ticket']); // What if both???? @TODO
 							return $next($request); // Vote is valid !
 						}
 						return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
 					}
-					if (Auth::check()) {
+					if (Auth::check() && ($vote->type == '0' || $vote->type == '2')) {
 						$userId = $request->user()->id;
 						$votedIds = $vote->votedUserIds();
 						if (!in_array($userId, $votedIds)) {
