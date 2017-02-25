@@ -26,7 +26,7 @@ class VoteVerify
 				if (strtotime($vote->ended_at) - strtotime('now') > 0) {
 					if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == '1' || $vote->type == '2') {
 						if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
-							$request->merge(['type' => 'ticket']); // What if both???? @TODO
+							$request->merge(['type' => 'ticket']); // Does not further handling
 							return $next($request); // Vote is valid !
 						}
 						return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
