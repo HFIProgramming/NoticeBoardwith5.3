@@ -118,36 +118,4 @@ class PostController extends Controller
 		abort(500);  // Something goes wrong :(
 	}
 
-	/**
-	 * Create a new post
-	 * @param Request $request
-	 * @return $this|\Illuminate\Http\RedirectResponse
-	 *
-	 */
-	public function createNewPost(Request $request)
-	{
-		if ($errors = Validator::make($request, [
-			'content' => 'required|max:255',
-			'title' => 'required|max:50',
-			'is_public' => 'required',
-			'is_hidden' => 'required_if:is_public,0', //need further validation
-			'level_limitation' => '' // required if student exists in is_hidden
-		])->validate()
-		) {
-			return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
-		}
-		if (Post::create([
-			'user_id' => $this->user->id,
-			'title' => $request['title'],
-			'content' => clean($request['content']),
-			'is_public' => $request['is_public'],
-			// 'is_hidden' =
-			// @TODO 权限判断
-		])
-		) {
-			return redirect()->back()->withMessage('成功');
-		}
-		abort(500);  // Something goes wrong :(
-	}
-
 }
