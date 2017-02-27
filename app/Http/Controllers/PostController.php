@@ -39,10 +39,6 @@ class PostController extends Controller
 							if (!in_array($this->user->grade, $roles)) {
 								return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
 							}
-
-							return redirect('/403')->withErrors(['warning' => Lang::get('auth.level_limitation')]);
-						}
-
 						return redirect('/403')->withErrors(['warning' => Lang::get('auth.role_limitation')]);
 					}
 
@@ -54,7 +50,7 @@ class PostController extends Controller
 			}
 		}
 
-		return redirect('/404')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Vote No Found
+		return redirect('/404')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Pote No Found
 	}
 
 	/**
@@ -122,5 +118,6 @@ class PostController extends Controller
 		}
 		abort(500);  // Something goes wrong :(
 	}
+
 
 }
