@@ -13,6 +13,7 @@
 
 // 认证路由
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
 
 // 访客区域
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
