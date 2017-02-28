@@ -16,7 +16,7 @@
             <div class="post-user-profile">
                 <div class="card-image"><img class="circle" src="{{ url($vote->getAuthor->avatar) }}"/></div>
                 <div class="post-header-container">
-                    <h5 class="header post-header">{{$vote->intro}}</h5>
+                    <h5 class="header post-header">{{$vote->title}}</h5>
                 </div>
             </div>
             <div class="card-stacked">
@@ -27,28 +27,25 @@
                         <button class="tag-btn btn-flat waves-effect waves-light">#Fuck PHP</button>
                     </div>
                     <br>
+
+                    <form id="vote-form" action="" method="post" accept-charset="utf-8">
+                        <input type="hidden" name="selected" id="vote-selected">
+                        {{ csrf_field() }}
+                        @each ('vote.question',$vote->questions, 'question')
+                    </form>
+                </div>
+            </div>
+            <div class="card-action">
+
+                <div class="btn waves-effect waves-light blue no-shadow" onclick="doVote()">Submit
+                    <i class="material-icons right">send</i>
                 </div>
             </div>
         </div>
     </div>
-    <form action="" method="post" enctype="text/plain" name="action">
-        {{ csrf_field() }}
-        @each ('vote.question',$vote->questions, 'question')
-        <div class="post-card">
-            <div class="card vertical post-card-content">
-                <div class="card-content display-all">
-                    <br>
-                    <p class="flow-text">{{$vote->end_word or "Finish? then Submit!"}}</p>
-                    <br>
-                    <div class="card-action">
-                        <button class="btn waves-effect waves-light blue no-shadow" type="submit" name="action">Submit
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
 
+@endsection
 
+@section('script')
+    <script type="text/javascript" src="/js/vote.js"></script>
 @endsection

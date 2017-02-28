@@ -84,6 +84,11 @@
     @endforeach
 @endsection
 
+@section('script')
+    <script type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript" src="/js/post.js"></script>
+    <script src="//cdn.bootcss.com/tinymce/4.5.2/tinymce.min.js"></script>
+@endsection
 
 @section('content')
 @yield('searchbar')
