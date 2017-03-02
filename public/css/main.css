@@ -67,15 +67,21 @@ body {
 	box-shadow: none;
 }
 
+.placeholder{
+	height: 2rem;
+}
 /*Nav bar*/
 
 #navbar {
 	/*max-width: 62.5rem;*/
 	margin: auto;
 }
+#navbar-container nav{
+	background: #000;
+	opacity: 0.9;
+}
 
 .nb-logo {
-	margin-top: 0.25rem;
 	height: 4rem;
 	vertical-align: middle;
 }
@@ -139,7 +145,7 @@ nav {
 }
 
 .post-card {
-	opacity: 0.93;
+	opacity: 0.97;
 	margin: auto;
 }
 
@@ -255,16 +261,7 @@ nav {
 .post-comment-card .circle {
 	width: 4rem!important;
 }
-/*About Card*/
 
-.about {
-	padding: 1rem;
-	background: #ddd;
-}
-
-.about h5 {
-	margin: 0;
-}
 /*Article Cards*/
 
 .railway {

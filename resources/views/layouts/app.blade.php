@@ -35,9 +35,6 @@
         body {
             background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
         }
-        #navbar-container nav {
-            background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr);
-        }
     </style>
 @yield('style')
 <!--End Import Styles-->
@@ -88,7 +85,7 @@
                 <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
                         class="material-icons">menu</i></a>
             --}}
-            <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/logo.png"></img></a>
+            <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/black_logo.png"></img></a>
             {{--
             @TODO Disabled for International Day,Removed when finished
                 <ul id="nav-mobile" class="right">
@@ -105,9 +102,18 @@
     <!--end Content-->
 </main>
 
-<footer>
-    <div class="post-card article-card about">
-        <h5 class="subheader center-align">©2015-{{date('Y')}} HFIProgramming</h5>
+<footer class="page-footer grey darken-4" id="footer">
+    <div class="container">
+        <div class="col l6 s12">
+            <h5 class="grey-text text-lighten-2">Connect</h5>
+            <p class="blue-text text-lighten-2">Follow Our Wechat: hfiprogramming</p>
+        </div>
+    </div>
+    
+    <div class="footer-copyright black" id="copyright">
+        <div class="container grey-text text-lighten-2">
+            © 2015-2017 HFIProgramming
+        </div>
     </div>
 </footer>
 </body>
