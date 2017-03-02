@@ -17,7 +17,7 @@ class CreateVotesTable extends Migration
         Schema::create('votes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('user_id');
+            $table->integer('user_id');
             $table->string('intro');
             $table->integer('type')->default(0); // 0 Login to vote; 1 only tickets; 2 both can.
             $table->string('end_word');
