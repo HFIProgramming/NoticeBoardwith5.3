@@ -23,7 +23,7 @@ class VoteVerify
 	{
 		// general Checking
 		if (empty($request->ticket) || !Auth::check()) {
-			return redirect('login')->withErrors(['warning' => Lang::get('login.login_required', [
+			return redirect('/login')->withErrors(['warning' => Lang::get('login.login_required', [
 				'process' => 'vote'
 			]),]); // No ticket or user need to login to vote.
 		}
