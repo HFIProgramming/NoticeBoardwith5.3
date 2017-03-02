@@ -25,7 +25,7 @@
                 <div class="card-action">
                     <div class="row post-card-heading no-margin">
                         <div class="col l8 hide-on-med-and-down subheader" align="left"><h6>{{$post->getAuthor->name}} on {{$post->created_at}}</h6></div>
-                        <div class="col l4 right"><a href="{{url('/post'.$post->id)}}">Full article</a></div>
+                        <div class="col l4 right"><a href="{{url('/post/'.$post->id)}}">Full article</a></div>
                     </div>
                 </div>
                 <div class="post-user-profile">
