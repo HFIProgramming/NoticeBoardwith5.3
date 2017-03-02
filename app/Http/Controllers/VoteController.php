@@ -32,6 +32,7 @@ class VoteController extends Controller
 	}
 
 	/**
+
 	 * show vote pages
 	 *
 	 * @param $id
@@ -40,7 +41,7 @@ class VoteController extends Controller
 	public function showIndividualVote($id)
 	{
 		return view('vote.individual')->withVote(Vote::Id($id)->first());
-	}
+  }
 
 	/**
 	 * Vote handler :)
@@ -100,7 +101,7 @@ class VoteController extends Controller
 		$this->checkIfRepeatingOptions($answers);
 		$this->checkIfAllFilled($answers, $vote);
 		$this->checkIfOptionsFilledMatch($answers, $vote);
-
+    
 		return true;
 	}
 
@@ -128,9 +129,10 @@ class VoteController extends Controller
 			return $question->id;
 		}));
 		if ($required->diff($filled)->isEmpty()) {
+
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled));
+		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled)); // @TODO diff return 
 	}
 
 	/**
