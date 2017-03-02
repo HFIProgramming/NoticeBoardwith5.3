@@ -1,33 +1,76 @@
-@extends('test')
-
-@section('title','article page')
-
-@section('optional_style')
-	<link rel="stylesheet" href="css/login.css" type="text/css" charset="utf-8" />
-@endsection
+@extends('layouts.app')
 
 @section('content')
-	<div class="login-card">
-		<!--Login Card Placeholder-->
-		<div class="login-placeholder"></div>
-		<div class="row login-form">
-			<form class="col s12">
-				<h4>Welcome to NoticeBoard.</h4>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="username" type="text">
-						<label for="username">Username</label>
-					</div>
-				</div>
-				<div class="row">
-					<div class="input-field col s12">
-						<input id="password" type="password">
-						<label for="password">Password</label>
-					</div>
-				</div>
-				<button class="login-btn btn-flat waves-effect waves-light" type="submit" name="action">Login</button>
-				  <a href="" class="forgot-password-link">FORGOT PASSWORD?</a>
-			</form>
-		</div>
-	</div>
+<div class="container">
+    <div class="row">
+        @if ($errors->has('warning'))
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ $errors->first('warning') }}</strong> <!--I Hate frontend ! SO THAT ALL-->
+            </div>
+            </div>
+        </div>
+        @endif
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Login</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                        {{ csrf_field() }}
+                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
+                            <label for="username" class="col-md-4 control-label">Username</label>
+
+                            <div class="col-md-6">
+                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+
+                                @if ($errors->has('username'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('username') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <label for="password" class="col-md-4 control-label">Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control" name="password" required>
+
+                                @if ($errors->has('password'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="remember"> Remember Me
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-8 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Login
+                                </button>
+
+                                <a class="btn btn-link" href="{{ url('/password/reset') }}">
+                                    Forgot Your Password?
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -24,21 +24,20 @@ class VoteVerify
 		if (!empty($request->ticket) || Auth::check()) {
 			if (!empty($request->id) && $vote = Vote::Id($request->id)->first()) {
 				if (strtotime($vote->ended_at) - strtotime('now') > 0) {
-					if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == '1' || $vote->type == '2') {
+					if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == 1 || $vote->type == 2)) {
 						if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
 							$request->merge(['type' => 'ticket']); // Does not further handling
 							return $next($request); // Vote is valid !
 						}
 						return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
 					}
-					if (Auth::check() && ($vote->type == '0' || $vote->type == '2')) {
-						$userId = $request->user()->id;
-						$votedIds = $vote->votedUserIds();
-						if (!in_array($userId, $votedIds)) {
+					if (Auth::check() && ($vote->type == 0 || $vote->type == 2)) {
+						// $userId = $request->user()->id;
+						// if (!in_array($userId, $votedIds)) {
 							$request->merge(['type' => 'user']);
 							return $next($request); // Vote is valid !
-						}
-						return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
+						// } @TODO Verify
+						// return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
 					}
 					return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
 				}
