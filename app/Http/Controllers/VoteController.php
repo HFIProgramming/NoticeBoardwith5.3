@@ -40,7 +40,7 @@ class VoteController extends Controller
 	 */
 	public function showIndividualVote($id)
 	{
-		return view('vote.individual')->withVote(Vote::Id($id)->first());
+		return view('vote.individual')->withVote(Vote::Id($id));
   }
 
 	/**
@@ -54,7 +54,7 @@ class VoteController extends Controller
 	{
 		$answers = collect(json_decode($request->selected));  // turn string to int
 //        return var_dump($answers);
-		$vote = Vote::Id($request->id)->get()->first();
+		$vote = Vote::Id($request->id);
 		$result = $this->verifyAnswers($answers, $vote);
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
