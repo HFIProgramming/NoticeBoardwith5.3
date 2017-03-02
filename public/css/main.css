@@ -1,14 +1,4 @@
 /* Google Material Design icons */
-
-@font-face {
-	font-family: 'Material Icons';
-	font-style: normal;
-	font-weight: 400;
-	src: url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
-	/* For IE6-8 */
-	src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-}
-
 .material-icons {
 	font-family: 'Material Icons';
 	font-weight: normal;
@@ -33,11 +23,6 @@
 }
 
 /*General Properties*/
-
-body {
-	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
-}
-
 .subheader {
 	color: #999;
 }
@@ -61,13 +46,19 @@ body {
 		font-style: italic;
 }
 
+.no-margin{
+	margin:0 0 !important;
+}
 
+.display-all{
+	max-height: none !important;
+}
+
+.no-shadow{
+	box-shadow: none;
+}
 
 /*Nav bar*/
-		
-#navbar-container nav {
-	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr);
-}
 
 #navbar {
 	/*max-width: 62.5rem;*/
@@ -139,7 +130,7 @@ nav {
 }
 
 .post-card {
-	opacity: 0.95;
+	opacity: 0.93;
 	margin: auto;
 }
 
@@ -199,7 +190,7 @@ nav {
 
 .post-card .card-image .circle {
 	padding: 10px;
-	width: 8rem;
+	width: 5rem;
 	border-radius: 50%;
 }
 
@@ -215,6 +206,11 @@ nav {
 
 .post-card .card-stacked {
 	margin-top: -30px;
+}
+
+.post-card-heading div a{
+	height: 2rem !important;
+	line-height: 2rem !important;
 }
 
 .post-header.subheader.hide-on-med-and-down {
@@ -354,4 +350,21 @@ nav {
 	font-weight: 300;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
+}
+
+/*
+ * Vote Styles
+ */
+.vote-info p{
+	 padding-top: 0.6rem;
+	 padding-bottom:0.6rem;
+}
+.vote-result-pack{
+	padding-top: 1rem !important;
+	padding-bottom: 1rem !important;
+	border-bottom: 1px #DDD solid;
+}
+.vote-block{
+	padding-top: 2rem;
+	border-top: 1px #DDD solid;
 }
