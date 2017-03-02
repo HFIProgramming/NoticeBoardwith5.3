@@ -89,12 +89,9 @@
 <!--Scripts from external source-->
 <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/materialize/0.98.0/js/materialize.min.js"></script>
-<script src="//cdn.bootcss.com/tinymce/4.5.2/tinymce.min.js"></script>
 <!--self-->
 <script type="text/javascript" src="/js/main.js"></script>
-<script type="text/javascript" src="/js/search.js"></script>
-<script type="text/javascript" src="/js/post.js"></script>
-@yield('Script')
+@yield('script')
 <!--End Scripts-->
 
 </html>

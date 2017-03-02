@@ -13,6 +13,7 @@
 
 // 认证路由
 Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
 
 // 访客区域
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
@@ -27,38 +28,38 @@ Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[
 // 以下页面都需要登录才能访问
 Route::group(['middleware' => 'auth'], function () {
 
-    // 补全信息页
-    Route::get('/completion', 'HomeController@showCompletionForm');
-    Route::post('/completion', 'HomeController@completeUserInfo');
+	// 补全信息页
+	Route::get('/completion', 'HomeController@showCompletionForm');
+	Route::post('/completion', 'HomeController@completeUserInfo');
 
-    // 登录后界面,发现用户登录没有补全信息将会自动跳转补全
-    Route::group(['middleware' => 'active'], function () {
-        // 登录后主页
-        Route::get('/home', 'HomeController@index');
+	// 登录后界面,发现用户登录没有补全信息将会自动跳转补全
+	Route::group(['middleware' => 'active'], function () {
+		// 登录后主页
+		Route::get('/home', 'HomeController@index');
 
-        // 投票相关
-        Route::get('/vote/{id}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+']);
-        Route::post('/vote/{id}', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
+		// 投票相关
+		Route::get('/vote/{id}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+']);
+		Route::post('/vote/{id}', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
 
-        // 帖子相关
-        Route::get('/post', function () {
-            return view('post/create');
-        });
-        Route::post('/post/{id}', 'PostController@getReply')->where(['id' => '[0-9]+']);
-        Route::post('/post', 'PostController@createNewPost');
+		// 帖子相关
+		Route::get('/post', function () {
+			return view('post/create');
+		});
+		Route::post('/post/{id}', 'PostController@getReply')->where(['id' => '[0-9]+']);
+		Route::post('/post', 'PostController@createNewPost');
 
-    });
+	});
 });
 
 // 管理员区域
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-    Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
-    Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
-    Route::get('/vote/result/{id}', 'Admin\VoteController@showVoteResult')->where(['id' => '[0-9]+']);
+	Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
+	Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
+	Route::get('/vote/result/{id}', 'Admin\VoteController@showVoteResult')->where(['id' => '[0-9]+']);
 });
 
 // 错误信息
 Route::get('/404', function () {
-    return view('errors.404');
+	return response()->view('errors.404', [], 404);
 });
 

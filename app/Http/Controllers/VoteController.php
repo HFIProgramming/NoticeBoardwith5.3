@@ -12,33 +12,36 @@ use App\Option;
 class VoteController extends Controller
 {
 	/**
-	* VoteController constructor.
-	*/
+	 * VoteController constructor.
+	 */
 	public function __construct()
 	{
 		$this->middleware('vote', ['except' => 'showVotes']);
 	}
 
 	/**
-	* show all votes
-	* @return mixed
-	*/
+	 * show all votes
+	 *
+	 * @return mixed
+	 */
 	public function showVotes()
 	{
 		$votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
+
 		return view('vote.index')->withVotes($votes);
 	}
 
 	/**
-	* show vote pages
-	*
-	* @param Request $request
-	* @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-	*/
-	public function showIndividualVote(Request $request)
+
+	 * show vote pages
+	 *
+	 * @param $id
+	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function showIndividualVote($id)
 	{
-		return view('vote.individual')->withVote(Vote::Id($request->id))->withUrl($request->url());
-	}
+		return view('vote.individual')->withVote(Vote::Id($id)->first());
+  }
 
 	/**
 	 * Vote handler :)
@@ -58,7 +61,7 @@ class VoteController extends Controller
 					$answers->each(function ($answer) {
 						Answer::create([
 							'option_id' => $answer,
-              'user_id' => 0,
+							'user_id'   => 0,
 							// 'content' => empty($answer->content) ? $answer->content : NULL,
 						]);
 					});
@@ -79,7 +82,8 @@ class VoteController extends Controller
 					$id = $request->user()->id;
 					break;
 			}
-				return view('vote.success');
+
+			return view('vote.success');
 		} else {
 			return $result;
 		}
@@ -97,6 +101,7 @@ class VoteController extends Controller
 		$this->checkIfRepeatingOptions($answers);
 		$this->checkIfAllFilled($answers, $vote);
 		$this->checkIfOptionsFilledMatch($answers, $vote);
+    
 		return true;
 	}
 
@@ -105,7 +110,7 @@ class VoteController extends Controller
 	 */
 	private function checkIfRepeatingOptions($answers)
 	{
-		if ($answers->diff($answers->unique())->isEmpty()){
+		if ($answers->diff($answers->unique())->isEmpty()) {
 			return;
 		}
 		abort(500);
@@ -123,10 +128,11 @@ class VoteController extends Controller
 		$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
 			return $question->id;
 		}));
-		if($required->diff($filled)->isEmpty()){
+		if ($required->diff($filled)->isEmpty()) {
+
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled));
+		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled)); // @TODO diff return 
 	}
 
 	/**
@@ -143,6 +149,7 @@ class VoteController extends Controller
 				abort(500);
 			} // illegal answers :( # of options for a specific question is not match
 		});
+
 		return;
 	}
 }
