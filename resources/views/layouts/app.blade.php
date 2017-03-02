@@ -11,7 +11,7 @@
     <div id='wx_pic' style='margin:0 auto;display:none;'>
         <img src='logo.jpg' />
     </div>
-    -->--}}
+    --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,6 +24,23 @@
     <!--self-->
     <link rel="stylesheet" href="/css/external/railwaysans/stylesheet.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="/css/main.css" type="text/css" charset="utf-8"/>
+    {{--Basic Styles--}}
+    <style>
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
+            /* For IE6-8 */
+            src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+        }
+        body {
+            background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
+        }
+        #navbar-container nav {
+            background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr);
+        }
+    </style>
 @yield('style')
 <!--End Import Styles-->
 </head>
