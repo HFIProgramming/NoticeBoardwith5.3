@@ -41,7 +41,6 @@ class PostController extends Controller
 							}
 						return redirect('/403')->withErrors(['warning' => Lang::get('auth.role_limitation')]);
 					}
-
 					return Redirect::guest(route('login'))
 						->withErrors(['warning' => Lang::get('login.login_required', [
 							'process' => 'Post Viewing',
@@ -118,6 +117,5 @@ class PostController extends Controller
 		}
 		abort(500);  // Something goes wrong :(
 	}
-
 
 }

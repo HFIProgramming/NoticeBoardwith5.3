@@ -20,7 +20,7 @@ class VoteVerify
 	 * @return mixed
 	 */
 	public function handle($request, Closure $next)
-	{
+  {
 		// general Checking
 		if (empty($request->ticket) || !Auth::check()) {
 			return redirect('login')->withErrors(['warning' => Lang::get('login.login_required', [
@@ -39,7 +39,7 @@ class VoteVerify
 		// Categorize
 
 		// Ticket first!
-		if ($ticket = Ticket::ticket($request->ticket)->first()) {
+		if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == 1 || $vote->type == 2)) {
 			if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
 				$request->merge(['type' => 'ticket']);
 				return $next($request); // Vote is valid !
@@ -48,7 +48,7 @@ class VoteVerify
 		}
 
 		// User
-		if (Auth::check()) {
+		if (Auth::check() && ($vote->type == 0 || $vote->type == 2)) {
 			$userId = $request->user()->id;
 			$votedIds = $vote->votedUserIds();
 			if ($votedIds->search($userId) == false) {

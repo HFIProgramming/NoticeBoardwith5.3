@@ -8,7 +8,6 @@ class Vote extends Model
 {
 	/**
 	 * Massive assign
-	 *
 	 * @var array
 	 */
 	protected $fillable = [
@@ -60,6 +59,6 @@ class Vote extends Model
 	 */
 	public function scopeId($query, $Id)
 	{
-		return $query->where('id', $Id);
+		return $query->where('id', $Id)->get()->first();
 	}
 }
