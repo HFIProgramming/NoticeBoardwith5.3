@@ -52,8 +52,9 @@ class VoteController extends Controller
 	 */
 	public function voteHandler(Request $request)
 	{
-		$answers = collect(array_map('intval', explode(',', $request->answer)));  // turn string to int
-		$vote = Vote::Id($request->id);
+		$answers = collect(json_decode($request->selected));  // turn string to int
+//        return var_dump($answers);
+		$vote = Vote::Id($request->id)->get()->first();
 		$result = $this->verifyAnswers($answers, $vote);
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
@@ -89,8 +90,7 @@ class VoteController extends Controller
 		}
 	}
 
-	/**
-	 * Check whether Vote is valid !
+	 /* Check whether Vote is valid !
 	 *
 	 * @param $answers
 	 * @param $vote
@@ -101,7 +101,6 @@ class VoteController extends Controller
 		$this->checkIfRepeatingOptions($answers);
 		$this->checkIfAllFilled($answers, $vote);
 		$this->checkIfOptionsFilledMatch($answers, $vote);
-    
 		return true;
 	}
 
@@ -121,27 +120,28 @@ class VoteController extends Controller
 	 * @param $vote
 	 */
 	private function checkIfAllFilled($answers, $vote)
-	{
-		$filled = $answers->map(function ($answer, $key) {
-			return Option::Id($answer)->question->id;
+    {
+		$filled = $answers->map(function ($answer) {
+            return Option::Id($answer)->question->id;
 		})->unique();// Get all filled questions
-		$required = collect($vote->questions->where('optional', 0)->map(function ($question, $key) {
+		$required = collect($vote->questions->where('optional', 0)->map(function ($question) {
 			return $question->id;
 		}));
 		if ($required->diff($filled)->isEmpty()) {
 
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Requried field', $required->diff($filled)); // @TODO diff return 
+		redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 	}
 
 	/**
 	 * @param $answers
 	 * @param $vote
 	 */
+
 	private function checkIfOptionsFilledMatch($answers, $vote)
 	{
-		$optionsFilled = array_count_values($answers->map(function ($answer, $key) {
+		$optionsFilled = array_count_values($answers->map(function ($answer) {
 			return Option::Id($answer)->question->id;
 		})->flatten()->toArray());
 		$vote->questions->each(function ($question, $key) use ($optionsFilled) {

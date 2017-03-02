@@ -10,7 +10,6 @@ class Answer extends Model
 
 	/**
 	 * Massive assign
-	 *
 	 * @var array
 	 */
 	protected $fillable = [
@@ -19,7 +18,6 @@ class Answer extends Model
 
 	/**
 	 * Hidden
-	 *
 	 * @var array
 	 */
 	protected $hidden = [
