@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 02, 2017 at 10:20 AM
+-- Generation Time: Mar 02, 2017 at 12:49 PM
 -- Server version: 5.7.17
 -- PHP Version: 5.6.28
 
@@ -173,7 +173,35 @@ CREATE TABLE `question_options` (
 --
 
 INSERT INTO `question_options` (`id`, `question_id`, `content`, `created_at`, `updated_at`) VALUES
-(1, '1', 'test option 1', NULL, NULL);
+(1, '1', 'test option 1', NULL, NULL),
+(3, '1', 'test option 2', NULL, NULL),
+(4, '1', 'test option 3', NULL, NULL),
+(5, '1', 'test option 4', NULL, NULL),
+(6, '1', 'test option 5', NULL, NULL),
+(7, '1', 'test option 6', NULL, NULL),
+(8, '1', 'test option 7', NULL, NULL),
+(9, '1', 'test option 8', NULL, NULL),
+(10, '1', 'test option 9', NULL, NULL),
+(11, '1', 'test option 10', NULL, NULL),
+(12, '1', 'test option 11', NULL, NULL),
+(13, '1', 'test option 12', NULL, NULL),
+(14, '1', 'test option 13', NULL, NULL),
+(15, '1', 'test option 14', NULL, NULL),
+(16, '1', 'test option 15', NULL, NULL),
+(17, '1', 'test option 16', NULL, NULL),
+(18, '1', 'test option 17', NULL, NULL),
+(19, '1', 'test option 18', NULL, NULL),
+(20, '1', 'test option 19', NULL, NULL),
+(21, '1', 'test option 20', NULL, NULL),
+(22, '1', 'test option 21', NULL, NULL),
+(23, '1', 'test option 22', NULL, NULL),
+(24, '1', 'test option 23', NULL, NULL),
+(25, '1', 'test option 24', NULL, NULL),
+(26, '1', 'test option 25', NULL, NULL),
+(27, '1', 'test option 26', NULL, NULL),
+(28, '1', 'test option 27', NULL, NULL),
+(29, '2', '萨非法所得方式', NULL, NULL),
+(30, '2', '水电费水电费水电费的说法是对方的身份是对方说', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -290,7 +318,7 @@ CREATE TABLE `votes` (
 --
 
 INSERT INTO `votes` (`id`, `title`, `intro`, `type`, `started_at`, `ended_at`, `created_at`, `updated_at`, `user_id`) VALUES
-(1, '', '', '0', '2016-01-01 00:00:00', '2018-01-01 00:00:00', NULL, NULL, 1);
+(1, 'this is a vote test', 'this a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test', '2', '2016-01-01 00:00:00', '2018-01-01 00:00:00', '2015-12-31 16:00:00', '2017-12-31 16:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -328,7 +356,8 @@ CREATE TABLE `vote_questions` (
 --
 
 INSERT INTO `vote_questions` (`id`, `vote_id`, `type`, `content`, `explanation`, `optional`, `range`) VALUES
-(1, '1', '', 'test question1', NULL, '0', '1');
+(1, '1', '', '1.你是一个笨蛋吗', '这个问题考的是你对中文的理解。如果你的中文很好，你应该感到很气愤', '0', '1'),
+(2, '1', '', '2.这是一个问题', '很明显，这是一个问题', '0', '1');
 
 --
 -- Indexes for dumped tables
@@ -464,7 +493,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `question_options`
 --
 ALTER TABLE `question_options`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `tagging_tagged`
 --
@@ -504,7 +533,7 @@ ALTER TABLE `vote_answers`
 -- AUTO_INCREMENT for table `vote_questions`
 --
 ALTER TABLE `vote_questions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

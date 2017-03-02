@@ -47,7 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
 		});
 		Route::post('/post/{id}', 'PostController@getReply')->where(['id' => '[0-9]+']);
 		Route::post('/post', 'PostController@createNewPost');
-
 	});
 });
 

@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta content="telephone=no" name="format-detection"/>
-    {{--
-    #Wechat Repost Image
+    {{--Wechat Repost Image--}}
     <div id='wx_pic' style='margin:0 auto;display:none;'>
-        <img src='logo.jpg' />
+        <img src='https://hfinotice-web.nos-eastchina1.126.net/nb.png' />
     </div>
-    --}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -59,7 +57,7 @@
                 <a href="/login"><img class="circle" src="https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg"></a>
                 <a href="/login"><span class="white-text name">Please Login and Enjoy.</span></a>
             @endif
-            {{--<img class="background" src="assets/images/avatar-background.jpg">-->--}}
+            {{--<img class="background" src="assets/images/avatar-background.jpg">--}}
         </div>
     </li>
     <li><a href="/me/notification" class="waves-effect"><i class="material-icons">view_stream</i>My Notification</a></li>
@@ -85,22 +83,33 @@
 <div class="navbar" id="navbar-container">
     <nav style="box-shadow: none">
         <div class="nav-wrapper" id="navbar">
-            <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
+            {{--
+            @TODO Disabled for International Day,Removed when finished
+                <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
                         class="material-icons">menu</i></a>
+            --}}
             <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/logo.png"></img></a>
-            <ul id="nav-mobile" class="right">
-                <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
-            </ul>
+            {{--
+            @TODO Disabled for International Day,Removed when finished
+                <ul id="nav-mobile" class="right">
+                    <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
+                </ul>
+            --}}
         </div>
     </nav>
 </div>
 
-<!--Content-->
-@yield('content')
-<!--end Content-->
-<div class="post-card article-card about">
-    <h5 class="subheader center-align">©2015-{{date('Y')}} HFIProgramming</h5>
-</div>
+<main>
+    <!--Content-->
+    @yield('content')
+    <!--end Content-->
+</main>
+
+<footer>
+    <div class="post-card article-card about">
+        <h5 class="subheader center-align">©2015-{{date('Y')}} HFIProgramming</h5>
+    </div>
+</footer>
 </body>
 
 <!--Scripts from external source-->

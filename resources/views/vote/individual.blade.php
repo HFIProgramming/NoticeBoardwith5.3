@@ -23,11 +23,15 @@
                 <div class="card-content display-all">
                     <!--Tags. Limit to 3 per post and their length-->
                     <div class="tag-container">
-                        <button class="tag-btn btn-flat waves-effect waves-light">#International Day</button>
-                        <button class="tag-btn btn-flat waves-effect waves-light">#Fuck PHP</button>
+                        <button class="tag-btn btn-flat waves-effect waves-light">结束时间：{{$vote->ended_at}}</button>
+                        <button class="tag-btn btn-flat waves-effect waves-light">投票人数：{{count($vote->votedUserIds())}}</button>
                     </div>
                     <br>
+                    <div>{{$vote->intro}}</div>
+                    <br>
 
+                    {{--Important!!!! This form will return all IDs of selected items in JSON in the name of "selected" !--}}
+                    {{--选项id结构设置为"vote-item-{id}"，其中，{id}请改为改选项在数据库中的primary key 值--}}
                     <form id="vote-form" action="" method="post" accept-charset="utf-8">
                         <input type="hidden" name="selected" id="vote-selected">
                         {{ csrf_field() }}
