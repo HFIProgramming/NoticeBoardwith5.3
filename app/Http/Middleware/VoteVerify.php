@@ -45,8 +45,7 @@ class VoteVerify
 			}
 			return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
 		}
-		return Redirect::guest(route('login'))
-			->withErrors(['warning' => Lang::get('login.login_required', [
+		return redirect('login')->withErrors(['warning' => Lang::get('login.login_required', [
 				'process' => 'vote'
 			]),]); // No ticket or user need to login to vote.
 	}

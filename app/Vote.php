@@ -16,6 +16,7 @@ class Vote extends Model
 
 	/**
 	 * Hidden
+	 *
 	 * @var array
 	 */
 	protected $hidden = [
@@ -33,6 +34,11 @@ class Vote extends Model
 		return $this->hasMany('App\Question');
 	}
 
+	public function getAuthor()
+	{
+		return $this->belongsTo('App\User', 'user_id', 'id');
+	}
+
 	public function votedUserIds()
 	{
 		return $this->questions->map(function ($question, $key) {
@@ -41,7 +47,7 @@ class Vote extends Model
 					return $answer->user_id;
 				});
 			});
-		})->flatten()->unique();
+		})->flatten()->unique()->toarray();
 	}
 
 	/**
@@ -51,8 +57,8 @@ class Vote extends Model
 	 * @param $id
 	 * @return mixed
 	 */
-	public function scopeId($query, $id)
+	public function scopeId($query, $Id)
 	{
-		return $query->where('id', $id);
+		return $query->where('id', $Id);
 	}
 }
