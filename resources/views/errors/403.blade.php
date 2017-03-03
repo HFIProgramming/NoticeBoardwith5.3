@@ -28,7 +28,7 @@
                 </div>
                 <p>{{trans('auth.403_action')}}</p>
             </div>
-            @endif
+            <a href="{{url('login')}}">Turn to Login</a>
         </div>
     </div>
 @endsection
