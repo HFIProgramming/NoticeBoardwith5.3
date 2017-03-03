@@ -59,6 +59,6 @@ class Option extends Model
 	 */
 	public function scopeId($query, $Id)
 	{
-		return $query->where('id', $Id)->firstOrFail();
+		return $query->where('id', $Id)->get()->first();
 	}
 }

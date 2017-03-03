@@ -21,19 +21,19 @@ class VoteVerify
 	 */
 	public function handle($request, Closure $next)
 	{
-		// General Checking
-
-		// Find Vote exist
-		$vote = Vote::Id($request->id);
-
-		// Login or Ticket
+		// general Checking
 		if (empty($request->ticket) && !Auth::check()){
 			return redirect('/login')->withErrors(['warning' => Lang::get('login.login_required', [
 				'process' => 'vote'
 			]),]); // No ticket or user need to login to vote.
 		}
 
-		// Vote Expire
+		$vote = Vote::Id($request->id);
+
+		if (empty($request->id) && $vote) {
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
+		}
+
 		if (strtotime($vote->ended_at) - strtotime('now') < 0) {
 			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
 		}
