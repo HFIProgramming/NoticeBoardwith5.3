@@ -34,13 +34,13 @@
                             <div class="vote-info row">
                                 <div>{{$question->explanation}}</div>
                                 <br>
-                                
+
                                 @foreach($question->options as $option)
                                         <div class="vote-result-pack col s12 l3">
                                             <div>{{$option->content}}</div>
                                             <div class="progress no-margin"><div class="determinate" style="width: 70%"></div></div>
-                                            <div align="right">{{count($option->answers)}} Votes, {{'I need a percentage here'}}%</div>
-                                        </div> 
+                                            <div align="right">{{count($option->answers)}} Votes, {{floor($option->getTotalNumber()/$question->getTotalNumber())}}%</div>
+                                        </div>
                                 @endforeach
 
                             </div>

@@ -41,9 +41,9 @@ class Vote extends Model
 
 	public function votedUserIds()
 	{
-		return $this->questions->map(function ($question, $key) {
-			return $question->options->map(function ($option, $key) {
-				return $option->answers->map(function ($answer, $key) {
+		return $this->questions->map(function ($question) {
+			return $question->options->map(function ($option) {
+				return $option->answers->map(function ($answer) {
 					return $answer->user_id;
 				});
 			});

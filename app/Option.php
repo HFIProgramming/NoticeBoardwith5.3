@@ -61,4 +61,9 @@ class Option extends Model
 	{
 		return $query->where('id', $Id)->firstOrFail();
 	}
+
+	public function getTotalNumber()
+	{
+		return count($this->answers);
+	}
 }
