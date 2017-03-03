@@ -121,16 +121,16 @@ class VoteController extends Controller
 				if($this->checkIfVoted('ticket',$voteId,$ticketString)){ //Can only see result when voted
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
+				return redirect('/vote/'.$voteId.'/'.$ticketString); 	 //redirect to vote page if not voted
 				break;
 			case 'user':
 				$userId = $request->user()->id;
 				if($this->checkIfVoted('user',$voteId,$userId)){
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
+				return redirect('/vote/'.$voteId); 	 //redirect to vote page if not voted
 				break;
 		}
-		return view('vote.result')->withVote(Vote::Id($voteId));
-			return redirect('/vote/'.$voteId.'/'.$ticketString); 	 //redirect to vote page if not voted
 	}
 
 	/**

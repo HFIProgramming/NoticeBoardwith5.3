@@ -38,7 +38,7 @@
                                 @foreach($question->options as $option)
                                         <div class="vote-result-pack col s12 l3">
                                             <div>{{$option->content}}</div>
-                                            <div class="progress no-margin"><div class="determinate" style="width: 70%"></div></div>
+                                            <div class="progress no-margin"><div class="determinate" style="width: {{round(($option->getTotalNumber()/$question->getTotalNumber())*100,2)}}%"></div></div>
                                             <div align="right">{{count($option->answers)}} Votes, {{round(($option->getTotalNumber()/$question->getTotalNumber())*100,2)}}%</div>
                                         </div>
                                 @endforeach

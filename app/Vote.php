@@ -36,7 +36,7 @@ class Vote extends Model
 
 	public function getAuthor()
 	{
-		return $this->belongsTo('App\User', 'user_id', 'id');
+		return $this->belongsTo('App\User', 'creator_id', 'id');
 	}
 
 	public function votedUserIds()
