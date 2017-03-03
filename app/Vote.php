@@ -59,6 +59,6 @@ class Vote extends Model
 	 */
 	public function scopeId($query, $Id)
 	{
-		return $query->where('id', $Id)->get()->first();
+		return $query->where('id', $Id)->firstOrFail();
 	}
 }

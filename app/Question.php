@@ -45,5 +45,4 @@ class Question extends Model
 	{
 		return $this->belongsTo('App\Vote', 'id', 'vote_id');
 	}
-
 }

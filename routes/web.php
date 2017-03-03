@@ -17,11 +17,18 @@ Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :
 
 // 访客区域
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
-Route::get('/', 'HomeController@index');
+
+// @TODO 国际日结束之后主页改回HomeController
+//Route::get('/', 'HomeController@index');
+Route::get('/', function(){
+	return redirect('/vote');
+});
 
 Route::get('/vote', 'VoteController@showVotes');
 Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+Route::get('/vote/result/{id}/{ticket}','VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+
 
 Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
 
@@ -40,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 		// 投票相关
 		Route::get('/vote/{id}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+']);
 		Route::post('/vote/{id}', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
+		Route::get('/vote/result/{id}', 'VoteController@showVoteResult')->where(['id' => '[0-9]+']);
 
 		// 帖子相关
 		Route::get('/post', function () {
@@ -54,7 +62,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
 	Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
-	Route::get('/vote/result/{id}', 'Admin\VoteController@showVoteResult')->where(['id' => '[0-9]+']);
 });
 
 // 错误信息
