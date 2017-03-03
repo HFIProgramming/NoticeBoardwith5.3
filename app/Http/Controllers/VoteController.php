@@ -46,15 +46,14 @@ class VoteController extends Controller
 					$ticketString = $request->ticket;
 					if($this->checkIfVoted('ticket',$id,$ticketString))
 						return redirect('/vote/result/'.$id.'/'.$ticketString); //If this ticket is used, then redirect to show results.
-					else
-						return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
+			break;
 				case 'user':
 					$userId = $request->user()->id;
 					if ($this->checkIfVoted('user',$id,$userId)) //Check if user has voted
 						return redirect('/vote/result/'.$id); //If this user has voted, then redirect to show results.
-					else
-						return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
+			break;
 			}
+		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
   	}
 
 
@@ -122,18 +121,16 @@ class VoteController extends Controller
 				if($this->checkIfVoted('ticket',$voteId,$ticketString)){ //Can only see result when voted
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
-				else{ //redirect to vote page if not voted
-					return redirect('/vote/'.$voteId.'/'.$ticketString);
-				}
+				break;
 			case 'user':
 				$userId = $request->user()->id;
 				if($this->checkIfVoted('user',$voteId,$userId)){
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
-				else{
-					return redirect('/vote/'.$voteId);
-				}
+				break;
 		}
+		return view('vote.result')->withVote(Vote::Id($voteId));
+			return redirect('/vote/'.$voteId.'/'.$ticketString); 	 //redirect to vote page if not voted
 	}
 
 	/**
