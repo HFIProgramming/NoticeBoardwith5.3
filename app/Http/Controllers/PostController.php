@@ -39,7 +39,7 @@ class PostController extends Controller
 							if (!in_array($this->user->grade, $roles)) {
 								return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
 							}
-						return redirect('/403')->withErrors(['warning' => Lang::get('auth.role_limitation')]);
+						abort(403,Lang::get('auth.role_limitation'));
 					}
 					return Redirect::guest(route('login'))
 						->withErrors(['warning' => Lang::get('login.login_required', [
@@ -49,7 +49,7 @@ class PostController extends Controller
 			}
 		}
 
-		return redirect('/404')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Pote No Found
+		return redirect('/error/custom')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Pote No Found
 	}
 
 	/**
@@ -82,7 +82,7 @@ class PostController extends Controller
 
 			return redirect()->back()->withInput()->withErrors('评论发表失败!');
 		}
-		abort(500); // post is not exist :(
+		abort(500); // post does not exist :(
 	}
 
 	/**

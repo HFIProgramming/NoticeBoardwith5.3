@@ -58,7 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 // 错误信息
-Route::get('/404', function () {
-	return response()->view('errors.404', [], 404);
+Route::get('/error/custom', function () {
+	return response()->view('errors.custom');
 });
 

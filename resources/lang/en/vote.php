@@ -2,8 +2,8 @@
 
 return [
 
-    'vote_expired' => 'Sorry, we have to inform you that the vote you attempt to have already closed.',
-    'vote_already' => 'You have already voted for this = - =|',
-    'credential_error' => 'Sorry, the credential you provided is not match.',
-    'vote_no_found' => 'Sorry, the vote page you attempt to visit has no found',
+    'vote_expired' => 'Sorry, we have to inform you that this vote is closed',
+    'vote_already' => 'You have already voted = - =|',
+    'credential_error' => 'Sorry, you do not have the credential to vote',
+    'vote_no_found' => 'Sorry, this vote does not exist',
 ];

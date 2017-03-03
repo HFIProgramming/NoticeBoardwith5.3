@@ -374,3 +374,11 @@ nav {
 	padding-top: 2rem;
 	border-top: 1px #DDD solid;
 }
+
+/*
+ * Error Styles
+ */
+.error-card{
+	padding: 4rem;
+	opacity: 0.9;
+}
