@@ -46,7 +46,7 @@ class VoteVerify
 				$request->merge(['type' => 'ticket']);
 				return $next($request); // Vote is valid !
 			}
-			return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Ticket No Valid !
+			return redirect('/404')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket No Valid !  
 		}
 
 		// User
@@ -59,6 +59,6 @@ class VoteVerify
 			}
 			return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
 		}
-
+		return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Missing vaild Credential  
 	}
 }
