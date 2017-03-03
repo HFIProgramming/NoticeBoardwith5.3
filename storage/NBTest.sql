@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 02, 2017 at 12:49 PM
+-- Generation Time: Mar 03, 2017 at 03:40 PM
 -- Server version: 5.7.17
 -- PHP Version: 5.6.28
 
@@ -260,6 +260,14 @@ CREATE TABLE `tickets` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `tickets`
+--
+
+INSERT INTO `tickets` (`id`, `vote_id`, `active`, `is_used`, `string`, `created_at`, `updated_at`) VALUES
+(1, '1', '1', '0', 'mdzzvip', '2017-03-14 16:00:00', '2017-03-03 15:37:04'),
+(2, '1', '1', '0', 'mdzzvip2', '2017-03-29 16:00:00', '2017-03-03 10:25:23');
+
 -- --------------------------------------------------------
 
 --
@@ -293,7 +301,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `chinese_name`, `email`, `name`, `phone_number`, `password`, `english_name`, `wechat`, `avatar`, `class`, `organization`, `grade`, `powerschool_id`, `self_intro`, `active`, `role`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, '测试', '123@123.com', 'mic', '', '$2y$10$ovOTrnjwEMpSvLK0XwoU1us4O4bQTyIH5DImBcfC82Y1vPntrmMaq', 'mic', '', NULL, NULL, NULL, '2017', NULL, NULL, '1', 'student', NULL, '2017-02-27 13:30:15', '2017-03-02 09:27:15');
+(1, '测试', '123@123.com', 'mic', '', '$2y$10$ovOTrnjwEMpSvLK0XwoU1us4O4bQTyIH5DImBcfC82Y1vPntrmMaq', 'mic', '', NULL, NULL, NULL, '2017', NULL, NULL, '1', 'student', 'F1cEQtuSyeD7rlPtBbe2vCQQ1LndqiCHcEgaCBu8ZKTxXhqqpG2TonYD2bRD', '2017-02-27 13:30:15', '2017-03-03 09:35:55');
 
 -- --------------------------------------------------------
 
@@ -310,15 +318,15 @@ CREATE TABLE `votes` (
   `ended_at` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL
+  `creator_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `votes`
 --
 
-INSERT INTO `votes` (`id`, `title`, `intro`, `type`, `started_at`, `ended_at`, `created_at`, `updated_at`, `user_id`) VALUES
-(1, 'this is a vote test', 'this a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test', '2', '2016-01-01 00:00:00', '2018-01-01 00:00:00', '2015-12-31 16:00:00', '2017-12-31 16:00:00', 1);
+INSERT INTO `votes` (`id`, `title`, `intro`, `type`, `started_at`, `ended_at`, `created_at`, `updated_at`, `creator_id`) VALUES
+(1, 'this is a vote test', 'this a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test\r\nthis a a vote test', '2', '2016-01-01 00:00:00', '2018-01-01 00:00:00', '2015-12-31 16:00:00', '2015-12-31 16:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -513,7 +521,7 @@ ALTER TABLE `tagging_tag_groups`
 -- AUTO_INCREMENT for table `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -528,7 +536,7 @@ ALTER TABLE `votes`
 -- AUTO_INCREMENT for table `vote_answers`
 --
 ALTER TABLE `vote_answers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `vote_questions`
 --
