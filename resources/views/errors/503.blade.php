@@ -1,21 +1,47 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Be right back.</title>
 
-@section('title')
-   Service Unavailable
-@endsection
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
-@section('content')
-    <div class="placeholder"></div>
-    <div class="row">
-        <div class="col s10 m8 push-s1 push-m2">
-            <div class="card error-card">
-                <h4 class="blue-text"><i class="material-icons pink-text">warning</i> 503: Oops... Something went wrong with our server... <br></h4>
-                @if(empty($exception->getMessage()))
-                    <h5>Contact us for more help</h5>
-                @else
-                    <h5>{{$exception->getMessage()}}</h5>
-                @endif
+        <style>
+            html, body {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                color: #B0BEC5;
+                display: table;
+                font-weight: 100;
+                font-family: 'Lato', sans-serif;
+            }
+
+            .container {
+                text-align: center;
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            .content {
+                text-align: center;
+                display: inline-block;
+            }
+
+            .title {
+                font-size: 72px;
+                margin-bottom: 40px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="title">Be right back.</div>
             </div>
         </div>
-    </div>
-@endsection
+    </body>
+</html>
