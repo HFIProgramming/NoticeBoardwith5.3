@@ -75,7 +75,7 @@
                         </div>
                         @else
                             <div class="post-header-container">
-                                <h6 class="header post-header"><strong>No One comments here yet...</strong></h6>
+                                <h6 class="header post-header"><strong>No One commented yet...</strong></h6>
                             </div>
                         @endif
                     </div>

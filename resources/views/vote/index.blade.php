@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="post-user-profile">
-                <div class="card-image"><img class="circle" src="/assets/images/avatar.jpg" /></div>
+                <div class="card-image"><img class="circle" src="{{ url($vote->getAuthor->avatar) }}" /></div>
                 <div class="post-header-container">
                     <h5 class="header post-header">{{$vote->title}}</h5>
                 </div>

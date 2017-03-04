@@ -1,32 +1,20 @@
 @extends('layouts.app')
 
 @section('title')
-    Page No Found
+    Page Not Found
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            @if ($errors->has('warning'))
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <strong>{{ $errors->first('warning') }}</strong> <!--I Hate frontend ! SO THAT ALL-->
-                        </div>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <strong>{{trans('error.404_sorry')}}</strong>
-                    </div>
-                    <p>{{trans('error.404_action')}}</p>
-                </div>
+    <div class="placeholder"></div>
+    <div class="row">
+        <div class="col s10 m8 push-s1 push-m2">
+            <div class="card error-card">
+                <h4 class="blue-text"><i class="material-icons pink-text">warning</i> 404: Sorry, but this page does not exists. <br></h4>
+                @if(empty($exception->getMessage()))
+                    <h5>Please check your URL or return to the home page.</h5>
+                @else
+                    <h5>{{$exception->getMessage()}}</h5>
+                @endif
             </div>
         </div>
     </div>

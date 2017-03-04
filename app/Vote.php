@@ -36,14 +36,14 @@ class Vote extends Model
 
 	public function getAuthor()
 	{
-		return $this->belongsTo('App\User', 'user_id', 'id');
+		return $this->belongsTo('App\User', 'creator_id', 'id');
 	}
 
 	public function votedUserIds()
 	{
-		return $this->questions->map(function ($question, $key) {
-			return $question->options->map(function ($option, $key) {
-				return $option->answers->map(function ($answer, $key) {
+		return $this->questions->map(function ($question) {
+			return $question->options->map(function ($option) {
+				return $option->answers->map(function ($answer) {
 					return $answer->user_id;
 				});
 			});
@@ -59,6 +59,6 @@ class Vote extends Model
 	 */
 	public function scopeId($query, $Id)
 	{
-		return $query->where('id', $Id)->get()->first();
+		return $query->where('id', $Id)->firstOrFail();
 	}
 }

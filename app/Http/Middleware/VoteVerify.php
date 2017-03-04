@@ -28,37 +28,35 @@ class VoteVerify
 			]),]); // No ticket or user need to login to vote.
 		}
 
-		$vote = Vote::Id($request->id);
+		$vote = Vote::find($request->id);
 
-		if (empty($request->id) && $vote) {
-			return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
+		if (empty($vote)) { //check if vote exists
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
 		}
 
-		if (strtotime($vote->ended_at) - strtotime('now') < 0) {
-			return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
+		if(!$request->segment(2) == 'result'){  //If this request points to show result, then bypass this check
+			if (strtotime($vote->ended_at) - strtotime('now') < 0) {
+				return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
+			}
 		}
 
 		// Categorize
 
-		// Ticket first!
-		if ($ticket = Ticket::ticket($request->ticket)->first() && ($vote->type == 1 || $vote->type == 2)) {
-			if ($ticket->active == 1 && $ticket->is_used == 0) { // Looks good
-				$request->merge(['type' => 'ticket']);
-				return $next($request); // Vote is valid !
+		// If user use ticket to vote, then go with this check
+		if (!empty(Ticket::ticket($request->ticket)->first()) && ($vote->type == 1 || $vote->type == 2)) {
+			$ticket = Ticket::ticket($request->ticket)->first();
+			if ($ticket->active == 1) { // check if ticket is valid
+				$request->merge(['type' => 'ticket']); //将该请求归类到Ticket类型
+				return $next($request);
 			}
-			return redirect('/404')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket No Valid !  
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket Not Valid !  
 		}
 
-		// User
+		// If user login to vote, then go with this check
 		if (Auth::check() && ($vote->type == 0 || $vote->type == 2)) {
-			$userId = $request->user()->id;
-			$votedIds = $vote->votedUserIds();
-			if ($votedIds->search($userId) == false) {
-				$request->merge(['type' => 'user']);
-				return $next($request); // Vote is valid !
-			}
-			return redirect('/404')->withErrors(['warning' => Lang::get('vote.vote_already')]); // User has already voted
+			$request->merge(['type' => 'user']); //将该请求归类到User类型
+			return $next($request);
 		}
-		return redirect('/404')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Missing vaild Credential  
+		return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Missing vaild Credential  
 	}
 }

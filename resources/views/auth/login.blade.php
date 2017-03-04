@@ -46,7 +46,7 @@
                     @endif
                     <br>
                     <div class="row">
-                        <a class="col s4 left login-btn btn-flat waves-effect waves-light" onclick="submit()" align="center">Login</a>
+                        <button class="col s4 left login-btn btn-flat waves-effect waves-light" type="submit" align="center">Login</button>
                         <a href="{{ url('/password/reset') }}" class="col s8 l4 right login-btn btn-flat waves-effect waves-light forgot-password-link" align="center">FORGOT PASSWORD?</a>
                     </div>
                 </form>
