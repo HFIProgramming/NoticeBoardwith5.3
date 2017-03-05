@@ -60,4 +60,14 @@ class User extends Authenticatable
 	{
 		return $this->hasMany('App\Post');
 	}
+
+    /**
+     * List the user's votes.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function votes()
+    {
+        return $this->hasMany('App\Vote', 'creator_id');
+	}
 }
