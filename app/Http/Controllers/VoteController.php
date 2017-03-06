@@ -124,7 +124,7 @@ class VoteController extends Controller
 				return redirect('/vote/'.$voteId.'/'.$ticketString); 	 //redirect to vote page if not voted
 			case 'user':
 				$userId = $request->user()->id;
-				if($this->checkIfVoted('user',$voteId,$userId)){
+				if($this->checkIfVoted('user',$voxteId,$userId)){
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
 				return redirect('/vote/'.$voteId); 	 //redirect to vote page if not voted
@@ -179,10 +179,9 @@ class VoteController extends Controller
 	 */
 	private function checkIfRepeatingOptions($answers)
 	{
-		if ($answers->diff($answers->unique())->isEmpty()) {
-			return;
+		if (!($answers->diff($answers->unique())->isEmpty())) {
+			abort(500);
 		}
-		abort(500);
 	}
 
 	/**
@@ -197,11 +196,9 @@ class VoteController extends Controller
 		$required = collect($vote->questions->where('optional', 0)->map(function ($question) {
 			return $question->id;
 		}));
-		if ($required->diff($filled)->isEmpty()) {
-
-			return;
+		if (!($required->diff($filled)->isEmpty())) {
+			redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 		}
-		redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 	}
 
 	/**
