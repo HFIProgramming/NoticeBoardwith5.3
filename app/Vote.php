@@ -61,4 +61,14 @@ class Vote extends Model
 	{
 		return $query->where('id', $Id)->firstOrFail();
 	}
+
+    /**
+     * Return tickets associated with the vote.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tickets()
+    {
+        return $this->belongsToMany('App\Ticket');
+	}
 }

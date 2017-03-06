@@ -36,4 +36,14 @@ class Ticket extends Model
 		return $query->where('string', $string);
 	}
 
+    /**
+     * Return votes associated with the ticket.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function votes()
+    {
+        return $this->belongsToMany('App\Vote');
+	}
+
 }
