@@ -31,6 +31,12 @@ class VoteController extends Controller
 		return view('vote.index')->withVotes($votes);
 	}
 
+	public function showTicketVotes(Request $request)
+	{
+		return var_dump($request);
+		// $votes = $ticket->votes;
+	}
+
 	/**
 	 * show vote pages, 并判断该用户是否已经投票
 	 *

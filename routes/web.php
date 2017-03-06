@@ -27,6 +27,7 @@ Route::get('/', function(){
 Route::get('/vote', 'VoteController@showVotes');
 Route::get('/vote/{id}/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 Route::post('/vote/{id}/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+Route::get('/vote/ticket/{ticket}', 'VoteController@showTicketVotes')->where(['ticket'=>'[A-Za-z0-9]+']);
 Route::get('/vote/result/{id}/{ticket}','VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 
 
@@ -68,4 +69,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 Route::get('/error/custom', function () {
 	return response()->view('errors.custom');
 });
-
