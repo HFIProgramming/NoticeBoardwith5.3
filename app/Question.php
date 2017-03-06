@@ -46,4 +46,9 @@ class Question extends Model
 		return $this->belongsTo('App\Vote', 'id', 'vote_id');
 	}
 
+	public function getTotalNumber(){
+		return $this->options->map(function ($option) {
+			return count($option->answers);
+		})->flatten()->sum();
+	}
 }

@@ -6,12 +6,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
     <meta content="telephone=no" name="format-detection"/>
-    {{--
-    #Wechat Repost Image
+    {{--Wechat Repost Image--}}
     <div id='wx_pic' style='margin:0 auto;display:none;'>
-        <img src='logo.jpg' />
+        <img src='https://hfinotice-web.nos-eastchina1.126.net/nb.png' />
     </div>
-    -->--}}
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,6 +22,20 @@
     <!--self-->
     <link rel="stylesheet" href="/css/external/railwaysans/stylesheet.css" type="text/css" charset="utf-8"/>
     <link rel="stylesheet" href="/css/main.css" type="text/css" charset="utf-8"/>
+    {{--Basic Styles--}}
+    <style>
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
+            /* For IE6-8 */
+            src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+        }
+        body {
+            background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
+        }
+    </style>
 @yield('style')
 <!--End Import Styles-->
 </head>
@@ -42,7 +54,7 @@
                 <a href="/login"><img class="circle" src="https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg"></a>
                 <a href="/login"><span class="white-text name">Please Login and Enjoy.</span></a>
             @endif
-            {{--<img class="background" src="assets/images/avatar-background.jpg">-->--}}
+            {{--<img class="background" src="assets/images/avatar-background.jpg">--}}
         </div>
     </li>
     <li><a href="/me/notification" class="waves-effect"><i class="material-icons">view_stream</i>My Notification</a></li>
@@ -68,33 +80,50 @@
 <div class="navbar" id="navbar-container">
     <nav style="box-shadow: none">
         <div class="nav-wrapper" id="navbar">
-            <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
+            {{--
+            @TODO Disabled for International Day,Removed when finished
+                <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
                         class="material-icons">menu</i></a>
-            <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/logo.png"></img></a>
-            <ul id="nav-mobile" class="right">
-                <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
-            </ul>
+            --}}
+            <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/black_logo.png"></img></a>
+            {{--
+            @TODO Disabled for International Day,Removed when finished
+                <ul id="nav-mobile" class="right">
+                    <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
+                </ul>
+            --}}
         </div>
     </nav>
 </div>
 
-<!--Content-->
-@yield('content')
-<!--end Content-->
-<div class="post-card article-card about">
-    <h5 class="subheader center-align">©2015-{{date('Y')}} HFIProgramming</h5>
-</div>
+<main>
+    <!--Content-->
+    @yield('content')
+    <!--end Content-->
+</main>
+
+<footer class="page-footer grey darken-4" id="footer">
+    <div class="container">
+        <div class="col l6 s12">
+            <h5 class="grey-text text-lighten-2">Connect</h5>
+            <p class="blue-text text-lighten-2">Follow Our Wechat: hfiprogramming</p>
+        </div>
+    </div>
+    
+    <div class="footer-copyright black" id="copyright">
+        <div class="container grey-text text-lighten-2">
+            © 2015-2017 HFIProgramming
+        </div>
+    </div>
+</footer>
 </body>
 
 <!--Scripts from external source-->
 <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/materialize/0.98.0/js/materialize.min.js"></script>
-<script src="//cdn.bootcss.com/tinymce/4.5.2/tinymce.min.js"></script>
 <!--self-->
 <script type="text/javascript" src="/js/main.js"></script>
-<script type="text/javascript" src="/js/search.js"></script>
-<script type="text/javascript" src="/js/post.js"></script>
-@yield('Script')
+@yield('script')
 <!--End Scripts-->
 
 </html>

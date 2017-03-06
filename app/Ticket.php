@@ -21,7 +21,7 @@ class Ticket extends Model
 	 * @var array
 	 */
 	protected $hidden = [
-		'active', 'is_used', 'string', 'vote_id',
+
 	];
 
 	/**

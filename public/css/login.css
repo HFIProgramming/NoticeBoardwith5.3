@@ -3,27 +3,17 @@
 .login-card {
 	background: #fff;
 	opacity: 0.95;
-	position:fixed;
-	height: 100%;
-	width: 100%;
-	padding: 5%;
-}
-
-.login-card .row {
-	max-width: 42.5rem;
-	margin: auto;
+	padding:2rem 0.8rem !important;
+	border-radius: 6px;
 }
 
 .login-card h4 {
-	margin-top: -1%;
-	margin-left: 0.675rem;
 	color: #2760aa;
 }
 
 .login-btn {
-	float: right;
 	color: #2760aa;
-	font-size: 1.2rem;
+	font-size: 1rem;
 }
 
 /*Change color of input fields*/
@@ -43,9 +33,6 @@ input[type=password]:focus {
 	height: 20%;
 }
 .forgot-password-link{
-	font-size: 1.2rem;
-	margin-top: 0.4rem;
-	padding-left: 0.675rem;
-	display:block;
+	font-size: 1rem;
 	color: #2760aa;
 }

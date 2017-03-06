@@ -1,14 +1,4 @@
 /* Google Material Design icons */
-
-@font-face {
-	font-family: 'Material Icons';
-	font-style: normal;
-	font-weight: 400;
-	src: url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.eot);
-	/* For IE6-8 */
-	src: local('Material Icons'), local('MaterialIcons-Regular'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff2) format('woff2'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.woff) format('woff'), url(https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/MaterialIcons-Regular.ttf) format('truetype');
-}
-
 .material-icons {
 	font-family: 'Material Icons';
 	font-weight: normal;
@@ -33,11 +23,15 @@
 }
 
 /*General Properties*/
-
 body {
-	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr) fixed;
-}
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
 
+ main {
+    flex: 1 0 auto;
+ }
 .subheader {
 	color: #999;
 }
@@ -61,21 +55,33 @@ body {
 		font-style: italic;
 }
 
-
-
-/*Nav bar*/
-		
-#navbar-container nav {
-	background: url(https://ws1.sinaimg.cn/large/006dLiLIly1fcnq352qm5j31kw0ro1jr);
+.no-margin{
+	margin:0 0 !important;
 }
+
+.display-all{
+	max-height: none !important;
+}
+
+.no-shadow{
+	box-shadow: none;
+}
+
+.placeholder{
+	height: 2rem;
+}
+/*Nav bar*/
 
 #navbar {
 	/*max-width: 62.5rem;*/
 	margin: auto;
 }
+#navbar-container nav{
+	background: #000;
+	opacity: 0.9;
+}
 
 .nb-logo {
-	margin-top: 0.25rem;
 	height: 4rem;
 	vertical-align: middle;
 }
@@ -139,7 +145,7 @@ nav {
 }
 
 .post-card {
-	opacity: 0.95;
+	opacity: 0.97;
 	margin: auto;
 }
 
@@ -199,7 +205,7 @@ nav {
 
 .post-card .card-image .circle {
 	padding: 10px;
-	width: 8rem;
+	width: 5rem;
 	border-radius: 50%;
 }
 
@@ -215,6 +221,11 @@ nav {
 
 .post-card .card-stacked {
 	margin-top: -30px;
+}
+
+.post-card-heading div a{
+	height: 2rem !important;
+	line-height: 2rem !important;
 }
 
 .post-header.subheader.hide-on-med-and-down {
@@ -250,16 +261,7 @@ nav {
 .post-comment-card .circle {
 	width: 4rem!important;
 }
-/*About Card*/
 
-.about {
-	padding: 1rem;
-	background: #ddd;
-}
-
-.about h5 {
-	margin: 0;
-}
 /*Article Cards*/
 
 .railway {
@@ -354,4 +356,29 @@ nav {
 	font-weight: 300;
 	padding-top: 2rem;
 	padding-bottom: 2rem;
+}
+
+/*
+ * Vote Styles
+ */
+.vote-info p{
+	 padding-top: 0.6rem;
+	 padding-bottom:0.6rem;
+}
+.vote-result-pack{
+	padding-top: 1rem !important;
+	padding-bottom: 1rem !important;
+	border-bottom: 1px #DDD solid;
+}
+.vote-block{
+	padding-top: 2rem;
+	border-top: 1px #DDD solid;
+}
+
+/*
+ * Error Styles
+ */
+.error-card{
+	padding: 4rem;
+	opacity: 0.9;
 }
