@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-	{{--We need a place to put intro for group !--}}
+	{{--We need a place to put intro for group @TODO!--}}
 	@foreach($ticket->voteGroup->votes as $vote)
 		<div class="post-card">
 			<div class="card vertical post-card-content">

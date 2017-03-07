@@ -21,9 +21,10 @@ Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :
 Route::get('/', function () {
 	return redirect('/aboutus');
 });
-Route::get('/aboutus', function(){
+Route::get('/aboutus', function () {
 	return 'about pages';
 });
+// @TODO 关于我们界面
 
 // ** 访客区域 **
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
@@ -31,7 +32,7 @@ Route::get('/aboutus', function(){
 // Vote 区域
 Route::group(['prefix' => 'vote'], function () {
 
-	Route::group(['middleware' => 'group'], function () {
+	Route::group(['middleware' => 'vote_group'], function () {
 		// 访客 Ticket 验证
 		Route::get('/ticket/{ticket}', 'VoteController@showVoteGroup')->where(['ticket' => '[a-z0-9]+']);
 		// 访客 Ticket 认证结束
@@ -39,16 +40,16 @@ Route::group(['prefix' => 'vote'], function () {
 
 	Route::group(['middleware' => 'vote'], function () {
 		// 投票处理认证
-		Route::get('/id/{id}/ticket/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
-		Route::post('/id/{id}/ticket/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
+		Route::get('/id/{id}/ticket/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
+		Route::post('/id/{id}/ticket/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
 		// 投票处理结束
 	});
 
-	Route::group(['middleware' => 'ResultVerify'], function(){
-		Route::get('/id/{id}/result', 'VoteController@showVoteResult');
+	Route::group(['middleware' => 'vote_result'], function () {
+		// 投票结果处理
+		Route::get('/id/{id}/ticket/{ticket}/result', 'VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
+		// 投票结果结束
 	});
-
-	// Route::get('/vote/result/{id}/{ticket}','VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 
 });
 
@@ -67,7 +68,20 @@ Route::group(['middleware' => 'auth'], function () {
 
 		// 投票相关
 		Route::get('/vote/group/{id}', 'VoteController@showVoteGroup')->where(['id' => '[0-9]+']);
+		Route::group(['middleware' => 'vote'], function () {
+			// 投票处理认证
+			Route::get('/id/{id}/', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+']);
+			Route::post('/id/{id}/', 'VoteController@voteHandler')->where(['id' => '[0-9]+']);
+			// 投票处理结束
+		});
+		Route::group(['middleware' => 'vote_result'], function () {
+			// 投票结果处理
+			Route::get('/id/{id}/result', 'VoteController@showVoteResult')->where(['id' => '[0-9]+']);
+			// 投票结果结束
+		});
+
 		// @TODO Login 尚未完成
+
 		// 帖子相关
 		Route::get('/post', function () {
 			return view('post/create');
@@ -79,8 +93,13 @@ Route::group(['middleware' => 'auth'], function () {
 
 // 管理员区域
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
-	Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
-	Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
+	Route::group(['prefix' => 'vote'], function () {
+		//票据区域
+		Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
+		Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
+		//票据结束
+	});
+
 });
 
 // 错误信息

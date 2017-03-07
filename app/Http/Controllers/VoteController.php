@@ -44,7 +44,7 @@ class VoteController extends Controller
 	}
 
 	/**
-	 * show vote pages, 并判断该用户是否已经投票
+	 * show vote pages
 	 *
 	 * @param $id
 	 * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
@@ -76,30 +76,31 @@ class VoteController extends Controller
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
-						foreach ($answers as $answer) {
-							Answer::create([
-								'option_id' => $answer,
-							    'source_id' => $ticket->id,
-								'source_type' => 'ticket',
-							]);
-						}
-						$ticket->IP_address = $request->ip();
-						if (!$ticket->save()) {
-							abort(500); // Something goes wrong :(
-						}
+					foreach ($answers as $answer) {
+						$modelAns = new Answer;
+						$modelAns->option_id = $answer;
+						$modelAns->source_id = $ticket->id;
+						$modelAns->source_type = 'ticket';
+					}
+					$ticket->IP_address = $request->ip();
+					$ticket->saveOrfail();
+					$modelAns->saveOrFail();
+					return redirect('/vote/id/' . $voteId . 'ticket' . $ticket->string . '/result/');
+					break;
 				case 'user':
 					$userId = $request->user()->id;
-						$answers->each(function ($answer) use ($request) {
-							Answer::create([
-								'option_id' => $answer,
-								// 'content' => empty($answer->content) ? $answer->content : NULL,
-							]);
-						});
+					foreach ($answers as $answer) {
+						$modelAns = new Answer;
+						$modelAns->option_id = $answer;
+						$modelAns->source_id = $ticket->id;
+						$modelAns->source_type = 'user';
 					}
-					return redirect('/vote/result/' . $voteId);
+					$modelAns->saveOrFail();
+					return redirect('/vote/id/' . $voteId . '/result/');
+					break;
 			}
 		} else {
-			return redirect('/error/custom')->withErrors(['warning' => 'There is something fishy about your vote. Try again.']);
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.checksum_fail')]);
 		}
 	}
 
@@ -111,18 +112,8 @@ class VoteController extends Controller
 	 */
 	public function showVoteResult(request $request)
 	{
-		// @TODO rewrite
 		$voteId = $request->id;
-		switch ($request->type) {
-			case 'ticket':
-				$ticketString = $request->ticket;
-			case 'user':
-				$userId = $request->user()->id;
-				if ($this->checkIfVoted('user', $voteId, $userId)) {
-					return view('vote.result')->withVote(Vote::Id($voteId));
-				}
-				return redirect('/vote/' . $voteId);     //redirect to vote page if not voted
-		}
+		return view('vote.result')->withVote(Vote::Id($voteId));
 	}
 
 
