@@ -33,7 +33,7 @@ class VoteController extends Controller
 
 	public function showTicketVotes(Request $request)
 	{
-		$votes = Ticket::ticket($request->ticket)->first()->votes;
+		$votes = Ticket::ticket($request->ticket)->voteGroup->votes;
 		return view('vote.index')->withVotes($votes);
 	}
 

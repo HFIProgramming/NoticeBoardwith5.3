@@ -30,7 +30,7 @@ class VoteVerify
 
 
 		//If tickets: the votes must be of the same type.
-		if (empty($vote = Vote::find($request->id))&&empty($vote = Ticket::ticket($request->ticket)->first()->votes->first())) { //check if vote exists
+		if (empty($vote = Vote::find($request->id))&&empty($vote = Ticket::ticket($request->ticket)->first()->voteGroup->votes->first())) { //check if vote exists
 			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
 		}
 
