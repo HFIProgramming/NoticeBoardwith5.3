@@ -130,7 +130,7 @@ class VoteController extends Controller
 				return redirect('/vote/'.$voteId.'/'.$ticketString); 	 //redirect to vote page if not voted
 			case 'user':
 				$userId = $request->user()->id;
-				if($this->checkIfVoted('user',$voxteId,$userId)){
+				if($this->checkIfVoted('user',$voteId,$userId)){
 					return view('vote.result')->withVote(Vote::Id($voteId));
 				}
 				return redirect('/vote/'.$voteId); 	 //redirect to vote page if not voted
