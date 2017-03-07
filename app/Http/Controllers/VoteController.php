@@ -185,9 +185,10 @@ class VoteController extends Controller
 	 */
 	private function checkIfRepeatingOptions($answers)
 	{
-		if (!($answers->diff($answers->unique())->isEmpty())) {
-			abort(500);
+		if ($answers->diff($answers->unique())->isEmpty()) {
+			return;
 		}
+		abort(500);
 	}
 
 	/**
@@ -202,9 +203,11 @@ class VoteController extends Controller
 		$required = collect($vote->questions->where('optional', 0)->map(function ($question) {
 			return $question->id;
 		}));
-		if (!($required->diff($filled)->isEmpty())) {
-			redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
+		if ($required->diff($filled)->isEmpty()) {
+
+			return;
 		}
+		redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 	}
 
 	/**

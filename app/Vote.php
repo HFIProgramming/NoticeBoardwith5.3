@@ -63,12 +63,12 @@ class Vote extends Model
 	}
 
     /**
-     * Return tickets associated with the vote.
+     * Return the vote group to which the vote belongs.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tickets()
+    public function voteGroup()
     {
-        return $this->belongsToMany('App\Ticket');
+        return $this->belongsTo('App\VoteGroup');
 	}
 }

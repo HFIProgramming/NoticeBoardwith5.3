@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTicketVoteTable extends Migration
+class AddVoteGroupIdToVotes extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateTicketVoteTable extends Migration
      */
     public function up()
     {
-        Schema::create('ticket_vote', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('ticket_id');
-            $table->string('vote_id');
-            $table->timestamps();
+        Schema::table('votes', function (Blueprint $table) {
+            $table->string('vote_group_id');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateTicketVoteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ticket_vote');
+        Schema::table('votes', function (Blueprint $table) {
+            $table->dropColumn('vote_group_id');
+        });
     }
 }

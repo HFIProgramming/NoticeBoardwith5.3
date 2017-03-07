@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DropVoteIdInTickets extends Migration
+class AddVoteGroupIdToTickets extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class DropVoteIdInTickets extends Migration
     public function up()
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->dropColumn('vote_id');
+            $table->string('vote_group_id');
         });
     }
 
@@ -26,7 +26,7 @@ class DropVoteIdInTickets extends Migration
     public function down()
     {
         Schema::table('tickets', function (Blueprint $table) {
-            $table->string('vote_id');
+            $table->dropColumn('vote_group_id');
         });
     }
 }
