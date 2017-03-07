@@ -36,13 +36,38 @@ class Ticket extends Model
 		return $query->where('string', $string);
 	}
 
-    /**
-     * Return the vote group to which the ticket belongs.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function voteGroup()
-    {
-        return $this->belongsTo('App\VoteGroup');
+	/**
+	 * Return the vote group to which the ticket belongs.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function voteGroup()
+	{
+		return $this->belongsTo('App\VoteGroup');
 	}
+
+	/**
+	 * All answers belong to specific ticket
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function answers()
+	{
+		return $this->morphMany('App\Answer', 'answerable');
+	}
+
+
+	/**
+	 * Check if ticket used
+	 *
+	 * @param $voteId
+	 * @return mixed
+	 */
+	public function isTicketUsed($voteId)
+	{
+		return $this->answers->map(function ($answer) {
+			return $answer->option->question->vote->id;
+		})->flatten()->search($voteId) ? true : false;
+	}
+
 }

@@ -61,13 +61,29 @@ class User extends Authenticatable
 		return $this->hasMany('App\Post');
 	}
 
-    /**
-     * List the user's votes.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function votes()
-    {
-        return $this->hasMany('App\Vote', 'creator_id');
+	/**
+	 * List the user's votes.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function votes()
+	{
+		return $this->hasMany('App\Vote', 'creator_id');
+	}
+
+	/**
+	 * List user's vote result
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function answers()
+	{
+		return $this->morphMany('App\Answer', 'answerable');
+	}
+
+	public function isUserVoted($voteId){
+		return $this->answers->map(function ($answer){
+			return $answer->option->question->vote->id;
+		})->flatten()->search($voteId) ? true : false;
 	}
 }

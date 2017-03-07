@@ -27,7 +27,6 @@ class VoteController extends Controller
 	public function showVotes()
 	{
 		$votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
-
 		return view('vote.index')->withVotes($votes);
 	}
 
@@ -40,7 +39,7 @@ class VoteController extends Controller
 	public function showVoteGroup(Request $request)
 	{
 		$group = Ticket::ticket($request->ticket)->voteGroup;
-		return view('vote.landing')->withGroup($group);
+		return view('vote.landing')->withGroup($group)->withTicket($request->ticket);
 	}
 
 	/**
@@ -143,34 +142,6 @@ class VoteController extends Controller
 		}
 	}
 
-	/**
-	 * Check if a user/ticket has voted
-	 *
-	 * @param  String $type :ticket or user?
-	 * @param  String $voteId
-	 * @param  String $id :Depends on the type. If it's ticket then should be ticket string, otherwise user id
-	 * @return Bool
-	 */
-	private function checkIfVoted($type,$voteId,$identifier){
-		if ($type == 'user'){
-			$vote = Vote::find($voteId);
-			$votedIds = $vote->votedUserIds();
-			if ($votedIds->search($identifier)){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}
-		else if ($type == 'ticket'){
-			if(Ticket::ticket($identifier)->first()->is_used){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}
-	}
 
 	 /* Check whether Vote is valid !
 	 *

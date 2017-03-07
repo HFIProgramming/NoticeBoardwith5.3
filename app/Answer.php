@@ -24,6 +24,11 @@ class Answer extends Model
 
 	];
 
+	public function answerable()
+	{
+		return $this->morphTo();
+	}
+
 	/**
 	 * Trace back the option
 	 *
