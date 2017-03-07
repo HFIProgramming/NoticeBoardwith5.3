@@ -36,4 +36,13 @@ class Ticket extends Model
 		return $query->where('string', $string);
 	}
 
+    /**
+     * Return the vote group to which the ticket belongs.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function voteGroup()
+    {
+        return $this->belongsTo('App\VoteGroup');
+	}
 }

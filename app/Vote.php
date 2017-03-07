@@ -61,4 +61,14 @@ class Vote extends Model
 	{
 		return $query->where('id', $Id)->firstOrFail();
 	}
+
+    /**
+     * Return the vote group to which the vote belongs.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function voteGroup()
+    {
+        return $this->belongsTo('App\VoteGroup');
+	}
 }
