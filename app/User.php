@@ -81,9 +81,15 @@ class User extends Authenticatable
 		return $this->morphMany('App\Answer', 'answerable');
 	}
 
-	public function isUserVoted($voteId){
-		return $this->answers->map(function ($answer){
+	public function isUserVoted($voteId)
+	{
+		if ($this->answers->map(function ($answer) {
 			return $answer->option->question->vote->id;
-		})->flatten()->search($voteId) ? true : false;
+		})->flatten()->search($voteId) === false
+		) {
+			return false;
+		}
+		return true;
 	}
+
 }

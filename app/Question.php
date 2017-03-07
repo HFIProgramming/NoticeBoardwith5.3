@@ -43,7 +43,7 @@ class Question extends Model
 	 */
 	public function vote()
 	{
-		return $this->belongsTo('App\Vote', 'id', 'vote_id');
+		return $this->belongsTo('App\Vote', 'vote_id', 'id');
 	}
 
 	public function getTotalNumber(){

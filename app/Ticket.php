@@ -33,7 +33,7 @@ class Ticket extends Model
 	 */
 	public function scopeTicket($query, $string)
 	{
-		return $query->where('string', $string);
+		return $query->where('string', $string)->firstorFail();
 	}
 
 	/**
@@ -65,9 +65,13 @@ class Ticket extends Model
 	 */
 	public function isTicketUsed($voteId)
 	{
-		return $this->answers->map(function ($answer) {
-			return $answer->option->question->vote->id;
-		})->flatten()->search($voteId) ? true : false;
+		if ($this->answers->map(function ($answer) {
+				return $answer->option->question->vote->id;
+			})->flatten()->search($voteId) === false
+		) {
+			return false;
+		}
+		return true;
 	}
 
 }

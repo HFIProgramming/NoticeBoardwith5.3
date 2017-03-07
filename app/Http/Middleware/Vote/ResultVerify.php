@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\vote;
+namespace App\Http\Middleware;
 
 use Closure;
 

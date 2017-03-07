@@ -24,6 +24,11 @@ class Answer extends Model
 
 	];
 
+	/**
+	 * multi connection
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
 	public function answerable()
 	{
 		return $this->morphTo();
@@ -36,7 +41,7 @@ class Answer extends Model
 	 */
 	public function option()
 	{
-		return $this->belongsTo('App\Option', 'id', 'option_id');
+		return $this->belongsTo('App\Option', 'option_id', 'id');
 	}
 
 	/**
@@ -46,7 +51,7 @@ class Answer extends Model
 	 */
 	public function user()
 	{
-		return $this->belongsTo('App\User', 'id', 'user_id');
+		return $this->belongsTo('App\User', 'user_id', 'id');
 	}
 
 }

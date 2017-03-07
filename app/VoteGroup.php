@@ -25,6 +25,6 @@ class VoteGroup extends Model
 	 */
 	public function tickets()
 	{
-		return $this->hasMany('App\Ticket', 'vote_group_id', 'id');
+		return $this->hasMany('App\Ticket', 'vote_group_tid', 'id');
 	}
 }

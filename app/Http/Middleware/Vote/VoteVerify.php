@@ -43,7 +43,7 @@ class VoteVerify
 		// Categorize
 
 		// If user use ticket to vote, then go with this check
-		if (!empty($ticket = Ticket::ticket($request->ticket)->first()) && ($vote->type == 1 || $vote->type == 2)) {
+		if (!empty($ticket = Ticket::ticket($request->ticket)) && ($vote->type == 1 || $vote->type == 2)) {
 			if ($ticket->active == 1) { // check if ticket is valid
 				if (!$ticket->isTicketUsed($vote->id)) {
 					$request->merge(['type' => 'Ticket']); //将该请求归类到Ticket类型

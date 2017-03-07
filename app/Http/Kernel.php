@@ -46,16 +46,16 @@ class Kernel extends HttpKernel
 	 * @var array
 	 */
 	protected $routeMiddleware = [
-		'auth'       => \Illuminate\Auth\Middleware\Authenticate::class,
+		'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
 		'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-		'bindings'   => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-		'can'        => \Illuminate\Auth\Middleware\Authorize::class,
-		'guest'      => \App\Http\Middleware\RedirectIfAuthenticated::class,
-		'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-		'active'     => \App\Http\Middleware\ActiveVerify::class,
-		'admin'      => \App\Http\Middleware\AdminVerify::class,
-		'vote'       => \App\Http\Middleware\VoteVerify::class,
-    'file'       => \App\Http\Middleware\FileVerify::class,
-
+		'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
+		'can' => \Illuminate\Auth\Middleware\Authorize::class,
+		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+		'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+		'active' => \App\Http\Middleware\ActiveVerify::class,
+		'admin' => \App\Http\Middleware\AdminVerify::class,
+		'vote' => \App\Http\Middleware\VoteVerify::class,
+		'file' => \App\Http\Middleware\FileVerify::class,
+		'group' => \App\Http\Middleware\GroupVerify::class,
 	];
 }
