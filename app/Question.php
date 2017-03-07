@@ -46,6 +46,11 @@ class Question extends Model
 		return $this->belongsTo('App\Vote', 'vote_id', 'id');
 	}
 
+	/**
+	 * Get total number of people who answer the question
+	 *
+	 * @return mixed
+	 */
 	public function getTotalNumber(){
 		return $this->options->map(function ($option) {
 			return count($option->answers);

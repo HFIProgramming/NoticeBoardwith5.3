@@ -81,6 +81,12 @@ class User extends Authenticatable
 		return $this->morphMany('App\Answer', 'answerable');
 	}
 
+	/**
+	 * Check if User has voted in specific Vote
+	 *
+	 * @param $voteId
+	 * @return bool
+	 */
 	public function isUserVoted($voteId)
 	{
 		if ($this->answers->map(function ($answer) {
