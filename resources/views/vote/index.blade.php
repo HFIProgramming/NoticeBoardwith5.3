@@ -3,14 +3,19 @@
 @section('title','Votes')
 
 @section('content')
-    
+
     @foreach($votes as $vote)
         <div class="post-card">
         <div class="card vertical post-card-content">
             <div class="card-action">
                 <div class="row post-card-heading no-margin">
                     <div class="col l8 subheade hide-on-med-and-down" align="left"><h6>{{$vote->created_at}}</h6></div>
-                    <div class="col l4 right"><a href="{{url('/vote/'.$vote->id)}}">Vote Now!</a></div>
+                    @if (strtotime($vote->ended_at) - strtotime('now') >= 0)
+                    	<div class="col l4 right"><a href="{{url('/vote/'.$vote->id)}}">Vote Now!</a></div>
+                    @endif
+					@if (strtotime($vote->ended_at) - strtotime('now') < 0)
+						<div class="col l4 right"><a href="#">Vote Not Available Now</a></div>
+					@endif
                 </div>
             </div>
             <div class="post-user-profile">

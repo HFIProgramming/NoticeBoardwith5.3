@@ -25,7 +25,7 @@ class PostController extends Controller
 	 */
 	public function showIndividualPost($id)
 	{
-		if ($post = Post::Id($id)->first()) {
+		if ($post = Post::Id($id)) {
 			switch ($post->is_public) {
 				case 1:
 					return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
@@ -49,7 +49,8 @@ class PostController extends Controller
 			}
 		}
 
-		return redirect('/error/custom')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Pote No Found
+
+		return redirect('/error/custom')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Post No Found
 	}
 
 	/**
@@ -66,7 +67,7 @@ class PostController extends Controller
 		) {
 			return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
 		}
-		if ($post = Post::Id($request->id)->first()) {
+		if ($post = Post::Id($request->id)) {
 			if (Comment::create([
 				'user_id'  => $this->user->id,
 				'password' => $request['content'],

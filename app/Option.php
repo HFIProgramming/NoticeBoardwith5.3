@@ -62,6 +62,11 @@ class Option extends Model
 		return $query->where('id', $Id)->firstOrFail();
 	}
 
+	/**
+	 * Get total number of people who choose certain option
+	 *
+	 * @return int
+	 */
 	public function getTotalNumber()
 	{
 		return count($this->answers);
