@@ -31,6 +31,12 @@ class VoteController extends Controller
 		return view('vote.index')->withVotes($votes);
 	}
 
+	public function showTicketVotes(Request $request)
+	{
+		$votes = Ticket::ticket($request->ticket)->voteGroup->votes;
+		return view('vote.index')->withVotes($votes);
+	}
+
 	/**
 	 * show vote pages, 并判断该用户是否已经投票
 	 *
@@ -214,7 +220,7 @@ class VoteController extends Controller
 		$optionsFilled = array_count_values($answers->map(function ($answer) {
 			return Option::Id($answer)->question->id;
 		})->flatten()->toArray());
-		$vote->questions->each(function ($question, $key) use ($optionsFilled) {
+		$vote->questions->each(function ($question) use ($optionsFilled) {
 			if ($optionsFilled[$question->id] != $question->range) {
 				abort(500);
 			} // illegal answers :( # of options for a specific question is not match

@@ -28,9 +28,9 @@ class VoteVerify
 			]),]); // No ticket or user need to login to vote.
 		}
 
-		$vote = Vote::find($request->id);
 
-		if (empty($vote)) { //check if vote exists
+		//If tickets: the votes must be of the same type.
+		if (empty($vote = Vote::find($request->id))&&empty($vote = Ticket::ticket($request->ticket)->first()->voteGroup->votes->first())) { //check if vote exists
 			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
 		}
 
@@ -43,13 +43,14 @@ class VoteVerify
 		// Categorize
 
 		// If user use ticket to vote, then go with this check
+
 		if (!empty(Ticket::ticket($request->ticket)->first()) && ($vote->type == 1 || $vote->type == 2)) {
 			$ticket = Ticket::ticket($request->ticket)->first();
 			if ($ticket->active == 1) { // check if ticket is valid
 				$request->merge(['type' => 'ticket']); //将该请求归类到Ticket类型
 				return $next($request);
 			}
-			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket Not Valid !  
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket Not Valid !
 		}
 
 		// If user login to vote, then go with this check
@@ -57,6 +58,6 @@ class VoteVerify
 			$request->merge(['type' => 'user']); //将该请求归类到User类型
 			return $next($request);
 		}
-		return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Missing vaild Credential  
+		return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Missing vaild Credential
 	}
 }
