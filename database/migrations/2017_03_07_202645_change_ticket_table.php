@@ -17,6 +17,7 @@ class ChangeTicketTable extends Migration
 	    Schema::table('tickets', function (Blueprint $table) {
 		    $table->dropColumn('is_used');
 		    $table->dropColumn('vote_id');
+		    $table->string('IP_address');
 	    });
     }
 
@@ -30,6 +31,7 @@ class ChangeTicketTable extends Migration
 	    Schema::table('tickets', function (Blueprint $table) {
 		    $table->integer('is_used');
 		    $table->integer('vote_id');
+		    $table->dropColumn('IP_address');
 	    });
 
     }

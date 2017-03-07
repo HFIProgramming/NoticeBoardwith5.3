@@ -16,16 +16,6 @@ class Comment extends Model
 	];
 
 	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'user_id', 'is_prohibited', 'reason', 'post_id',
-	];
-
-
-	/**
 	 * Trace back the post
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

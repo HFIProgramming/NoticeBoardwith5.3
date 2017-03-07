@@ -16,15 +16,6 @@ class Ticket extends Model
 	];
 
 	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-
-	];
-
-	/**
 	 * popular search for ticket
 	 *
 	 * @param $query

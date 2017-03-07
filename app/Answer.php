@@ -17,14 +17,6 @@ class Answer extends Model
 	];
 
 	/**
-	 * Hidden
-	 * @var array
-	 */
-	protected $hidden = [
-
-	];
-
-	/**
 	 * multi connection
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo

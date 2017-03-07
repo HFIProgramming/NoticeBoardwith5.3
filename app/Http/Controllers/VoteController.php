@@ -66,35 +66,32 @@ class VoteController extends Controller
 	 */
 	public function voteHandler(Request $request)
 	{
+		// init
 		$voteId = $request->id;
-		$ticket = Ticket::ticket($request->ticket)->first();
+		$ticket = Ticket::ticket($request->ticket);
 		$answers = collect(json_decode($request->selected));  // turn string to int
 		$vote = Vote::Id($request->id);
 		$result = $this->verifyAnswers($answers, $vote);
+
 		if ($result === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
-					$ticketString = $request->ticket;
-					if (!$this->checkIfVoted('ticket', $voteId, $ticketString)) { //Check if ticket has voted
 						foreach ($answers as $answer) {
 							Answer::create([
 								'option_id' => $answer,
-								'user_id' => $ticketString
+							    'source_id' => $ticket->id,
+								'source_type' => 'ticket',
 							]);
 						}
-						$ticket->is_used = 1;  // Mark as used
+						$ticket->IP_address = $request->ip();
 						if (!$ticket->save()) {
 							abort(500); // Something goes wrong :(
 						}
-					}
-					return redirect('/vote/result/' . $voteId . '/' . $ticketString);
 				case 'user':
 					$userId = $request->user()->id;
-					if (!$this->checkIfVoted('user', $voteId, $userId)) { //Check if user has voted
 						$answers->each(function ($answer) use ($request) {
 							Answer::create([
 								'option_id' => $answer,
-								'user_id' => $request->user()->id
 								// 'content' => empty($answer->content) ? $answer->content : NULL,
 							]);
 						});
@@ -114,14 +111,11 @@ class VoteController extends Controller
 	 */
 	public function showVoteResult(request $request)
 	{
+		// @TODO rewrite
 		$voteId = $request->id;
 		switch ($request->type) {
 			case 'ticket':
 				$ticketString = $request->ticket;
-				if ($this->checkIfVoted('ticket', $voteId, $ticketString)) { //Can only see result when voted
-					return view('vote.result')->withVote(Vote::Id($voteId));
-				}
-				return redirect('/vote/' . $voteId . '/' . $ticketString);     //redirect to vote page if not voted
 			case 'user':
 				$userId = $request->user()->id;
 				if ($this->checkIfVoted('user', $voteId, $userId)) {
