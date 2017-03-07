@@ -53,7 +53,7 @@ class Ticket extends Model
 	 */
 	public function answers()
 	{
-		return $this->morphMany('App\Answer', 'answerable');
+		return $this->morphMany('App\Answer', 'source');
 	}
 
 

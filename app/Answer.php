@@ -29,7 +29,7 @@ class Answer extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
-	public function answerable()
+	public function source()
 	{
 		return $this->morphTo();
 	}

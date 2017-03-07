@@ -78,7 +78,7 @@ class User extends Authenticatable
 	 */
 	public function answers()
 	{
-		return $this->morphMany('App\Answer', 'answerable');
+		return $this->morphMany('App\Answer', 'source');
 	}
 
 	/**
