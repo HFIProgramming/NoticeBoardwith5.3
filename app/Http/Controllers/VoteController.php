@@ -16,7 +16,7 @@ class VoteController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware('vote', ['except' => 'showVotes']);
+		$this->middleware('vote', ['except' => 'showVotes','showVoteGroup']);
 	}
 
 	/**
@@ -31,7 +31,7 @@ class VoteController extends Controller
 		return view('vote.index')->withVotes($votes);
 	}
 
-	public function showTicketVotes(Request $request)
+	public function showVoteGroup(Request $request)
 	{
 		$votes = Ticket::ticket($request->ticket)->voteGroup->votes;
 		return view('vote.index')->withVotes($votes);

@@ -50,7 +50,7 @@ class VoteVerify
 				$request->merge(['type' => 'ticket']); //将该请求归类到Ticket类型
 				return $next($request);
 			}
-			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invaild')]); // Ticket Not Valid !
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invalid')]); // Ticket Not Valid !
 		}
 
 		// If user login to vote, then go with this check
