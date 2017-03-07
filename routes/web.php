@@ -76,6 +76,10 @@ Route::group(['prefix' => 'vote'], function () {
 		// 投票处理结束
 	});
 
+	Route::group(['middleware' => 'ResultVerify'], function(){
+		Route::get('/id/{id}/result', 'VoteController@showVoteResult');
+	});
+
 	// Route::get('/vote/result/{id}/{ticket}','VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[A-Za-z0-9]+']);
 
 });

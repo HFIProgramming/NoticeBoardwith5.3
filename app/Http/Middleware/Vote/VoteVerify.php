@@ -22,7 +22,7 @@ class VoteVerify
 	public function handle($request, Closure $next)
 	{
 		// general Checking
-		if (empty($request->ticket) && !Auth::check()){
+		if (empty($request->ticket) && !Auth::check()) {
 			return redirect('/login')->withErrors(['warning' => Lang::get('login.login_required', [
 				'process' => 'vote'
 			]),]); // No ticket or user need to login to vote.
@@ -30,14 +30,12 @@ class VoteVerify
 
 
 		//If tickets: the votes must be of the same type.
-		if (empty($vote = Vote::find($request->id))&&empty($vote = Ticket::ticket($request->ticket)->first()->voteGroup->votes->first())) { //check if vote exists
+		if (empty($vote = Vote::find($request->id)) && empty($vote = Ticket::ticket($request->ticket)->first()->voteGroup->votes->first())) { //check if vote exists
 			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_no_found')]); // Vote No Found
 		}
 
-		if(!$request->segment(2) == 'result'){  //If this request points to show result, then bypass this check
-			if (strtotime($vote->ended_at) - strtotime('now') < 0) {
-				return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
-			}
+		if (strtotime($vote->ended_at) - strtotime('now') < 0) {
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_expired')]); // Vote Expired
 		}
 
 		// Categorize

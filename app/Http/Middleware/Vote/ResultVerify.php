@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\vote;
 
 use Closure;
 
-class GroupVerify
+class ResultVerify
 {
     /**
      * Handle an incoming request.
@@ -15,10 +15,8 @@ class GroupVerify
      */
     public function handle($request, Closure $next)
     {
-		if(empty($ticket=Ticket::ticket($request->ticket)->first())||$ticket->active!=1)
-		{
-			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invalid')]);
-		}
+    	// @TODO
+
         return $next($request);
     }
 }

@@ -31,10 +31,16 @@ class VoteController extends Controller
 		return view('vote.index')->withVotes($votes);
 	}
 
+	/**
+	 * show vote group
+	 *
+	 * @param Request $request
+	 * @return mixed
+	 */
 	public function showVoteGroup(Request $request)
 	{
-		$votes = Ticket::ticket($request->ticket)->voteGroup->votes;
-		return view('vote.index')->withVotes($votes);
+		$group = Ticket::ticket($request->ticket)->voteGroup;
+		return view('vote.landing')->withGroup($group);
 	}
 
 	/**
