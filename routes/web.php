@@ -96,8 +96,8 @@ Route::group(['middleware' => 'auth'], function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 	Route::group(['prefix' => 'vote'], function () {
 		//票据区域
-		Route::get('/vote/ticket', 'Admin\VoteController@viewTickets');
-		Route::post('/vote/ticket', 'Admin\VoteController@generateTickets');
+		Route::get('/ticket', 'Admin\VoteController@viewTickets');
+		Route::post('/ticket', 'Admin\VoteController@generateTickets');
 		//票据结束
 	});
 
