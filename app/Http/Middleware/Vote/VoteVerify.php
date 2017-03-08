@@ -5,10 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Redirect;
 use App\Vote;
 use App\Ticket;
-use App\Answer;
 
 class VoteVerify
 {
@@ -43,10 +41,10 @@ class VoteVerify
 		// Categorize
 
 		// If user use ticket to vote, then go with this check
-		if (!empty($ticket = Ticket::ticket($request->ticket)) && ($vote->type == 1 || $vote->type == 2)) {
+		if ((!empty($ticket = Ticket::ticket($request->ticket))) && ($vote->type == 1 || $vote->type == 2)) {
 			if ($ticket->active == 1) { // check if ticket is valid
 				if (!$ticket->isTicketUsed($vote->id)) {
-					$request->merge(['type' => 'Ticket']); //将该请求归类到Ticket类型
+					$request->merge(['type' => 'ticket']); //将该请求归类到Ticket类型
 					return $next($request);
 				}
 				return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_is_used')]); // Ticket is used !
@@ -55,9 +53,10 @@ class VoteVerify
 		}
 
 		// If user login to vote, then go with this check
-		if ($user = Auth::user() && ($vote->type == 0 || $vote->type == 2)) {
+		if (Auth::check() && ($vote->type == 0 || $vote->type == 2)) {
+			$user = Auth::user();
 			if (!$user->isUserVoted($vote->id)) {
-				$request->merge(['type' => 'User']); //将该请求归类到User类型
+				$request->merge(['type' => 'user']); //将该请求归类到User类型
 				return $next($request);
 			}
 			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.user_has_voted')]); // User has voted !

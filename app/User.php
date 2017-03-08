@@ -82,6 +82,16 @@ class User extends Authenticatable
 	}
 
 	/**
+	 * Login Addresses
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function ipAddress()
+	{
+		return $this->morphMany('App\IPAddress', 'source');
+	}
+
+	/**
 	 * Check if User has voted in specific Vote
 	 *
 	 * @param $voteId

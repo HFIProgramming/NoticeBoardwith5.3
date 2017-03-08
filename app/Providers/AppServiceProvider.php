@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
 		Relation::morphMap([
 			'user' => \App\User::class,
 			'ticket' => \App\Ticket::class,
+		    'post' => \App\Post::class,
+		    'comment' => \App\Comment::class,
 		]);
 	}
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+use App\Events\UpdateModelIPAddress;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class VoteController extends Controller
 	 */
 	public function __construct()
 	{
-		$this->middleware('vote')->except(['showVotes', 'showVoteGroup']);
+
 	}
 
 	/**
@@ -82,10 +83,9 @@ class VoteController extends Controller
 						$modelAns->source_id = $ticket->id;
 						$modelAns->source_type = 'ticket';
 					}
-					$ticket->IP_address = $request->ip();
-					$ticket->saveOrfail();
+					event(new UpdateModelIPAddress('ticket', $ticket->id, 'vote.ticket', $request->ip()));
 					$modelAns->saveOrFail();
-					return redirect('/vote/id/' . $voteId . 'ticket' . $ticket->string . '/result/');
+					return redirect('/vote/id/' . $voteId . '/ticket/' . $ticket->string . '/result/');
 					break;
 				case 'user':
 					$userId = $request->user()->id;
@@ -155,10 +155,9 @@ class VoteController extends Controller
 			return $question->id;
 		}));
 		if ($required->diff($filled)->isEmpty()) {
-
 			return;
 		}
-		redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
+		return redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 	}
 
 	/**

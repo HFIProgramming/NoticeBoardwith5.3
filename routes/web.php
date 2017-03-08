@@ -38,17 +38,17 @@ Route::group(['prefix' => 'vote'], function () {
 		// 访客 Ticket 认证结束
 	});
 
+	Route::group(['middleware' => 'vote_result'], function () {
+		// 投票结果处理
+		Route::get('/id/{id}/ticket/{ticket}/result', 'VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
+		// 投票结果结束
+	});
+
 	Route::group(['middleware' => 'vote'], function () {
 		// 投票处理认证
 		Route::get('/id/{id}/ticket/{ticket}', 'VoteController@showIndividualVote')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
 		Route::post('/id/{id}/ticket/{ticket}', 'VoteController@voteHandler')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
 		// 投票处理结束
-	});
-
-	Route::group(['middleware' => 'vote_result'], function () {
-		// 投票结果处理
-		Route::get('/id/{id}/ticket/{ticket}/result', 'VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);
-		// 投票结果结束
 	});
 
 });

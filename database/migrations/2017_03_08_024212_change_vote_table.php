@@ -27,7 +27,7 @@ class ChangeVoteTable extends Migration
     public function down()
     {
         //
-	    Schema::table('tickets', function (Blueprint $table) {
+	    Schema::table('votes', function (Blueprint $table) {
 		    $table->dropColumn('show_result');
 	    });
     }

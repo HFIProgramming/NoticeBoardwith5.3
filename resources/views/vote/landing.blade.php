@@ -15,7 +15,7 @@
 						</div>
 						@if (!$ticket->isTicketUsed($vote->id))
 						@if (strtotime($vote->ended_at) - strtotime('now') >= 0)
-							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket)}}">Vote
+							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">Vote
 									Now!</a></div>
 						@elseif (strtotime($vote->started_at) - strtotime('now') > 0)
 							<div class="col l4 right"><a href="#">Vote Has not started Yet</a></div>
@@ -41,7 +41,7 @@
 								开始时间：{{$vote->started_at}}</button>
 							<button class="tag-btn btn-flat waves-effect waves-light">结束时间：{{$vote->ended_at}}</button>
 							<button class="tag-btn btn-flat waves-effect waves-light">
-								投票人数：{{count($vote->votedUserIds())}}</button>
+								投票人数：{{count($vote->votedIds())}}</button>
 						</div>
 						<h6 class="subheader post-header hide-on-large-only">{{$vote->created_at}}</h6>
 					</div>

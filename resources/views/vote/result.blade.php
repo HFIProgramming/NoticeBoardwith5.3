@@ -22,7 +22,7 @@
                     <!--Tags. Limit to 3 per post and their length-->
                     <div class="tag-container">
                         <button class="tag-btn btn-flat waves-effect waves-light">结束时间：{{$vote->ended_at}}</button>
-                        <button class="tag-btn btn-flat waves-effect waves-light">投票人数：{{count($vote->votedUserIds())}}</button>
+                        <button class="tag-btn btn-flat waves-effect waves-light">投票人数：{{count($vote->votedIds())}}</button>
                     </div>
                     <br>
 

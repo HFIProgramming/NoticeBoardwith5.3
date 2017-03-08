@@ -47,6 +47,15 @@ class Ticket extends Model
 		return $this->morphMany('App\Answer', 'source');
 	}
 
+	/**
+	 * Ticket IPAddress
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function ipAddress()
+	{
+		return $this->morphMany('App\IPAddress', 'source');
+	}
 
 	/**
 	 * Check if ticket used

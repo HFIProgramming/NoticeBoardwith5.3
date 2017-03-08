@@ -15,7 +15,8 @@ class ChangeAnswerTable extends Migration
     {
     	Schema::table('vote_answers', function($table){
     		$table->renameColumn('user_id', 'source_id');
-		    $table->string('source_type')->nullable();
+    		$table->integer('option_id')->change();
+		    $table->string('source_type');
 	    });
     }
 
@@ -30,6 +31,7 @@ class ChangeAnswerTable extends Migration
 	    Schema::table('vote_answers', function (Blueprint $table) {
 		    $table->dropColumn('source_type');
 		    $table->renameColumn('source_id','user_id');
+		    $table->string('option_id')->nullable()->change();
 	    });
     }
 }
