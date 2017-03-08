@@ -48,7 +48,7 @@ class Vote extends Model
 					return $answer->source->id;
 				});
 			});
-		})->flatten();
+		})->flatten()->unique();
 	}
 
 	/**
