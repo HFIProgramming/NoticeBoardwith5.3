@@ -50,4 +50,5 @@ class ResultVerify
 
 		return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.credential_error')]); // Credential invalid
 	}
+  
 }

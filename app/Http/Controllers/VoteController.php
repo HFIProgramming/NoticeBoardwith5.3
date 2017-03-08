@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Answer;
+
 use App\Events\UpdateModelIPAddress;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,6 @@ class VoteController extends Controller
 	 */
 	public function __construct()
 	{
-
 	}
 
 	/**

@@ -20,7 +20,6 @@ Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :
 //Route::get('/', 'HomeController@index');
 Route::get('/', function () {
 	return redirect('/aboutus');
-});
 Route::get('/aboutus', function () {
 	return 'about pages';
 });
@@ -37,7 +36,7 @@ Route::group(['prefix' => 'vote'], function () {
 		Route::get('/ticket/{ticket}', 'VoteController@showVoteGroup')->where(['ticket' => '[a-z0-9]+']);
 		// 访客 Ticket 认证结束
 	});
-
+  
 	Route::group(['middleware' => 'vote_result'], function () {
 		// 投票结果处理
 		Route::get('/id/{id}/ticket/{ticket}/result', 'VoteController@showVoteResult')->where(['id' => '[0-9]+', 'ticket' => '[a-z0-9]+']);

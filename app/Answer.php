@@ -27,6 +27,16 @@ class Answer extends Model
 	}
 
 	/**
+	 * multi connection
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+	 */
+	public function answerable()
+	{
+		return $this->morphTo();
+	}
+
+	/**
 	 * Trace back the option
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
