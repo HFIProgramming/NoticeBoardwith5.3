@@ -24,6 +24,7 @@ class VoteController extends Controller
 	/**
 	 * show all votes
 	 *
+	 * @TODO 研究一下预加载
 	 * @return mixed
 	 */
 	public function showVotes()
@@ -82,9 +83,9 @@ class VoteController extends Controller
 						$modelAns->option_id = $answer;
 						$modelAns->source_id = $ticket->id;
 						$modelAns->source_type = 'ticket';
+						$modelAns->saveOrFail();
 					}
 					event(new UpdateModelIPAddress('ticket', $ticket->id, 'vote.ticket', $request->ip()));
-					$modelAns->saveOrFail();
 					return redirect('/vote/id/' . $voteId . '/ticket/' . $ticket->string . '/result/');
 					break;
 				case 'user':
@@ -94,8 +95,8 @@ class VoteController extends Controller
 						$modelAns->option_id = $answer;
 						$modelAns->source_id = $ticket->id;
 						$modelAns->source_type = 'user';
+						$modelAns->saveOrFail();
 					}
-					$modelAns->saveOrFail();
 					return redirect('/vote/id/' . $voteId . '/result/');
 					break;
 			}
