@@ -13,11 +13,11 @@
 				<div class="card-image article-avatar"><img class="club-avatar" src="assets/images/clublogo.png" /></div>
 			</div>
 			<div class="post-header-container title-container">
-				<h3 class="header post-header railway">HFI Programming Club</h3>
+				<h4 class="header post-header railway">HFI Programming Club</h4>
 			</div>
 			<!--Club motto-->
 			<div class="post-header-container">
-				<h5 class="header post-header railway subheader">Inventing futures through coding</h5>
+				<h5 class="header post-header railway subheader">Invents future through coding</h5>
 			</div>
 			<div class="card-stacked">
 				<div class="card-content">
@@ -56,49 +56,42 @@
 						<span class="title railway">Howard Yu</span>
 						<p class="railway subheader italic">社长，后端工程师
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/michael.jpg" alt="" class="circle">
 						<span class="title railway">Micheal Luo</span>
 						<p class="railway subheader italic">社长，宣传，市场，公关，运维，后端
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/ethan.jpg" alt="" class="circle">
 						<span class="title railway">Ethan Hu</span>
 						<p class="railway subheader italic">前社长，前端工程师，设计师，财务
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/concord.png" alt="" class="circle">
 						<span class="title railway">Jerry Li</span>
 						<p class="railway subheader italic">前端工程师，设计师
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/jhonny.png" alt="" class="circle">
 						<span class="title railway">Jhonny Jian</span>
 						<p class="railway subheader italic">后端工程师，技术支持
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/dorothy.jpg" alt="" class="circle">
 						<span class="title railway">Dorothy [Family Name]</span>
 						<p class="railway subheader italic">宣传，公关
 						</p>
-						<a href="#" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/bazinga.jpg" alt="" class="circle">
 						<span class="title railway">[First Name] Lin</span>
 						<p class="railway subheader italic">后端工程师
 						</p>
-						<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 					</li>
 				</ul>
 			</div>
