@@ -15,7 +15,7 @@ class ChangeVoteTable extends Migration
     {
         //
 	    Schema::table('votes', function (Blueprint $table) {
-		    $table->integer('show_result')->default(1); // 1 show 2 no
+		    $table->integer('show_result')->default(1); // 1 show 0 no
 	    });
     }
 
