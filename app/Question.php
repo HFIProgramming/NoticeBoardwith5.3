@@ -15,15 +15,6 @@ class Question extends Model
 		'type', 'content', 'explanation',
 	];
 
-	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'range', 'vote_id',
-	];
-
 	protected $table = 'vote_questions';
 
 	/**

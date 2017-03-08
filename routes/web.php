@@ -27,6 +27,10 @@ Route::get('/aboutus', function () {
 });
 // @TODO 关于我们界面
 
+Route::get('/intl/{ticket}', function($ticket){
+	return redirect('/vote/ticket/'.$ticket);
+});
+
 // ** 访客区域 **
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
 
