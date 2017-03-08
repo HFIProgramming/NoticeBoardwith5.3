@@ -13,7 +13,7 @@ class ChangeAnswerTable extends Migration
      */
     public function up()
     {
-    	Schema::table('vote_answers', function($table){
+    	Schema::table('vote_answers', function(Blueprint $table){
     		$table->renameColumn('user_id', 'source_id');
     		$table->integer('option_id')->change();
 		    $table->string('source_type');
