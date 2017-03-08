@@ -31,7 +31,7 @@ class VoteController extends Controller
 
 	/**
 	 * process generation
-	 *
+	 * @TODO rewrite
 	 * @param Request $request
 	 * @return $this|\Illuminate\Http\RedirectResponse
 	 */
@@ -40,7 +40,7 @@ class VoteController extends Controller
 		if ($errors = Validator::make($request->all(), [
 			'prefix'  => 'nullable|string',
 			'length'  => 'required|numeric',
-			'vote_id' => 'required|numeric',
+			'vote_group_id' => 'required|numeric',
 			'number'  => 'required|numeric',
 		])->validate()
 		) {
@@ -49,7 +49,7 @@ class VoteController extends Controller
 		for ($i = 1; $i <= $request->number; $i++) {
 			Ticket::create([
 				'string'  => randomString($request->length, $request->prefix),
-				'vote_id' => $request->vote_id,
+				'vote_group_id' => $request->vote_id,
 			]);
 		}
 
