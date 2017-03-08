@@ -21,6 +21,7 @@ Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :
 Route::get('/', function () {
 	return redirect('/aboutus');
 });
+
 Route::get('/aboutus', function () {
 	return 'about pages';
 });
