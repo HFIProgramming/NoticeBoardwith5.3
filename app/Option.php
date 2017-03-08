@@ -16,14 +16,6 @@ class Option extends Model
 	];
 
 	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = ['question_id',
-	];
-
-	/**
 	 * Table name plz
 	 *
 	 * @var string

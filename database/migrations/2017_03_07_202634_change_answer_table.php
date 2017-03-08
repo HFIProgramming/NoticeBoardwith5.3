@@ -14,8 +14,9 @@ class ChangeAnswerTable extends Migration
     public function up()
     {
     	Schema::table('vote_answers', function($table){
-    		$table->renameColumn('user_id', 'answerable_id');
-		    $table->string('answerable_type')->nullable();
+    		$table->renameColumn('user_id', 'source_id');
+    		$table->integer('option_id')->change();
+		    $table->string('source_type');
 	    });
     }
 
@@ -28,8 +29,9 @@ class ChangeAnswerTable extends Migration
     {
         //
 	    Schema::table('vote_answers', function (Blueprint $table) {
-		    $table->dropColumn('answerable_type');
-		    $table->renameColumn('answerable_id','user_id');
+		    $table->dropColumn('source_type');
+		    $table->renameColumn('source_id','user_id');
+		    $table->string('option_id')->nullable()->change();
 	    });
     }
 }

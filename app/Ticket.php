@@ -16,15 +16,6 @@ class Ticket extends Model
 	];
 
 	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-
-	];
-
-	/**
 	 * popular search for ticket
 	 *
 	 * @param $query
@@ -53,9 +44,18 @@ class Ticket extends Model
 	 */
 	public function answers()
 	{
-		return $this->morphMany('App\Answer', 'answerable');
+		return $this->morphMany('App\Answer', 'source');
 	}
 
+	/**
+	 * Ticket IPAddress
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+	 */
+	public function ipAddress()
+	{
+		return $this->morphMany('App\IPAddress', 'source');
+	}
 
 	/**
 	 * Check if ticket used

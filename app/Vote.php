@@ -8,21 +8,12 @@ class Vote extends Model
 {
 	/**
 	 * Massive assign
+	 *
 	 * @var array
 	 */
 	protected $fillable = [
 		'title', 'type', 'started_at', 'ended_at', 'intro',
 	];
-
-	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-
-	];
-
 
 	/**
 	 * Related to question
@@ -34,20 +25,30 @@ class Vote extends Model
 		return $this->hasMany('App\Question');
 	}
 
+	/**
+	 * get user model
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
 	public function getAuthor()
 	{
 		return $this->belongsTo('App\User', 'creator_id', 'id');
 	}
 
-	public function votedUserIds()
+	/**
+	 * id of voted User
+	 *
+	 * @return mixed
+	 */
+	public function votedIds()
 	{
 		return $this->questions->map(function ($question) {
 			return $question->options->map(function ($option) {
 				return $option->answers->map(function ($answer) {
-					return $answer->user_id;
+					return $answer->source->id;
 				});
 			});
-		})->flatten()->unique();
+		})->flatten();
 	}
 
 	/**
@@ -62,13 +63,13 @@ class Vote extends Model
 		return $query->where('id', $Id)->firstOrFail();
 	}
 
-    /**
-     * Return the vote group to which the vote belongs.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function voteGroup()
-    {
-        return $this->belongsTo('App\VoteGroup');
+	/**
+	 * Return the vote group to which the vote belongs.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function voteGroup()
+	{
+		return $this->belongsTo('App\VoteGroup');
 	}
 }

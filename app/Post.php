@@ -18,15 +18,6 @@ class Post extends Model
 	];
 
 	/**
-	 * Hidden
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'club', 'is_prohibited', 'reason', 'background',
-	];
-
-	/**
 	 * Attached comments to the post
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

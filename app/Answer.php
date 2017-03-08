@@ -17,12 +17,14 @@ class Answer extends Model
 	];
 
 	/**
-	 * Hidden
-	 * @var array
+	 * multi connection
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\MorphTo
 	 */
-	protected $hidden = [
-
-	];
+	public function source()
+	{
+		return $this->morphTo();
+	}
 
 	/**
 	 * multi connection
