@@ -5,6 +5,19 @@
 @endsection
 
 @section('content')
+    @if(isset($error))
+       <div class="post-card" style="margin-bottom:0;">
+            <div class="card-panel red lighten-2 no-shadow" style="margin: 0;border-radius: 0">
+                <div class="white-text">
+                    <div style="display:inline-block;line-height: 2rem; height: 2rem; position: relative; top: 0.2rem"><i class="material-icons">error</i></div>
+                    <h5 style="display: inline-block;line-height: 2rem; height: 2rem;">Oops! Error!</h5>
+                    <div>
+                        {{$error}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="post-card">
         <div class="card vertical post-card-content">
             <div class="card-action">
@@ -34,7 +47,33 @@
                     <form id="vote-form" action="" method="post" accept-charset="utf-8">
                         <input type="hidden" name="selected" id="vote-selected">
                         {{ csrf_field() }}
-                        @each ('vote.question',$vote->questions, 'question')
+                        @foreach($vote->questions as $question)
+                            <!-- Vote Question Block: Copy this block for multi-questions -->
+                            <div class="vote-block">
+                                <p class="flow-text">{{$question->content}}</p>
+                                <br>
+                                <div class="vote-info">
+                                    <div>{{$question->explanation}}</div>
+                                    <br>
+                                    @if ($question->range > 1)
+                                        @foreach($question->options as $option)
+                                            <p>
+                                                <input type="checkbox" class="filled-in" id="vote-item-{{$option->id}}"/>
+                                                <label for="vote-item-{{$option->id}}">{{$option->content}}</label>
+                                            </p>
+                                        @endforeach
+                                    @else
+                                        @foreach($question->options as $option)
+                                            <p>
+                                                <input class="with-gap" name="group{{$question->id}}" type="radio" id="vote-item-{{$option->id}}"/>
+                                                <label for="vote-item-{{$option->id}}">{{$option->content}}</label>
+                                            </p>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            <!--End Vote Question Block-->
+                        @endforeach
                     </form>
                 </div>
             </div>

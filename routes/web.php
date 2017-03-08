@@ -19,11 +19,11 @@ Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :
 // @TODO 国际日结束之后主页改回HomeController
 //Route::get('/', 'HomeController@index');
 Route::get('/', function () {
-	return redirect('/aboutus');
+	return redirect('/about');
 });
 
-Route::get('/aboutus', function () {
-	return 'about pages';
+Route::get('/about', function () {
+	return view('about');
 });
 // @TODO 关于我们界面
 
