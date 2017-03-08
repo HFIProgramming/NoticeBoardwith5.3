@@ -15,6 +15,7 @@
 						</div>
 						@if (!$ticket->isTicketUsed($vote->id))
 						@if (strtotime($vote->ended_at) - strtotime('now') >= 0)
+
 							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">Vote
 									Now!</a></div>
 						@elseif (strtotime($vote->started_at) - strtotime('now') > 0)
