@@ -74,4 +74,52 @@ class VoteController extends Controller
 
 		return view('vote.result')->withResults($results)->withVote($vote);
 	}
+
+
+	/**
+	 * show tickets for admin
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function checkStatus(){
+		$ticket = Ticket::where('active','0')->get();
+		return view('vote/ticketstatus')->withTicket($ticket);
+	}
+
+	/**
+	 * search tickets for admin
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function searchTicket(Request $request){
+		$id = $request->ticketid;
+		$ticket = Ticket::where('id',$id)->get();
+		return view('vote/ticketstatus')->withTicket($ticket);
+	}
+
+	/**
+	 * activate or de-activate ticket.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function toggleTicketStatus(Request $request){
+		$id = $request->id;
+		$currentTicketStatus = Ticket::find($id)->active;
+		Ticket::where('id',$id)->update([
+			'active' => ($currentTicketStatus) ? 0 : 1
+			]);
+		return redirect('/admin/vote/ticket/status');
+	}
+
+	/**
+	 * activate all tickets.
+	 *
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	function activateAllTicket(){
+		Ticket::where('active','0')->update([
+			'active' => '1'
+		]);
+		return redirect('/admin/vote/ticket/status');
+	}
 }
