@@ -35,6 +35,9 @@ class ResultVerify
 		}
 
 		if (!empty($ticket = Ticket::ticket($request->ticket)) && ($vote->type == 1 || $vote->type == 2)) {
+			if ($ticket->active == 0){	
+				return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.ticket_invalid')]); // Ticket is not valid
+			}
 			if ($ticket->isTicketUsed($vote->id)) {
 				return $next($request);  // Ticket has used for this Vote !
 			}
