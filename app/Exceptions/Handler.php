@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +45,19 @@ class Handler extends ExceptionHandler
 	 */
 	public function render($request, Exception $exception)
 	{
+		if ($exception instanceof ModelNotFoundException){
+			switch ($exception->getModel()) {
+				case "App\Ticket":
+					abort(404,'Ticket Invalid');
+					break;
+				case "App\Vote":
+					abort(404,'Vote does not exist');
+					break;
+				default:
+					abort(404,$exception);
+					break;
+			}
+		}
 		return parent::render($request, $exception);
 	}
 
