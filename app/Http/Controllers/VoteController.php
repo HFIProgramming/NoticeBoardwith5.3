@@ -93,7 +93,7 @@ class VoteController extends Controller
 					foreach ($answers as $answer) {
 						$modelAns = new Answer;
 						$modelAns->option_id = $answer;
-						$modelAns->source_id = $ticket->id;
+						$modelAns->source_id = $userId;
 						$modelAns->source_type = 'user';
 						$modelAns->saveOrFail();
 					}
