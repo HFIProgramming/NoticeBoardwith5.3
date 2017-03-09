@@ -9,6 +9,7 @@ $(document).ready(function () {
             $(postcards[i]).addClass('post-grey');
         }
     }
+
     //If comments placeholder is needed
     var comments = $('.comment-card');
     if (comments.length == 1) {
@@ -28,3 +29,4 @@ try {
     ga('send', 'pageview');
 } catch (e) {
 }
+

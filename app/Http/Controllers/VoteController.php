@@ -30,6 +30,7 @@ class VoteController extends Controller
 	public function showVotes()
 	{
 		$votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
+
 		return view('vote.index')->withVotes($votes);
 	}
 
@@ -42,6 +43,7 @@ class VoteController extends Controller
 	public function showVoteGroup(Request $request)
 	{
 		$ticket = Ticket::ticket($request->ticket);
+
 		return view('vote.landing')->withTicket($ticket);
 	}
 
@@ -55,6 +57,7 @@ class VoteController extends Controller
 	public function showIndividualVote(Request $request)
 	{
 		$id = $request->id;
+
 		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
 	}
 
@@ -86,6 +89,7 @@ class VoteController extends Controller
 						$modelAns->saveOrFail();
 					}
 					event(new UpdateModelIPAddress('ticket', $ticket->id, 'vote.ticket', $request->ip()));
+
 					return redirect('/vote/id/' . $voteId . '/ticket/' . $ticket->string . '/result/');
 					break;
 				case 'user':
@@ -97,6 +101,7 @@ class VoteController extends Controller
 						$modelAns->source_type = 'user';
 						$modelAns->saveOrFail();
 					}
+
 					return redirect('/vote/id/' . $voteId . '/result/');
 					break;
 			}
@@ -114,6 +119,7 @@ class VoteController extends Controller
 	public function showVoteResult(request $request)
 	{
 		$voteId = $request->id;
+
 		return view('vote.result')->withVote(Vote::Id($voteId));
 	}
 
@@ -129,6 +135,7 @@ class VoteController extends Controller
 		$this->checkIfRepeatingOptions($answers);
 		$this->checkIfAllFilled($answers, $vote);
 		$this->checkIfOptionsFilledMatch($answers, $vote);
+
 		return true;
 	}
 
@@ -158,6 +165,7 @@ class VoteController extends Controller
 		if ($required->diff($filled)->isEmpty()) {
 			return;
 		}
+
 		return redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
 	}
 
