@@ -90,7 +90,7 @@
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/dorothy.jpg" alt="" class="circle">
-						<span class="title railway">Dorothy [Family Name]</span>
+						<span class="title railway">Dorothy Tian</span>
 						<p class="railway subheader italic">宣传，公关
 						</p>
 					</li>
