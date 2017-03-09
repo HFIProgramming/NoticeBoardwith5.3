@@ -24,7 +24,7 @@ class Ticket extends Model
 	 */
 	public function scopeTicket($query, $string)
 	{
-		return $query->where('string', $string)->first();
+		return $query->where('string', $string)->firstorFail();
 	}
 
 	/**
