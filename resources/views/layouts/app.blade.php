@@ -105,8 +105,11 @@
 <footer class="page-footer grey darken-4" id="footer">
     <div class="container">
         <div class="col l6 s12">
-            <h5 class="grey-text text-lighten-2">Connect</h5>
-            <p class="blue-text text-lighten-2">Follow Our Wechat: hfiprogramming</p>
+            <h5 class="grey-text text-lighten-2">More</h5>
+            <ul>
+            <li><a class="blue-text lighten-2" href="https://status.hfi.me">SERVICE STATUS</a></li>
+            <li><a class="blue-text lighten-2" href="#">WECHAT: HFIPROGRAMMING</a></li>
+          </ul>
         </div>
     </div>
     
