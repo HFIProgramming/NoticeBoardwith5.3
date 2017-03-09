@@ -96,7 +96,7 @@
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/bazinga.jpg" alt="" class="circle">
-						<span class="title railway">[First Name] Lin</span>
+						<span class="title railway">Schrieffer Lin</span>
 						<p class="railway subheader italic">后端工程师
 						</p>
 					</li>
