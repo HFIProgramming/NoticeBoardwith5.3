@@ -38,7 +38,7 @@ class ResultVerify
 			if ($ticket->isTicketUsed($vote->id)) {
 				return $next($request);  // Ticket has used for this Vote !
 			}
-			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.voted_first')]); // Ticket is not used !
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.vote_first')]); // Ticket is not used !
 		}
 
 		// If user login to vote, then go with this check

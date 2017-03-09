@@ -60,7 +60,6 @@ class VoteController extends Controller
 		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
 	}
 
-
 	/**
 	 * Vote handler :)
 	 *
