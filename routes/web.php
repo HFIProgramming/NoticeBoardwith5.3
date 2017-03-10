@@ -108,6 +108,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		Route::post('/ticket/status','Admin\VoteController@searchTicket');
 		Route::get('/ticket/toggle/{id}','Admin\VoteController@toggleTicketStatus');
 		Route::get('/ticket/activate/all','Admin\VoteController@activateAllTicket');
+		Route::get('/ticket/clearallvote/{id}','Admin\VoteController@clearVoteRecord');
 	});
 
 });

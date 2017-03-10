@@ -9,7 +9,7 @@
                 <div style="display:inline-block;line-height: 2rem; height: 2rem; position: relative; top: 0.2rem"><i class="material-icons">error</i></div>
                 <h5 style="display: inline-block;line-height: 2rem; height: 2rem;">Read Me</h5>
                 <div>
-                    This page shows all un-activated tickets by default.<br>
+                    This page shows all tickets by default.<br>
                     You can also do a custom ticket search by id.
                 </div>
             </div>
@@ -44,7 +44,8 @@
                         <th data-field="Name">ID</th>
                         <th data-field="Name">键值</th>
                         <th data-field="Name">激活状态</th>
-                        <th data-field="Name">用于投票</th>
+                        <th data-field="Name">投票记录</th>
+                        <th data-field="Name">清空投票</th>
                         <th data-field="Name">激活开关</th>
                     </tr>
                 </thead>
@@ -57,7 +58,10 @@
                         <td>{{($ticket->active) ? '是' : '否'}}</td>
                         <td><?php foreach($ticket->usedForVote() as $voteid){ echo $voteid.', ';}?></td>
                         <td>
-                            <button class="btn waves-effect waves-light orange no-shadow" onclick="toggle_confirmation({{$ticket->id}})">{{($ticket->active) ? '禁用' : '启用'}}</button>
+                            <button class="btn waves-effect waves-light pink no-shadow" onclick="toggle_confirmation({{$ticket->id}},'/admin/vote/ticket/clearallvote/')">清空</button>
+                        </td>
+                        <td>
+                            <button class="btn waves-effect waves-light orange no-shadow" onclick="toggle_confirmation({{$ticket->id}}, '/admin/vote/ticket/toggle/')">{{($ticket->active) ? '禁用' : '启用'}}</button>
                         </td>
                     </tr>
                 @endforeach
@@ -69,9 +73,9 @@
 
 @section('script')
 <script type="text/javascript">
-    function toggle_confirmation(id){
+    function toggle_confirmation(id, url){
         if(confirm("Are you sure to change ticket status?")){
-            location.href = "/admin/vote/ticket/toggle/" + id;
+            location.href = url + id;
         }
     }
 </script>

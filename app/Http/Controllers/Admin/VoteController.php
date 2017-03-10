@@ -81,7 +81,7 @@ class VoteController extends Controller
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function checkStatus(){
-		$ticket = Ticket::where('active','0')->get();
+		$ticket = Ticket::get();
 		return view('vote/ticketstatus')->withTicket($ticket);
 	}
 
@@ -119,6 +119,17 @@ class VoteController extends Controller
 		Ticket::where('active','0')->update([
 			'active' => '1'
 		]);
+		return redirect('/admin/vote/ticket/status');
+	}
+
+	/**
+	 * clear vote record for given ticket id.
+	 * @param $id:Int
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	function clearVoteRecord(Request $request){
+		$id = $request->id;
+		$data = Ticket::find($id)->clearVoteRecord();
 		return redirect('/admin/vote/ticket/status');
 	}
 }
