@@ -47,11 +47,16 @@ class VoteController extends Controller
 			return redirect()->back()->withErrors($validator)->withInput();  // When Validator fails, return errors
 		}
 		for ($i = 1; $i <= $request->number; $i++) {
-			Ticket::create([
-				'string'  => randomString($request->length, $request->prefix),
-				'vote_group_id' => $request->vote_group_id,
-			]);
+			$ticket_string = randomString($request->length, $request->prefix);
+			$vote_group_id = $request->vote_group_id;
+			if(count(Ticket::where('string',$ticket_string)->get()) == 0){ //prevent duplicated ticket strings
+				Ticket::create([
+					'string' => $ticket_string,
+					'vote_group_id' => $vote_group_id
+				]);
+			}
 		}
+
 		return redirect()->back();
 	}
 

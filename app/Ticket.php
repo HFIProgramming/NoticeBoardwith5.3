@@ -87,8 +87,6 @@ class Ticket extends Model
 
 	/**
 	 * clear vote record for given ticket id.
-	 *
-	 * @return Bool
 	 */
 	public function clearVoteRecord(){
 		foreach($this->answers as $answer){
