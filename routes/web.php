@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // 认证路由
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
@@ -110,6 +109,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		Route::post('/ticket/status','Admin\VoteController@searchTicket');
 		Route::get('/ticket/toggle/{id}','Admin\VoteController@toggleTicketStatus');
 		Route::get('/ticket/activate/all','Admin\VoteController@activateAllTicket');
+		Route::get('/ticket/clearallvote/{id}','Admin\VoteController@clearVoteRecord');
 	});
 
 });
