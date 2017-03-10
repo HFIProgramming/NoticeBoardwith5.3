@@ -37,22 +37,21 @@ class VoteController extends Controller
 	 */
 	public function generateTickets(Request $request)
 	{
-		if ($errors = Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
 			'prefix'  => 'nullable|string',
 			'length'  => 'required|numeric',
 			'vote_group_id' => 'required|numeric',
 			'number'  => 'required|numeric',
-		])->validate()
-		) {
-			return redirect()->back()->withErrors($errors)->withInput();  // When Validator fails, return errors
+		]);
+		if ($validator->fails()){
+			return redirect()->back()->withErrors($validator)->withInput();  // When Validator fails, return errors
 		}
 		for ($i = 1; $i <= $request->number; $i++) {
 			Ticket::create([
 				'string'  => randomString($request->length, $request->prefix),
-				'vote_group_id' => $request->vote_id,
+				'vote_group_id' => $request->vote_group_id,
 			]);
 		}
-
 		return redirect()->back();
 	}
 
