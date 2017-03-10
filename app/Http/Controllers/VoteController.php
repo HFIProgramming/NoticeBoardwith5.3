@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use App\Ticket;
 use App\Vote;
 use App\Option;
+use Illuminate\Support\Facades\Lang;
+
 
 class VoteController extends Controller
 {
@@ -58,7 +60,6 @@ class VoteController extends Controller
 		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
 	}
 
-
 	/**
 	 * Vote handler :)
 	 *
@@ -73,9 +74,20 @@ class VoteController extends Controller
 		$ticket = Ticket::ticket($request->ticket);
 		$answers = collect(json_decode($request->selected));  // turn string to int
 		$vote = Vote::Id($request->id);
-		$result = $this->verifyAnswers($answers, $vote);
+		$voteIsValid = false;
+		if($this->checkIfRepeatingOptions($answers) == false){ //如果没有重复的元素
+			if($this->checkIfAllFilled($answers, $vote)){ //并且所有的选项填完了
+				if($this->checkIfOptionsFilledMatch($answers,$vote)){
+					$voteIsValid = true;
+				}
+			}
+			else{
+				return redirect()->back()->withErrors(['warning' => Lang::get('vote.option_left_not_filled')]);
+			}
+		}
+		//这里之所以这么写是因为按照原来的写法，return redirect()不会立即执行。我也不知是什么原因。另外，没有all filled的时候，第三个函数是会报错的，所以必须按照这种逻辑进行。
 
-		if ($result === true) {  // Safety First :)
+		if ($voteIsValid === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
 					foreach ($answers as $answer) {
@@ -117,30 +129,20 @@ class VoteController extends Controller
 		return view('vote.result')->withVote(Vote::Id($voteId));
 	}
 
-
-	/* Check whether Vote is valid !
-	*
-	* @param $answers
-	* @param $vote
-	* @return bool
-	*/
-	private function verifyAnswers($answers, $vote)  // Notice: Depend on Model Object and Collection Object !
-	{
-		$this->checkIfRepeatingOptions($answers);
-		$this->checkIfAllFilled($answers, $vote);
-		$this->checkIfOptionsFilledMatch($answers, $vote);
-		return true;
-	}
-
 	/**
 	 * @param $answers
 	 */
 	private function checkIfRepeatingOptions($answers)
 	{
-		if ($answers->diff($answers->unique())->isEmpty()) {
-			return;
+		$answers = $answers->toArray();
+		$origin = $answers;
+		$answers = array_unique($answers);
+		if (count($origin) == count($answers)){ //答案中没有重复： If two arrays have the same number of values, this means that there is no repetition within answers.
+			return false;
 		}
-		abort(500);
+		else{ //答案中有重复: 如果两个数组的有不同数量的元素，说明array_unique()函数压缩了一些元素，也就是证明答案中有重复。
+			return true;
+		}
 	}
 
 	/**
@@ -156,9 +158,9 @@ class VoteController extends Controller
 			return $question->id;
 		}));
 		if ($required->diff($filled)->isEmpty()) {
-			return;
+			return true;
 		}
-		return redirect()->back()->withInput()->withErrors('Missing Required field', $required->diff($filled)); // @TODO diff return
+		return false;
 	}
 
 	/**
@@ -173,10 +175,9 @@ class VoteController extends Controller
 		})->flatten()->toArray());
 		$vote->questions->each(function ($question) use ($optionsFilled) {
 			if ($optionsFilled[$question->id] != $question->range) {
-				abort(500);
+				return false;
 			} // illegal answers :( # of options for a specific question is not match
 		});
-
-		return;
+		return true;
 	}
 }

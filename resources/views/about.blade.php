@@ -23,8 +23,15 @@
 				<div class="card-content">
 					<p class="club-card-text">
 						<!--Club description-->
-						
-						</p>
+						We are a group of enthusiatic programmers, "indulging" in coding.<br>
+						This site, NoticeBoard, is one of our main products. Its functions include but are not limited to: <br>
+							- Post Feed<br>
+							- File Sharing<br>
+							- School-wide Votes<br>
+							- Club Information Center<br>
+							- Student Profile System<br>
+							- Supporting Website for Many School Activities<br>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -83,13 +90,13 @@
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/dorothy.jpg" alt="" class="circle">
-						<span class="title railway">Dorothy [Family Name]</span>
+						<span class="title railway">Dorothy Tian</span>
 						<p class="railway subheader italic">宣传，公关
 						</p>
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/bazinga.jpg" alt="" class="circle">
-						<span class="title railway">[First Name] Lin</span>
+						<span class="title railway">Schrieffer Lin</span>
 						<p class="railway subheader italic">后端工程师
 						</p>
 					</li>

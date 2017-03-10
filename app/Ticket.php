@@ -12,7 +12,7 @@ class Ticket extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'vote_group_id', 'string'
+		'vote_group_id', 'string','active'
 	];
 
 	/**
@@ -24,7 +24,7 @@ class Ticket extends Model
 	 */
 	public function scopeTicket($query, $string)
 	{
-		return $query->where('string', $string)->first();
+		return $query->where('string', $string)->firstorFail();
 	}
 
 	/**
@@ -74,4 +74,23 @@ class Ticket extends Model
 		return true;
 	}
 
+	/**
+	 * Return a list of votes that this ticket has been used for
+	 *
+	 * @return array
+	 */
+	public function usedForVote(){
+		return $this->answers->map(function ($answer) {
+				return $answer->option->question->vote->id;
+			})->flatten()->unique();
+	}
+
+	/**
+	 * clear vote record for given ticket id.
+	 */
+	public function clearVoteRecord(){
+		foreach($this->answers as $answer){
+			$answer->delete();
+		}
+	}
 }

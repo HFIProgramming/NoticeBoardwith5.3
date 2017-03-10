@@ -5,14 +5,14 @@
 @endsection
 
 @section('content')
-    @if(isset($error))
+    @if($errors->has('warning'))
        <div class="post-card" style="margin-bottom:0;">
             <div class="card-panel red lighten-2 no-shadow" style="margin: 0;border-radius: 0">
                 <div class="white-text">
                     <div style="display:inline-block;line-height: 2rem; height: 2rem; position: relative; top: 0.2rem"><i class="material-icons">error</i></div>
                     <h5 style="display: inline-block;line-height: 2rem; height: 2rem;">Oops! Error!</h5>
                     <div>
-                        {{$error}}
+                        {{$errors->first('warning')}}
                     </div>
                 </div>
             </div>
