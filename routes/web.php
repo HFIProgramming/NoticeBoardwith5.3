@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 // 认证路由
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(

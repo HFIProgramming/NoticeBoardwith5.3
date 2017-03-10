@@ -38,14 +38,14 @@
     </form>
     <div class="post-card">
         <div class="card-panel white lighten-2 no-shadow" style="border-radius: 0">
-            <table class="centered striped">
+            <table class="centered striped responsive-table">
                 <thead>
                     <tr>
                         <th data-field="Name">ID</th>
-                        <th data-field="Name">Ticket String</th>
-                        <th data-field="Name">Active</th>
-                        <th data-field="Name">Used for VoteID</th>
-                        <th data-field="Name">Actions</th>
+                        <th data-field="Name">键值</th>
+                        <th data-field="Name">激活状态</th>
+                        <th data-field="Name">用于投票</th>
+                        <th data-field="Name">激活开关</th>
                     </tr>
                 </thead>
                 

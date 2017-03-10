@@ -75,8 +75,8 @@ class VoteController extends Controller
 		$answers = collect(json_decode($request->selected));  // turn string to int
 		$vote = Vote::Id($request->id);
 		$voteIsValid = false;
-		if($this->checkIfRepeatingOptions($answers)){
-			if($this->checkIfAllFilled($answers, $vote)){
+		if($this->checkIfRepeatingOptions($answers) == false){ //如果没有重复的元素
+			if($this->checkIfAllFilled($answers, $vote)){ //并且所有的选项填完了
 				if($this->checkIfOptionsFilledMatch($answers,$vote)){
 					$voteIsValid = true;
 				}
@@ -134,10 +134,15 @@ class VoteController extends Controller
 	 */
 	private function checkIfRepeatingOptions($answers)
 	{
-		if ($answers->diff($answers->unique())->isEmpty()) {
+		$answers = $answers->toArray();
+		$origin = $answers;
+		$answers = array_unique($answers);
+		if (count($origin) == count($answers)){ //答案中没有重复： If two arrays have the same number of values, this means that there is no repetition within answers.
+			return false;
+		}
+		else{ //答案中有重复: 如果两个数组的有不同数量的元素，说明array_unique()函数压缩了一些元素，也就是证明答案中有重复。
 			return true;
 		}
-		return false;
 	}
 
 	/**
