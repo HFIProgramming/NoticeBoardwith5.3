@@ -1,4 +1,4 @@
-var domainroot = "hfinotice.sinaapp.com";
+var domainroot = "hfi.me/post";
 
 function Bingsitesearch(curobj) {
 	curobj.q.value = "site:" + domainroot + " " + curobj.keyword.value;
