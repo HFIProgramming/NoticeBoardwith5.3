@@ -14,15 +14,13 @@
 						<div class="col l8 subheade hide-on-med-and-down" align="left"><h6>{{$vote->created_at}}</h6>
 						</div>
 						@if (!$ticket->isTicketUsed($vote->id))
-						@if (strtotime($vote->ended_at) - strtotime('now') >= 0)
-
-							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">Vote
-									Now!</a></div>
-						@elseif (strtotime($vote->started_at) - strtotime('now') > 0)
-							<div class="col l4 right"><a href="#">Vote Not Started</a></div>
-						@elseif (strtotime($vote->ended_at) - strtotime('now') < 0)
-							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">Vote Closed, See Results</a></div>
-						@endif
+							@if (strtotime($vote->started_at) - strtotime('now') > 0)
+								<div class="col l4 right"><a href="#">Vote Not Started</a></div>
+							@elseif (strtotime($vote->ended_at) - strtotime('now') < 0)
+								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">Vote Closed, See Results</a></div>
+							@else
+								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">VoteNow!</a></div>
+							@endif
 						@else
 							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">You Voted, See Results</a></div>
 						@endif
