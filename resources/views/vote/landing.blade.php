@@ -11,15 +11,13 @@
 			<div class="card vertical post-card-content">
 				<div class="card-action">
 					<div class="row post-card-heading no-margin">
-						<div class="col l8 subheade hide-on-med-and-down" align="left"><h6>{{$vote->created_at}}</h6>
-						</div>
 						@if (!$ticket->isTicketUsed($vote->id))
 							@if (strtotime($vote->started_at) - strtotime('now') > 0)
 								<div class="col l4 right"><a href="#">Vote Not Started</a></div>
 							@elseif (strtotime($vote->ended_at) - strtotime('now') < 0)
 								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">Vote Closed, See Results</a></div>
 							@else
-								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">VoteNow!</a></div>
+								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">Vote Now!</a></div>
 							@endif
 						@else
 							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">You Voted, See Results</a></div>
@@ -42,7 +40,8 @@
 							<button class="tag-btn btn-flat waves-effect waves-light">
 								投票人数：{{count($vote->votedIds())}}</button>
 						</div>
-						<h6 class="subheader post-header hide-on-large-only">{{$vote->created_at}}</h6>
+						<br>
+                    	<div>{{$vote->intro}}</div>
 					</div>
 				</div>
 			</div>
