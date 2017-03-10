@@ -47,11 +47,16 @@ class VoteController extends Controller
 			return redirect()->back()->withErrors($validator)->withInput();  // When Validator fails, return errors
 		}
 		for ($i = 1; $i <= $request->number; $i++) {
-			Ticket::create([
-				'string'  => randomString($request->length, $request->prefix),
-				'vote_group_id' => $request->vote_group_id,
-			]);
+			$ticket_string = randomString($request->length, $request->prefix);
+			$vote_group_id = $request->vote_group_id;
+			if(count(Ticket::where('string',$ticket_string)->get()) == 0){ //prevent duplicated ticket strings
+				Ticket::create([
+					'string' => $ticket_string,
+					'vote_group_id' => $vote_group_id
+				]);
+			}
 		}
+
 		return redirect()->back();
 	}
 
@@ -81,7 +86,7 @@ class VoteController extends Controller
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function checkStatus(){
-		$ticket = Ticket::where('active','0')->get();
+		$ticket = Ticket::get();
 		return view('vote/ticketstatus')->withTicket($ticket);
 	}
 
@@ -119,6 +124,17 @@ class VoteController extends Controller
 		Ticket::where('active','0')->update([
 			'active' => '1'
 		]);
+		return redirect('/admin/vote/ticket/status');
+	}
+
+	/**
+	 * clear vote record for given ticket id.
+	 * @param $id:Int
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	function clearVoteRecord(Request $request){
+		$id = $request->id;
+		$data = Ticket::find($id)->clearVoteRecord();
 		return redirect('/admin/vote/ticket/status');
 	}
 }

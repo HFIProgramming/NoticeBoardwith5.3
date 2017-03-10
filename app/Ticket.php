@@ -84,4 +84,13 @@ class Ticket extends Model
 				return $answer->option->question->vote->id;
 			})->flatten()->unique();
 	}
+
+	/**
+	 * clear vote record for given ticket id.
+	 */
+	public function clearVoteRecord(){
+		foreach($this->answers as $answer){
+			$answer->delete();
+		}
+	}
 }
