@@ -9,8 +9,13 @@
                 <div style="display:inline-block;line-height: 2rem; height: 2rem; position: relative; top: 0.2rem"><i class="material-icons">error</i></div>
                 <h5 style="display: inline-block;line-height: 2rem; height: 2rem;">Read Me</h5>
                 <div>
-                    This page shows all tickets by default.<br>
-                    You can also do a custom ticket search by id.
+                    该面板默认显示所有Ticket<br>
+                    <li>你也可以通过id搜索单张ticket</li>
+                    除此之外，你还可以:
+                    <li>激活所有Ticket</li>
+                    <li>点击“刷新本页”按钮查看所有Ticket</li>
+                    <li>清空某张Ticket的所有投票记录</li>
+                    <li>激活／禁用某张Ticket</li>
                 </div>
             </div>
         </div>
