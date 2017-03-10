@@ -76,11 +76,9 @@ class VoteController extends Controller
 		$voteId = $request->id;
 		$ticket = Ticket::ticket($request->ticket);
 		$answers = collect(json_decode($request->selected));
-		$answers->transform(function ($answer){
-			return (int)$answer;
-		});// turn string to int
 		$vote = Vote::Id($request->id);
 		$voteIsValid = false;
+		// @TODO 简化流程 将结果转为数字后处理，因为一开始进入的数据是字符串 diff功能不生效
 		if($this->checkIfRepeatingOptions($answers) == false){ //如果没有重复的元素
 			if($this->checkIfAllFilled($answers, $vote)){ //并且所有的选项填完了
 				if($this->checkIfOptionsFilledMatch($answers,$vote)){
@@ -91,7 +89,6 @@ class VoteController extends Controller
 				return redirect()->back()->withErrors(['warning' => Lang::get('vote.option_left_not_filled')]);
 			}
 		}
-		//这里之所以这么写是因为按照原来的写法，return redirect()不会立即执行。我也不知是什么原因。另外，没有all filled的时候，第三个函数是会报错的，所以必须按照这种逻辑进行。
 
 		if ($voteIsValid === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
