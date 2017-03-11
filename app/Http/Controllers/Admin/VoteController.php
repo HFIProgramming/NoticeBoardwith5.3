@@ -103,7 +103,7 @@ class VoteController extends Controller
 
 	/**
 	 * activate or de-activate ticket.
-	 *
+	 * @param $id : Int
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
 	public function toggleTicketStatus(Request $request){
@@ -115,15 +115,50 @@ class VoteController extends Controller
 		return redirect('/admin/vote/ticket/status');
 	}
 
+
+
 	/**
-	 * activate all tickets.
+	 * activate or de-activate ticket.
+	 * @param $startIndex : Int
+	 * @param $endIndex : Int
+	 * @param $action : String
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	function toggleTicketStatusWithRange(Request $request){
+		$startIndex = $request->startIndex;
+		$endIndex = $request->endIndex;
+		$action = $request->action;
+		for($id = $startIndex; $id <= $endIndex; $id++){
+			if (!empty($ticket = Ticket::find($id))){
+				$ticket->update([
+					'active' => ($action == "activate") ? 1 : 0
+				]);
+			}
+		}
+		return redirect('/admin/vote/ticket/status');
+	}
+
+	/**
+	 * activate or disable all tickets.
 	 *
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	function activateAllTicket(){
-		Ticket::where('active','0')->update([
-			'active' => '1'
-		]);
+	function toggleAllTickets(Request $request){
+		$action = $request->noneOrAll;
+		switch ($action) {
+			case 'all':
+				Ticket::where('active','0')->update([
+					'active' => '1'
+				]);
+				break;
+			case 'none':
+				Ticket::where('active','1')->update([
+					'active' => '0'
+				]);
+				break;
+
+			default:break;
+		}
 		return redirect('/admin/vote/ticket/status');
 	}
 

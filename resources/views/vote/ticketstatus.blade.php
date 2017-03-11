@@ -3,28 +3,24 @@
 @section('title','Vote Ticket Status')
 
 @section('content')
-    <div class="post-card" style="margin-bottom:0;">
-        <div class="card-panel red lighten-2 no-shadow" style="margin: 0;border-radius: 0">
-            <div class="white-text">
-                <div style="display:inline-block;line-height: 2rem; height: 2rem; position: relative; top: 0.2rem"><i class="material-icons">error</i></div>
-                <h5 style="display: inline-block;line-height: 2rem; height: 2rem;">Read Me</h5>
-                <div>
-                    该面板默认显示所有Ticket<br>
-                    <li>你也可以通过id搜索单张ticket</li>
-                    除此之外，你还可以:
-                    <li>激活所有Ticket</li>
-                    <li>点击“刷新本页”按钮查看所有Ticket</li>
-                    <li>清空某张Ticket的所有投票记录</li>
-                    <li>激活／禁用某张Ticket</li>
-                </div>
+    <div class="post-card">
+        <div class="card white lighten-2 no-shadow" style="border-radius: 0">
+            <div class="card-content">
+                <h6>工具栏</h6>
+            </div>
+            <div class="card-action">
+                <div class="btn waves-effect waves-light red no-shadow white-text" onclick="toggle_confirmation('none','/admin/vote/ticket/activate/')">全部禁用</div>
+                <div class="btn waves-effect waves-light purple no-shadow white-text" onclick="toggle_confirmation('all','/admin/vote/ticket/activate/')">全部激活</div>
+                <div class="btn waves-effect waves-light green no-shadow white-text" onclick="location.href=''">刷新本页</div>
             </div>
         </div>
     </div>
-
+    
     <form action="" method="post" accept-charset="utf-8">
     <div class="post-card">
         <div class="card white lighten-2 no-shadow" style="border-radius: 0">
             <div class="card-content">
+                <h6>查找Ticket根据Id</h6>
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="input-field col s12">
@@ -34,13 +30,45 @@
                 </div>
             </div>
             <div class="card-action">
-                <div class="btn waves-effect waves-light purple no-shadow white-text" onclick="location.href='/admin/vote/ticket/activate/all'">全部激活</div>
-                <div class="btn waves-effect waves-light green no-shadow white-text" onclick="location.href=''">刷新本页</div>
                 <button class="btn waves-effect waves-light blue no-shadow" type="submit">搜索</button>
             </div>
         </div>
     </div>
     </form>
+
+    <form id="ticket-range-form" action="/admin/vote/ticket/toggle/with/range" method="post" accept-charset="utf-8">
+    <div class="post-card">
+        <div class="card white lighten-2 no-shadow" style="border-radius: 0">
+            <div class="card-content">
+                {{ csrf_field() }}
+                <h6>范围内Ticket状态更变</h6>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="number" id="ticket-range-start" name="startIndex" class="validate">
+                        <label for="ticket-search">From id</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input type="number" id="ticket-range-end" name="endIndex" class="validate">
+                        <label for="ticket-search">To Id (inclusive)</label>
+                    </div>
+                </div>
+                <input type="hidden" name="action" id="ticket-range-action">
+            </div>
+            <div class="card-action">
+                <p>
+                    <input class="with-gap" name="ticket-range" type="radio" id="ticket-range-activate" onclick="setRangeStatus(this.id)" />
+                    <label for="ticket-range-activate">激活范围内的Ticket</label>
+                </p>
+                <p>
+                    <input class="with-gap" name="ticket-range" type="radio" id="ticket-range-disable" onclick="setRangeStatus(this.id)" />
+                    <label for="ticket-range-disable">禁用范围内的Ticket</label>
+                </p>
+                <button class="btn waves-effect waves-light blue no-shadow" type="submit">执行</button>
+            </div>
+        </div>
+    </div>
+    </form>
+
     <div class="post-card">
         <div class="card-panel white lighten-2 no-shadow" style="border-radius: 0">
             <table class="centered striped responsive-table">
@@ -78,6 +106,24 @@
 
 @section('script')
 <script type="text/javascript">
+    $("#ticket-range-form").submit(function(e){
+        if($("#ticket-range-start").val() == "" || $("#ticket-range-end").val() == "" || $("#ticket-range-action").val() == ""){
+            alert("请填写完范围与操作类型");
+            e.preventDefault();
+        }
+    })
+
+    function setRangeStatus(id){
+        switch(id){
+            case "ticket-range-activate":
+                $("#ticket-range-action").val("activate");
+                break;
+            case "ticket-range-disable":
+                $("#ticket-range-action").val("disable");
+                break;
+        }
+    }
+
     function toggle_confirmation(id, url){
         if(confirm("Are you sure to change ticket status?")){
             location.href = url + id;
