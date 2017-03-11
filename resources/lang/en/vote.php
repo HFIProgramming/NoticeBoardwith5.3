@@ -16,5 +16,6 @@ return [
 	'vote_now_button' => 'VOTE NOW!',
 	'vote_closed_button' => 'VOTE CLOSED, SEE RESULTS',
 	'vote_not_started_button' => 'VOTE HAVEN\'T STARTED',
-	'voted_button' => 'YOU VOTED, SEE RESULTS'
+	'voted_button' => 'YOU VOTED, SEE RESULTS',
+	'vote_submit_button' => 'Submit'
 ];

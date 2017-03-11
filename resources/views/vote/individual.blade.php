@@ -79,7 +79,7 @@
             </div>
             <div class="card-action">
 
-                <div class="btn waves-effect waves-light blue no-shadow" onclick="doVote()">Submit
+                <div class="btn waves-effect waves-light blue no-shadow" onclick="doVote()">@lang('vote.vote_submit_button')
                     <i class="material-icons right">send</i>
                 </div>
             </div>
