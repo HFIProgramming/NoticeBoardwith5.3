@@ -11,5 +11,9 @@ return [
 	'ticket_is_used' => 'Sorry, but this ticket is already used',
 	'checksum_fail' => 'There is something fishy about your vote. Try again.',
 	'option_left_not_filled' => 'It appears that you did not fill all the options, try again.',
-	'vote_first' => 'Sorry, but you can only check results after you have voted.'
+	'vote_first' => 'Sorry, but you can only check results after you have voted.',
+	'vote_now_button' => 'VOTE NOW!',
+	'vote_closed_button' => 'VOTE CLOSED, SEE RESULTS',
+	'vote_not_started_button' => 'VOTE HAVEN\'T STARTED',
+	'voted_button' => 'YOU VOTED, SEE RESULTS'
 ];

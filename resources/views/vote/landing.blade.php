@@ -13,14 +13,14 @@
 					<div class="row post-card-heading no-margin">
 						@if (!$ticket->isTicketUsed($vote->id))
 							@if (strtotime($vote->started_at) - strtotime('now') > 0)
-								<div class="col l4 right"><a href="#">Vote Not Started</a></div>
+								<div class="col l4 right"><a href="#">@lang('vote.vote_not_started_button')</a></div>
 							@elseif (strtotime($vote->ended_at) - strtotime('now') < 0)
-								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">Vote Closed, See Results</a></div>
+								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">@lang('vote.vote_closed_button')</a></div>
 							@else
-								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">Vote Now!</a></div>
+								<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string)}}">@lang('vote.vote_now_button')</a></div>
 							@endif
 						@else
-							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">You Voted, See Results</a></div>
+							<div class="col l4 right"><a href="{{url('/vote/id/'.$vote->id.'/ticket/'.$ticket->string.'/result/')}}">@lang('vote.voted_button')</a></div>
 						@endif
 					</div>
 				</div>
