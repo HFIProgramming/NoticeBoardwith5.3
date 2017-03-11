@@ -23,6 +23,9 @@
 }
 
 /*General Properties*/
+html{
+	font-family: "Roboto", "PingFang SC", "Microsoft YaHei", "微软雅黑", "STHeiti ";
+}
 body {
     display: flex;
     min-height: 100vh;
@@ -200,7 +203,7 @@ nav {
 }
 
 .card .card-action a {
-	color: #2d4186!important;
+	color: #1e88e5!important;
 }
 
 .post-card .card-image .circle {
@@ -226,6 +229,10 @@ nav {
 .post-card-heading div a{
 	height: 2rem !important;
 	line-height: 2rem !important;
+	margin: 0 !important;
+}
+.post-card-heading .col{
+	padding: 0 !important;
 }
 
 .post-header.subheader.hide-on-med-and-down {

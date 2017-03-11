@@ -66,7 +66,7 @@
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/michael.jpg" alt="" class="circle">
-						<span class="title railway">Micheal Luo</span>
+						<span class="title railway">Michael Luo</span>
 						<p class="railway subheader italic">社长，宣传，市场，公关，运维，后端
 						</p>
 					</li>
@@ -84,7 +84,7 @@
 					</li>
 					<li class="collection-item avatar">
 						<img src="assets/images/jhonny.png" alt="" class="circle">
-						<span class="title railway">Jhonny Jian</span>
+						<span class="title railway">Johnny Jian</span>
 						<p class="railway subheader italic">后端工程师，技术支持
 						</p>
 					</li>

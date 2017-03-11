@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Lang;
 
 class Handler extends ExceptionHandler
 {
@@ -48,10 +49,10 @@ class Handler extends ExceptionHandler
 		if ($exception instanceof ModelNotFoundException){
 			switch ($exception->getModel()) {
 				case "App\Ticket":
-					abort(404,'Ticket Invalid');
+					abort(404,Lang::get('vote.ticket_not_found'));
 					break;
 				case "App\Vote":
-					abort(404,'Vote does not exist');
+					abort(404,Lang::get('vote.vote_no_found'));
 					break;
 				default:
 					abort(404,$exception);
