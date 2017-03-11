@@ -8,6 +8,7 @@ return [
 	'credential_error' => 'Sorry, you do not have the credential to vote',
 	'vote_no_found' => 'Sorry, this vote does not exist',
 	'ticket_invalid' => 'Sorry, this ticket is expired',
+	'ticket_not_found' => 'Sorry, thi ticket does not exist',
 	'ticket_is_used' => 'Sorry, but this ticket is already used',
 	'checksum_fail' => 'There is something fishy about your vote. Try again.',
 	'option_left_not_filled' => 'It appears that you did not fill all the options, try again.',

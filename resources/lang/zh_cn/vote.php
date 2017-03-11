@@ -10,6 +10,7 @@ return [
 	'checksum_fail' => '您的投票似乎有点问题，请重试→_→',
 	'vote_not_started' => '对不起，改投票还没开始',
 	'ticket_is_used' => '对不起，您的投票券已经使用过了',
+	'ticket_not_found' => '对不起，这张投票券不存在',
 	'option_left_not_filled' => '您没有填完所有问题',
 	'vote_first' => '对不起，您只能在投票之后查看结果',
 	'vote_now_button' => '点我投票！',
