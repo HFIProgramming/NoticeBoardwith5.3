@@ -9,9 +9,9 @@
     <div class="row">
         <div class="col s10 m8 push-s1 push-m2">
             <div class="card error-card">
-                <h4 class="blue-text"><i class="material-icons pink-text">warning</i> 404: Sorry, but this page does not exists. <br></h4>
+                <h4 class="blue-text"><i class="material-icons pink-text">warning</i> @lang('error.404') <br></h4>
                 @if(empty($exception->getMessage()))
-                    <h5>Please check your URL or return to the home page.</h5>
+                    <h5>@lang('error.general_back')</h5>
                 @else
                     <h5>{{$exception->getMessage()}}</h5>
                 @endif
