@@ -22,7 +22,7 @@
         <div class="card vertical post-card-content">
             <div class="card-action">
                 <div class="row post-card-heading no-margin">
-                    <div class="col s12 subheader" align="left"><h6>{{$vote->getAuthor->name}} on {{$vote->created_at}}</h6></div>
+                    <div class="col s12 subheader" align="left"><h6>{{$vote->getAuthor->name}} at {{date('Y/n/j G:i', strtotime($vote->created_at))}}</h6></div>
                 </div>
             </div>
             <div class="post-user-profile">
