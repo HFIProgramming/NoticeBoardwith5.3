@@ -34,11 +34,9 @@
 					<div class="card-content display-all">
 						<!--Tags. Limit to 3 per post and their length-->
 						<div class="tag-container">
-							<button class="tag-btn btn-flat waves-effect waves-light">
-								开始时间：{{$vote->started_at}}</button>
-							<button class="tag-btn btn-flat waves-effect waves-light">结束时间：{{$vote->ended_at}}</button>
-							<button class="tag-btn btn-flat waves-effect waves-light">
-								投票人数：{{count($vote->votedIds())}}</button>
+							<button class="tag-btn btn-flat waves-effect waves-light">开始时间：{{date('Y/n/j G:i', strtotime($vote->started_at))}}</button>
+							<button class="tag-btn btn-flat waves-effect waves-light">结束时间：{{date('Y/n/j G:i', strtotime($vote->ended_at))}}</button>
+							<button class="tag-btn btn-flat waves-effect waves-light">投票人数：{{count($vote->votedIds())}}</button>
 						</div>
 						<br>
                     	<div>{{$vote->intro}}</div>

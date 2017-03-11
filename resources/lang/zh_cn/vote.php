@@ -16,5 +16,6 @@ return [
 	'vote_now_button' => '点我投票！',
 	'vote_closed_button' => '投票结束了，查看结果',
 	'vote_not_started_button' => '投票尚未开始',
-	'voted_button' => '您投过票啦，查看结果'
+	'voted_button' => '您投过票啦，查看结果',
+	'vote_submit_button' => '提交'
 ];
