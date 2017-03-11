@@ -6,7 +6,7 @@ return [
 	'vote_already' => '您已经投过票了哦 = - =|',
 	'credential_error' => '抱歉，您没有投票的权限╮(￣▽￣)╭',
 	'vote_no_found' => '抱歉，该投票不存在(￣▽￣)"',
-	'ticket_invalid' => '抱歉，这张投票券过期了哦︿(￣︶￣)︿',
+	'ticket_invalid' => '抱歉，这张投票券无效︿(￣︶￣)︿',
 	'checksum_fail' => '您的投票似乎有点问题，请重试→_→',
 	'vote_not_started' => '对不起，改投票还没开始',
 	'ticket_is_used' => '对不起，您的投票券已经使用过了',
