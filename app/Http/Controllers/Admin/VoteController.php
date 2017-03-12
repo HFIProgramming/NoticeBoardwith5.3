@@ -76,6 +76,10 @@ class VoteController extends Controller
 			$results[$key] = ['questionId' => Option::find($key)->question->id, 'count' => $count];
 		}
 
+		uasort($results, function ($question1, $question2) {
+		    return ($question1['count'] > $question2['count']) ? -1 : 1;
+        });
+
 		return view('vote.result')->withResults($results)->withVote($vote);
 	}
 
