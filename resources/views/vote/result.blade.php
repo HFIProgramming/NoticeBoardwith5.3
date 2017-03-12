@@ -35,7 +35,7 @@
                                 <div>{{$question->explanation}}</div>
                                 <br>
 
-                                @foreach($question->options as $option)
+                                @foreach($question->options()->withCount('answers')->orderBy('answers_count', 'desc') as $option)
                                         <div class="vote-result-pack col s12 l3">
                                             <div>{{$option->content}}</div>
                                             <div class="progress no-margin"><div class="determinate" style="width: {{round(($option->getTotalNumber()/$question->getTotalNumber())*100,2)}}%"></div></div>
