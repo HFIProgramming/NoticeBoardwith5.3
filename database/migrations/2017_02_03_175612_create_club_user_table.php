@@ -14,7 +14,7 @@ class CreateClubUsersTable extends Migration
     public function up()
     {
         //
-        Schema::create('club_users', function (Blueprint $table) {
+        Schema::create('club_user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('club_id');
             $table->string('user_id');
@@ -31,6 +31,6 @@ class CreateClubUsersTable extends Migration
     public function down()
     {
 		//
-		Schema::dropIfExists('club_users');
+		Schema::dropIfExists('club_user');
     }
 }
