@@ -35,7 +35,7 @@ class User extends Authenticatable
 	 */
 	public function getAvatarAttribute($value)
 	{
-		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : $value;
+		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : 'https://hfinotice-images.nos-eastchina1.126.net/%2Favatar%2F'.$value;
 	}
 
 	/**
