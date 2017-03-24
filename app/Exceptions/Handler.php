@@ -54,6 +54,8 @@ class Handler extends ExceptionHandler
 				case "App\Vote":
 					abort(404,Lang::get('vote.vote_no_found'));
 					break;
+				case "App\Post":
+					abort(404,trans('post.post_no_found'));
 				default:
 					abort(404,$exception);
 					break;

@@ -26,7 +26,8 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$posts = Post::with('hasManyComments','tagged')->orderBy('updated_at', 'desc')->get();
+		$posts = Post::with('hasManyComments', 'tagged')->orderBy('updated_at', 'desc')->get();
+
 		return view('welcome')->withPosts($posts);
 	}
 
@@ -82,5 +83,15 @@ class HomeController extends Controller
 		}
 
 		return redirect('/login');  // Fail to get user, turn to login page
+	}
+
+	public function encodeHome(Request $request)
+	{
+		$post = Post::with('hasManyComments', 'tagged')->orderBy('updated_at', 'desc');
+		if (!(empty($request->start)) && !(empty($request->end))) {
+			return response()->json($post->forPage($request->page, $request->numberPerPage)->all());
+		}
+
+		return response()->json($post->take(10)->get());
 	}
 }
