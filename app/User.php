@@ -24,7 +24,7 @@ class User extends Authenticatable
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token',
+		'password', 'remember_token', 'email','powerschool_id','role','id'
 	];
 
 	/**
@@ -58,7 +58,7 @@ class User extends Authenticatable
 	 */
 	public function posts()
 	{
-		return $this->hasMany('App\Post');
+		return $this->hasMany('App\Post', 'user_id' , 'id');
 	}
 
 	/**
@@ -68,7 +68,7 @@ class User extends Authenticatable
 	 */
 	public function votes()
 	{
-		return $this->hasMany('App\Vote', 'creator_id');
+		return $this->hasMany('App\Vote', 'creator_id', 'id');
 	}
 
 	/**

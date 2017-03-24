@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Lang;
 use App\Post;
 use App\Comment;
 
@@ -13,7 +12,7 @@ class PostController extends Controller
 {
 	public function __construct()
 	{
-		$this->middleware('auth', ['except' => 'showIndividualPost']);
+		$this->middleware('auth', ['except' => ['showIndividualPost', 'encodePost']]);
 		$this->user = Auth::user();
 	}
 
@@ -25,32 +24,15 @@ class PostController extends Controller
 	 */
 	public function showIndividualPost($id)
 	{
-		if ($post = Post::Id($id)) {
-			switch ($post->is_public) {
-				case 1:
-					return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
-					// eager load cannot throw 404 exception :(
-					break;
-				case 0:
-					if (Auth::check()) {
-						$roles = explode("|", $post->is_hidden);
-						if (!in_array($this->user->role, $roles)) {
-							$grades = explode("|", $post->level_limitation);
-							if (!in_array($this->user->grade, $roles)) {
-								return view('post.individual')->withPost(Post::with('hasManyComments')->find($id));
-							}
-						abort(403,Lang::get('auth.role_limitation'));
-					}
-					return Redirect::guest(route('login'))
-						->withErrors(['warning' => Lang::get('login.login_required', [
-							'process' => 'Post Viewing',
-						]),]);
-					break;
-			}
+		$post = Post::Id($id);
+		if ($this->checkPemission($post)) {
+			return view('post.individual')->withPost(Post::with('hasManyComments')->find($id)->firstOrFail());
+		} else {
+			Redirect::guest(route('login'))
+				->withErrors(['warning' => Lang::get('login.login_required', [
+					'process' => 'Post Viewing',
+				]),]);
 		}
-
-
-		return redirect('/error/custom')->withErrors(['warning' => Lang::get('post.post_no_found')]); // Post No Found
 	}
 
 	/**
@@ -119,4 +101,38 @@ class PostController extends Controller
 		abort(500);  // Something goes wrong :(
 	}
 
+	public function encodePost(Request $request)
+	{
+		$post = Post::Id($request->id);
+		if ($this->checkPemission($post)) {
+			return response()->json(Post::with('hasManyComments')->where('id', $request->id)->get());
+		} else {
+			return response()->json(trans('post.post_no_found'), 404);
+		}
+	}
+
+	protected function checkPemission($post)
+	{
+		switch ($post->is_public) {
+			case 1:
+				return true;
+				break;
+			case 0:
+				if (Auth::check()) {
+					$roles = explode("|", $post->is_hidden);
+					if (!in_array($this->user->role, $roles)) {
+						$grades = explode("|", $post->level_limitation);
+						if (!in_array($this->user->grade, $roles)) {
+							return true;
+						}
+						abort(403, trans('auth.role_limitation'));
+					}
+
+					return false;
+					break;
+				}
+
+				return false;
+		}
+	}
 }
