@@ -88,8 +88,8 @@ class HomeController extends Controller
 	public function encodeHome(Request $request)
 	{
 		$post = Post::with('hasManyComments', 'tagged')->orderBy('updated_at', 'desc');
-		if (!(empty($request->start)) && !(empty($request->end))) {
-			return response()->json($post->forPage($request->page, $request->numberPerPage)->all());
+		if (!empty($request->numberPerPage)) {
+			return response()->json($post->paginate($request->numberPerPage));
 		}
 
 		return response()->json($post->take(10)->get());
