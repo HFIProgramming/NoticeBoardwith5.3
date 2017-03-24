@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
 				case "App\Post":
 					abort(404,trans('post.post_no_found'));
 				default:
-					abort(404,$exception);
+					abort(404);
 					break;
 			}
 		}
