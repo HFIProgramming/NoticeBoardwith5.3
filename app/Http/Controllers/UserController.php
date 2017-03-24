@@ -19,7 +19,7 @@ class UserController extends Controller
 
 	public function encodeUser(Request $request)
 	{
-		return response()->json(User::find($request->id)->firstorFail());
+		return response()->json(User::where('id', $request->id)->firstorFail());
 	}
 
 }
