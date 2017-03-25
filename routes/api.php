@@ -32,6 +32,6 @@ Route::get('now', function () {
 // This is a sample with bad name, just for test.
 // Change them as long as it works
 // @TODO
-Route::get('/post/page/{page?}/{numberPerPage?}', 'HomeController@encodeHome');
+Route::get('/post/page/{numberPerPage?}', 'HomeController@encodeHome');
 Route::get('/user/id/{id}', 'UserController@encodeUser');
 Route::get('/post/id/{id}', 'PostController@encodePost');
