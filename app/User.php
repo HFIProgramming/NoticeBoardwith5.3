@@ -20,11 +20,12 @@ class User extends Authenticatable
 
 	/**
 	 * The attributes that should be hidden for arrays.
+	 * @TODO Think about this: should user phone number and wechat be leaked?
 	 *
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token', 'email','powerschool_id','role','id'
+		'password', 'remember_token', 'email','powerschool_id','role','id','active','created_at','updated_at'
 	];
 
 	/**

@@ -28,10 +28,7 @@ Route::get('now', function () {
 });
 
 
-// Sample API
-// This is a sample with bad name, just for test.
-// Change them as long as it works
-// @TODO
-Route::get('/post/page/{numberPerPage?}', 'HomeController@encodeHome');
-Route::get('/user/id/{id}', 'UserController@encodeUser');
-Route::get('/post/id/{id}', 'PostController@encodePost');
+// Public APIs
+// @TODO Improve naming and stuffs?
+Route::get('/post/for/{numberPerPage?}', 'API\PostController@getPosts');
+Route::get('/post/id/{id}','API\PostController@loadIndividualPost');

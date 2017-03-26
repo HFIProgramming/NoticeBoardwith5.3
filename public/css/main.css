@@ -314,9 +314,8 @@ nav {
 
 .article-card-text {
 	line-height: 2;
-	font-size: 1.25rem;
 	font-weight: 300;
-	max-width: 42.5rem;
+	max-width: 50rem;
 	margin: auto!important;
 }
 /*Comment Card*/
