@@ -20,6 +20,7 @@ class User extends Authenticatable
 
 	/**
 	 * The attributes that should be hidden for arrays.
+	 * @TODO Think about this: should user phone number and wechat be leaked?
 	 *
 	 * @var array
 	 */

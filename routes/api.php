@@ -31,3 +31,4 @@ Route::get('now', function () {
 // Public APIs
 // @TODO Improve naming and stuffs?
 Route::get('/post/for/{numberPerPage?}', 'API\PostController@getPosts');
+Route::get('/post/id/{id}','API\PostController@loadIndividualPost');
