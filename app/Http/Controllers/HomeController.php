@@ -85,13 +85,4 @@ class HomeController extends Controller
 		return redirect('/login');  // Fail to get user, turn to login page
 	}
 
-	public function encodeHome(Request $request)
-	{
-		$post = Post::with('hasManyComments', 'tagged')->orderBy('updated_at', 'desc');
-		if (!empty($request->numberPerPage)) {
-			return response()->json($post->paginate($request->numberPerPage));
-		}
-
-		return response()->json($post->take(10)->get());
-	}
 }

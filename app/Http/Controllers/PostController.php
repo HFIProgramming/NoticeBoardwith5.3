@@ -101,16 +101,6 @@ class PostController extends Controller
 		abort(500);  // Something goes wrong :(
 	}
 
-	public function encodePost(Request $request)
-	{
-		$post = Post::Id($request->id);
-		if ($this->checkPemission($post)) {
-			return response()->json(Post::with('hasManyComments')->where('id', $request->id)->get());
-		} else {
-			return response()->json(trans('post.post_no_found'), 404);
-		}
-	}
-
 	protected function checkPemission($post)
 	{
 		switch ($post->is_public) {
