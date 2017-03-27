@@ -209,6 +209,14 @@ nav {
 .post-card .card-image .circle {
 	padding: 10px;
 	width: 5rem;
+	height:5rem;
+	border-radius: 50%;
+}
+
+.article-card .card-image .circle {
+	padding: 10px;
+	width: 8rem;
+	height:8rem;
 	border-radius: 50%;
 }
 

@@ -48,6 +48,7 @@
 <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.bootcss.com/materialize/0.98.0/js/materialize.min.js"></script>
 <!--self-->
+<script type="text/javascript" src="/js/scroll_loading.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
 @yield('script')
 <!--End Scripts-->
