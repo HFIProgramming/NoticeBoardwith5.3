@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="post-user-profile">
-                    <div class="card-image"><img class="circle" data-url="{{ url($post->getAuthor->avatar) }}" src="/assets/images/blank.png"/></div>
+                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{ url($post->getAuthor->avatar) }}" src="/assets/images/blank.png"/></div>
                     <div class="post-header-container">
                         <h5 class="header post-header">{{$post->title}}</h5>
                     </div>
@@ -56,7 +56,7 @@
                         @if ($post->getLastUser != NULL)
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
-                                    <div class="card-image"><img class="circle" data-url="{{$post->getLastUser->avatar}}" src="/assets/images/blank.png"/></div>
+                                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{$post->getLastUser->avatar}}" src="/assets/images/blank.png"/></div>
                                     <div class="post-header-container">
                                         <h6 class="header post-header">
                                             <span>{{$post->getLastUser->name}}

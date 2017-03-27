@@ -8,7 +8,7 @@
 	<div class="post-card article-card">
 		<div class="card vertical post-card-content">
 			<div class="post-user-profile">
-				<div class="card-image article-avatar"><img class="circle" data-url="{{$post->getAuthor->avatar}}" src="/assets/images/blank.png" /></div>
+				<div class="card-image article-avatar"><img class="circle scroll-load-image" data-url="{{$post->getAuthor->avatar}}" src="/assets/images/blank.png" /></div>
 			</div>
 			<div class="post-header-container title-container">
 				<h5 class="header post-header railway">{{$post->title}}</h5>
@@ -46,7 +46,7 @@
 		@foreach($post->hasManyComments as $comment)
 		<div class="card vertical post-card-content">
 			<div class="post-user-profile">
-				<div class="card-image"><img class="circle" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png" /></div>
+				<div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png" /></div>
 				<div class="post-header-container">
 					<h6 class="header post-header"><span class="blue-text"><b>{{$comment->getAuthor->name}}</b></span></br><span class="grey-text">2016/9/20 1:29</span></h6>
 				</div>

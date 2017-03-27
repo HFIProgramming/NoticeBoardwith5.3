@@ -21,7 +21,7 @@ if (!function_exists('postProcess') && true) {
 		  	$str=str_replace('>','&gt;',$str);
 		  	$str = nl2br($str);
 			
-			$str = str_replace("[img-src]","<img style='max-width:100%;' src='/assets/images/blank.png' data-url='",$str);
+			$str = str_replace("[img-src]","<img style='max-width:100%;' class='scroll-load-image' src='/assets/images/blank.png' data-url='",$str);
 			$str = str_replace("[img-end]","'>",$str);
 			
 			$str = ' '.$str;
