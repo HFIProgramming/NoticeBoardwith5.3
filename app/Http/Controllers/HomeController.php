@@ -26,7 +26,8 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$posts = Post::with('hasManyComments','tagged')->orderBy('updated_at', 'desc')->get();
+		$posts = Post::with('hasManyComments', 'tagged')->orderBy('updated_at', 'desc')->get();
+
 		return view('welcome')->withPosts($posts);
 	}
 
@@ -83,4 +84,5 @@ class HomeController extends Controller
 
 		return redirect('/login');  // Fail to get user, turn to login page
 	}
+
 }

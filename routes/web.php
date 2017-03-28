@@ -90,8 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
 		Route::get('/post', function () {
 			return view('post/create');
 		});
-		Route::post('/post/{id}', 'PostController@getReply')->where(['id' => '[0-9]+']);
 		Route::post('/post', 'PostController@createNewPost');
+		Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
 
 	});
 });
@@ -116,7 +116,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 });
 
 // 错误信息
-Route::get('/error/custom', function () {
+Route::get('/errocustom', function () {
 	return response()->view('errors.custom');
 });
 

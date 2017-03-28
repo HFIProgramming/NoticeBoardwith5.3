@@ -49,13 +49,15 @@ class Handler extends ExceptionHandler
 		if ($exception instanceof ModelNotFoundException){
 			switch ($exception->getModel()) {
 				case "App\Ticket":
-					abort(404,Lang::get('vote.ticket_not_found'));
+					abort(404,trans('vote.ticket_not_found'));
 					break;
 				case "App\Vote":
-					abort(404,Lang::get('vote.vote_no_found'));
+					abort(404,trans('vote.vote_no_found'));
 					break;
+				case "App\Post":
+					abort(404,trans('post.post_no_found'));
 				default:
-					abort(404,$exception);
+					abort(404);
 					break;
 			}
 		}

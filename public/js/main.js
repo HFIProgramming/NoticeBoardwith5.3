@@ -15,6 +15,8 @@ $(document).ready(function () {
     if (comments.length == 1) {
         $('.comment-card').css('display', 'block');
     }
+
+    $(".scroll-load-image").scrollLoading();
 });
 
 //Google Analytics

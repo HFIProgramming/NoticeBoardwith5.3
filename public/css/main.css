@@ -209,6 +209,14 @@ nav {
 .post-card .card-image .circle {
 	padding: 10px;
 	width: 5rem;
+	height:5rem;
+	border-radius: 50%;
+}
+
+.article-card .card-image .circle {
+	padding: 10px;
+	width: 8rem;
+	height:8rem;
 	border-radius: 50%;
 }
 
@@ -314,9 +322,8 @@ nav {
 
 .article-card-text {
 	line-height: 2;
-	font-size: 1.25rem;
 	font-weight: 300;
-	max-width: 42.5rem;
+	max-width: 50rem;
 	margin: auto!important;
 }
 /*Comment Card*/

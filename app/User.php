@@ -20,11 +20,12 @@ class User extends Authenticatable
 
 	/**
 	 * The attributes that should be hidden for arrays.
+	 * @TODO Think about this: should user phone number and wechat be leaked?
 	 *
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token',
+		'password', 'remember_token', 'email','powerschool_id','role','id','active','created_at','updated_at'
 	];
 
 	/**
@@ -35,7 +36,7 @@ class User extends Authenticatable
 	 */
 	public function getAvatarAttribute($value)
 	{
-		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : $value;
+		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : 'https://hfinotice-images.nos-eastchina1.126.net/%2Favatar%2F'.$value;
 	}
 
 	/**
@@ -58,7 +59,7 @@ class User extends Authenticatable
 	 */
 	public function posts()
 	{
-		return $this->hasMany('App\Post');
+		return $this->hasMany('App\Post', 'user_id' , 'id');
 	}
 
 	/**
@@ -68,7 +69,7 @@ class User extends Authenticatable
 	 */
 	public function votes()
 	{
-		return $this->hasMany('App\Vote', 'creator_id');
+		return $this->hasMany('App\Vote', 'creator_id', 'id');
 	}
 
 	/**

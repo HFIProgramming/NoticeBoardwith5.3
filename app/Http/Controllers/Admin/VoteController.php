@@ -173,7 +173,7 @@ class VoteController extends Controller
 	 */
 	function clearVoteRecord(Request $request){
 		$id = $request->id;
-		$data = Ticket::find($id)->clearVoteRecord();
+		$data = Ticket::find($id)->clearAnswers();
 		return redirect('/admin/vote/ticket/status');
 	}
 }
