@@ -21,6 +21,11 @@ class AppServiceProvider extends ServiceProvider
 		    'post' => \App\Post::class,
 		    'comment' => \App\Comment::class,
 		]);
+
+		// IDE helper
+		if ($this->app->environment() !== 'production') {
+			$this->app->register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
+		}
 	}
 
 	/**
