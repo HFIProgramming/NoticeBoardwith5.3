@@ -2,6 +2,7 @@
 /public/storage
 /storage/*.key
 /vendor
+
 # PHPSTROM
 /.idea
 
@@ -13,11 +14,9 @@ Homestead.yaml
 .DS_Store
 
 # Laravel 4 specific
-bootstrap/compiled.php
 app/storage/
 
 # Laravel 5 & Lumen specific
-bootstrap/cache/
 .env.*.php
 .env.php
 .env

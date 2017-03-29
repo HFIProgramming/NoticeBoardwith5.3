@@ -103,7 +103,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		Route::get('/ticket', 'Admin\VoteController@viewTickets');
 		Route::post('/ticket', 'Admin\VoteController@generateTickets');
 		//票据结束
-		
+
 		//Ticket状态管理
 		Route::get('/ticket/status','Admin\VoteController@checkStatus');
 		Route::post('/ticket/status','Admin\VoteController@searchTicket');

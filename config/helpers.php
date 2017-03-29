@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'default_timezone' => 'UTC',
+    'default_timezone' => 'america/chicago',
 
     /*
     |--------------------------------------------------------------------------
