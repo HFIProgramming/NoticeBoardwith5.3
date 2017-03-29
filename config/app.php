@@ -185,7 +185,11 @@ return [
 		 * Tag Provider
 		 */
         \Conner\Tagging\Providers\TaggingServiceProvider::class,
-    ],
+        /*
+         * IDE Helper
+         */
+        \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+    ], 
 
     /*
     |--------------------------------------------------------------------------
