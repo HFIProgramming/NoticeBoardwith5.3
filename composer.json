@@ -9,7 +9,8 @@
         "barryvdh/laravel-ide-helper": "^2.3",
         "browner12/helpers": "^1.0",
         "doctrine/dbal": "^2.5",
-        "laravel/framework": "5.3.*",
+        "laravel/framework": "5.4.*",
+        "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
         "rtconner/laravel-tagging": "~2.2",
         "voku/anti-xss": "^2.1"
@@ -17,7 +18,7 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.0",
+        "phpunit/phpunit": "~5.7",
         "symfony/css-selector": "3.1.*",
         "symfony/dom-crawler": "3.1.*"
     },
