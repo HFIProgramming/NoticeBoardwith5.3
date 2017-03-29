@@ -24,7 +24,6 @@ class PostController extends Controller
 	 */
 	public function showIndividualPost($id)
 	{
-		__()
 		$post = Post::Id($id);
 		if ($this->checkPemission($post)) {
 			return view('post.individual')->withPost(Post::with('hasManyComments')->find($id)->firstOrFail());
