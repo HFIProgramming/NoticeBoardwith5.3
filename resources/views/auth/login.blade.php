@@ -21,29 +21,27 @@
                     <div class="row">
                         <h4 class="col s12 l8 push-l2">Welcome to NoticeBoard.</h4>
                     </div>
-                    <div class="row">
+                    <div class="row no-margin">
                         <div class="input-field col s10 push-s1 l8 push-l2">
                             <input id="username" type="text" name="username" value="{{ old('username') }}" required
                                    autofocus>
                             <label for="username">Username</label>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom: 0">
+                    @if ($errors->has('no_user'))
+                        <div class="row no-margin">
+                            <strong class="col s10 push-s1 l8 push-l2 red-text no-padding">{{ $errors->first('no_user') }}</strong>
+                        </div>
+                    @endif
+                    <div class="row" style="margin-top: 1rem; margin-bottom: 0;">
                         <div class="input-field col s10 push-s1 l8 push-l2">
                             <input id="password" type="password" name="password" required>
                             <label for="password">Password</label>
                         </div>
+                        @if ($errors->has('password'))
+                            <strong class="col s10 push-s1 l8 push-l2 red-text no-padding">{{ $errors->first('password') }}</strong>
+                        @endif
                     </div>
-                    @if ($errors->has('password'))
-                        <div class="row">
-                            <strong class="col red-text s10 push-s1 l8 push-l2">{{ $errors->first('password') }}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->has('warning'))
-                        <div class="row">
-                            <strong class="col red-text s10 push-s1 l8 push-l2">{{ $errors->first('warning') }}</strong>
-                        </div>
-                    @endif
                     <br>
                     <div class="row">
                         <button class="col s4 left login-btn btn-flat waves-effect waves-light" type="submit" align="center">Login</button>
