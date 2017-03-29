@@ -57,9 +57,6 @@ class Post extends Model
 	 * @param $Id
 	 * @return mixed
 	 */
-	public function scopeId($query, $Id)
-	{
-		return $query->where('id', $Id)->firstOrFail();
-	}
+
 
 }
