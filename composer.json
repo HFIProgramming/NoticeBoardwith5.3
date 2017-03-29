@@ -10,17 +10,14 @@
         "browner12/helpers": "^1.0",
         "doctrine/dbal": "^2.5",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "^1.0",
+        "laravel/tinker": "~1.0",
         "predis/predis": "^1.1",
-        "rtconner/laravel-tagging": "~2.2",
-        "voku/anti-xss": "^2.1"
+        "rtconner/laravel-tagging": "^2.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7",
-        "symfony/css-selector": "3.1.*",
-        "symfony/dom-crawler": "3.1.*"
+        "phpunit/phpunit": "~5.7"
     },
     "autoload": {
         "classmap": [
@@ -31,9 +28,9 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
-            "tests/TestCase.php"
-        ]
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     },
     "scripts": {
         "post-root-package-install": [
@@ -55,6 +52,7 @@
     },
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }
