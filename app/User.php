@@ -101,12 +101,20 @@ class User extends Authenticatable
 	public function isUserVoted($voteId)
 	{
 		if ($this->answers->map(function ($answer) {
-			return $answer->option->question->vote->id;
-		})->flatten()->search($voteId) === false
+				return $answer->option->question->vote->id;
+			})->flatten()->search($voteId) === false
 		) {
 			return false;
 		}
 		return true;
 	}
+
+	public function clubs()
+	{
+		$this->belongsToMany('App\Club', 'club_users', 'user_id', 'club_id')->withTimestamps();
+	}
+
+
+
 
 }

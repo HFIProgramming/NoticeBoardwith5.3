@@ -27,3 +27,7 @@ bootstrap/cache/
 
 # redis
 dump.rdb
+
+# IDE helper
+_ide_helper.php
+.phpstorm.meta.php
