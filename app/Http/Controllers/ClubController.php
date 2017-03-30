@@ -26,9 +26,7 @@ class ClubController extends Controller
 	{
 		$club = Club::Id($id);
 		if ($this->checkPermission($club)) {
-
 			return view('club.individual')->withClub($club);
-
 		}
 	}
 
@@ -37,35 +35,29 @@ class ClubController extends Controller
 
 		$clubId = $request->id;
 		if ($club = Club::Id($clubId)) {
-			if ($club = $this->user->clubs()->find($clubId)) {
+			if ($club = $this->user->clubs()->findOrFail($clubId)) {
 
-				if ($club->pivot->status == 'rejected') {
-					$club->pivot->status = 'pending';
-					return redirect()->back()->withMessage('成功');
+				switch ($club->pivot->status) {
+					case 'rejected':
+						$club->pivot->status = 'pending';
+						$club->saveOrFail();
+						return redirect()->back()->withMessage(__('club.apply_success'));
+						break;
+					case 'approved':
+						return redirect()->back()->withMessage(__('club.duplicate_approved_apply'));
+						break;
+					case 'blacklisted':
+						return redirect()->back()->withMessage(__('club.blacklisted'));
+						break;
+					case 'pending':
+						return redirect()->back()->withMessage(__('club.duplicate_pending_apply'));
+						break;
+					default:
+						abort(500, __('error.500'));
 				}
-				return redirect()->back()->withInput()->withErrors('您不能提交申请!');
-
-			} else {
-				ClubUser::create([
-					'user_id' => $this->user->id,
-					'club_id' => $request['id'],
-				]);
-				return redirect()->back()->withMessage('成功');
+			}else{
+				$club->users()
 			}
-
-			/*
-			if ($clubUser = ClubUser::where([['user_id', $this->user->id], ['club_id', $request->id]])->firstOrFail()) {
-				$clubUser->role = 'pending';
-			} else {
-				ClubUser::create([
-					'user_id' => $this->user->id,
-					'club_id' => $request['id'],
-				]);
-			}
-			*/
-
-			return redirect()->back()->withInput()->withErrors('申请提交失败!');
-
 
 		}
 
