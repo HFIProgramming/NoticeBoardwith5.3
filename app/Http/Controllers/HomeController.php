@@ -27,7 +27,9 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$posts = Post::with('comments', 'tagged')->orderBy('updated_at', 'desc')->get();
+		$posts = Post::with(['comments' => function ($query) {
+			$query->orderBy('created_at', 'desc');
+		}], 'tagged')->orderBy('updated_at', 'desc')->get();
 
 		return view('welcome')->withPosts($posts);
 	}
@@ -57,17 +59,17 @@ class HomeController extends Controller
 	{
 		$user = $request->user(); // Get user first :)
 		$data = $request->all();
-			if ($user->update([
-				'name'         => $data['name'],
-				'email'        => $data['email'],
-				'password'     => bcrypt($data['password']),
-				'english_name' => $data['english_name'],
-				'phone_number' => $data['phone_number'],
-				'wechat'       => $data['wechat'],
-				'active'       => '1',
-				//@TODO 数据库加了表项但是没有添加输入方式
-			])
-			) return redirect('/notice'); // Success! turn to notice
+		if ($user->update([
+			'name' => $data['name'],
+			'email' => $data['email'],
+			'password' => bcrypt($data['password']),
+			'english_name' => $data['english_name'],
+			'phone_number' => $data['phone_number'],
+			'wechat' => $data['wechat'],
+			'active' => '1',
+			//@TODO 数据库加了表项但是没有添加输入方式
+		])
+		) return redirect('/notice'); // Success! turn to notice
 	}
 
 }

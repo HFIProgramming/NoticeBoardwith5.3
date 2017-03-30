@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Vote;
 use App\Ticket;
 
-class VoteVerify
+class VerifyVote
 {
 	/**
 	 * Handle an incoming request.

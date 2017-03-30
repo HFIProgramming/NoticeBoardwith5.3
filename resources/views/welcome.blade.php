@@ -54,7 +54,7 @@
                     </div>
                     <div class="card-content post-comment-card">
                         @if (($comment = $post->comments) != NULL)
-                            @php($comment = $comment->sortByDesc('updated_at')->first())
+                            @php($comment = $comment->first())
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
                                     <div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png"/></div>
@@ -62,7 +62,7 @@
                                         <h6 class="header post-header">
                                             <span>{{$comment->user_id}}
                                                 <span class="blue-text">commented</span>
-                                            </span> 
+                                            </span>
                                             <br>
                                             <span>{{$comment->created_at}}</span>
                                         </h6>

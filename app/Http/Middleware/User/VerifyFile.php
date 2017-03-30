@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class FileVerify
+class VerifyFile
 {
     /**
      * Handle an incoming request.
