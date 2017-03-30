@@ -23,11 +23,11 @@ class Post extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 *
 	 */
+
 	public function comments()
 	{
 		return $this->hasMany('App\Comment', 'post_id', 'id');
 	}
-
 
 	/**
 	 * Get Author of specific post
@@ -40,7 +40,6 @@ class Post extends Model
 		return $this->belongsTo('App\User', 'user_id', 'id');
 	}
 
-
 	/**
 	 * Popular search Id
 	 *
@@ -52,7 +51,6 @@ class Post extends Model
 	{
 		return $query->where('id', $Id)->firstOrFail();
 	}
-
 
 
 }

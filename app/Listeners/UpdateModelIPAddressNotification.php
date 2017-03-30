@@ -5,7 +5,6 @@ namespace App\Listeners;
 use App\Events\UpdateModelIPAddress;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\IPAddress;
 
 class UpdateModelIPAddressNotification
 {

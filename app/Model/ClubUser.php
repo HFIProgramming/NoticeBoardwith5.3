@@ -13,7 +13,7 @@ class ClubUser extends Model
 	 * @var string
 	 */
 	protected $table = 'club_user';
-
+  
 	public function user()
 	{
 		$this->belongsTo('App\User','user_id','id');
@@ -31,4 +31,5 @@ class ClubUser extends Model
 	public function isBlackList(){
 
 	}
+
 }

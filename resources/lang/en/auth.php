@@ -16,5 +16,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'auth.role_limitation' => '没做呢'
+    'password' => 'Your password is incorrect.',
+    'no_user' => 'username does not exist'
 
 ];

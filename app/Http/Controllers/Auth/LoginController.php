@@ -8,6 +8,8 @@ use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
+
 
 class LoginController extends Controller
 {
@@ -64,6 +66,33 @@ class LoginController extends Controller
 		return 'username';
 	}
 
+
+    /**
+     * Method override to send correct error messages for login
+     * @param  Request $request 
+     * @return Response
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+
+        if ( ! User::where(usernameIdentifier($request->username), $request->username)->first() ) {
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([
+                    'no_user' => Lang::get('auth.no_user'),
+                ]);
+        }
+
+        if ( ! User::where(usernameIdentifier($request->username), $request->username)->where('password', bcrypt($request->password))->first() ) {
+            return redirect()->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors([
+                    'password' => Lang::get('auth.password'),
+                ]);
+        }
+
+    }
+
 	/**
 	 * API to check user's condition before login.
 	 *
@@ -83,4 +112,6 @@ class LoginController extends Controller
 
 		return response()->json($result);
 	}
+
+
 }

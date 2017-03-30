@@ -72,6 +72,7 @@ class ClubController extends Controller
 	}
 
 	protected function checkPermission($club)
+
 	{
 		switch ($club->is_public) {
 			case 1:
@@ -90,6 +91,5 @@ class ClubController extends Controller
 
 		abort(403, __('auth.role_limitation'));
 	}
-
 
 }

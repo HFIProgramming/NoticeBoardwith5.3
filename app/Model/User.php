@@ -45,7 +45,7 @@ class User extends Authenticatable
 
 
 	// Query
-
+  
 	/**
 	 * scope username with this function
 	 *
@@ -59,9 +59,7 @@ class User extends Authenticatable
 	}
 
 	// Relationship
-
-
-
+  
 	/**
 	 * List the Posts from a specific user
 	 *
@@ -123,11 +121,11 @@ class User extends Authenticatable
 	 */
 	public function isUserVoted($voteId)
 	{
+
 		return $this->answers->map(function ($answer) {
 				return $answer->option->question->vote->id;
 			})->flatten()->search($voteId) === false;
 
 	}
-
 
 }
