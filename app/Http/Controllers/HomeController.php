@@ -40,7 +40,7 @@ class HomeController extends Controller
 	public function showCompletionForm(Request $request)
 	{
 		if ($request->user()->active == 0) {
-			return view('user.completion'); // User is not active.
+			return view('user.completion')->withUser($request->user()); // User is not active.
 		} else {
 			return redirect('/'); // User is active already.
 		}

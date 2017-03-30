@@ -394,5 +394,25 @@ nav {
  */
 .error-card{
 	padding: 4rem;
-	opacity: 0.9;
+}
+
+/**
+ * User info complesion styles
+ */
+.user-info-completion {
+	padding: 2rem;
+	padding-bottom: 0;
+	opacity: 0.95;
+}
+
+.user-info-completion .card-content {
+	max-height: none !important;
+}
+
+.user-info-completion .card-content input {
+	margin-bottom:0;
+}
+
+.user-info-completion .card-content .input-field {
+	margin-bottom: 3.5rem;
 }

@@ -1,118 +1,88 @@
 @extends('layouts.app')
 
+@section('title','Complete Your Info')
+
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Complete your information before further action</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/completion') }}">
+    <div class="placeholder hide-on-med-and-down"></div>
+    <div class="row">
+        <div class="col s12 l8 push-l2">
+            <div class="card user-info-completion">
+                <div class="card-content">
+                    <span class="card-title">Please Complete Your User Information</span><br>
+                    <form role="form" method="POST" action="{{ url('/completion') }}">
 
-                            {{ csrf_field() }}
+                        {{ csrf_field() }}
 
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
+                        <div class="input-field">
+                            <i class="material-icons prefix">account_circle</i>
+                            <input id="name" type="text" name="name" value="{{$user->name}}" placeholder="required" required autofocus>
+                            <label for="name">Nick Name</label>
 
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                            @if ($errors->has('name'))
+                                <strong class="red-text">{{$error->first('name')}}</strong>
+                            @endif
+                        </div>
 
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">email</i>
+                            <input id="email" type="email" name="email" value="{{$user->email}}" placeholder="required" required>
+                            <label for="email">E-Mail Address</label>
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                            @if ($errors->has('email'))
+                                <strong class="red-text">{{ $errors->first('email') }}</strong>
+                            @endif
+                        </div>
 
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                        <div class="input-field">
+                            <i class="material-icons prefix">lock</i>
+                            <input id="password" type="password" name="password" placeholder="required" required>
+                            <label for="password">Password</label>
+                        </div>
 
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <input id="password-confirm" type="password" name="password_confirmation" placeholder="required" required>                        
+                            <label for="password-confirm">Confirm Password</label>
+                            @if ($errors->has('password'))
+                                <strong class="red-text">{{ $errors->first('password') }}</strong>
+                            @endif
+                        </div>
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
+                        <div class="input-field">   
+                            <i class="material-icons prefix">assignment_ind</i>
+                            <input id="english_name" type="text" class="form-control" name="english_name" placeholder="required" value="{{$user->english_name}}" required>
+                            <label for="english_name">English Name</label>
 
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password" required>
+                            @if ($errors->has('english_name'))
+                                <strong class="red-text">{{ $errors->first('english_name') }}</strong>
+                            @endif
+                        </div>
 
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">phone</i>
+                            <input id="phone_number" type="number" name="phone_number" value="{{$user->phone_number}}" placeholder="optional">
+                            <label for="phone_number">Phone Number</label>
 
-                            <div class="form-group">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+                            @if ($errors->has('phone_number'))
+                                <strong class="red-text">{{ $errors->first('phone_number') }}</strong>
+                            @endif
+                        </div>
 
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                                </div>
-                            </div>
+                        <div class="input-field">
+                            <i class="material-icons prefix">chat</i>
+                            <input id="wechat" type="text" name="wechat" value="{{$user->wechat}}" placeholder="optional">
+                            <label for="wechat">Wechat</label>
 
-                            <div class="form-group{{ $errors->has('english_name') ? ' has-error' : '' }}">
-                                <label for="english_name" class="col-md-4 control-label">English Name</label>
+                            @if ($errors->has('wechat'))
+                                <strong class="red-text">{{ $errors->first('wechat') }}</strong>
+                            @endif
+                        </div>
 
-                                <div class="col-md-6">
-                                    <input id="english_name" type="name" class="form-control" name="english_name" value="{{ old('english_name') }}" required>
-
-                                    @if ($errors->has('english_name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('english_name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">Phone Number</label>
-
-                                <div class="col-md-6">
-                                    <input id="phone_number" type="number" class="form-control" name="phone_number" value="{{ old('phone_number') }}" placeholder="optional">
-
-                                    @if ($errors->has('phone_number'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('phone_number') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('wechat') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">Wechat</label>
-
-                                <div class="col-md-6">
-                                    <input id="wechat" type="text" class="form-control" name="wechat" value="{{ old('wechat') }}" placeholder="optional">
-
-                                    @if ($errors->has('wechat'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('wechat') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Complete your information
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                 </div>
+                <div class="card-action">
+                    <button type="submit" class="btn blue no-shadow">Complete your information</button>
+                </div>
+                </form>
             </div>
         </div>
     </div>
