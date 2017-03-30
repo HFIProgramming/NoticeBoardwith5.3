@@ -112,7 +112,7 @@ class PostController extends Controller
 					$roles = explode("|", $post->is_hidden);
 					if (!in_array($this->user->role, $roles)) {
 						$grades = explode("|", $post->level_limitation);
-						if (!in_array($this->user->grade, $roles)) {
+						if (!in_array($this->user->grade, $grades)) {
 							return true;
 						}
 						abort(403, trans('auth.role_limitation'));

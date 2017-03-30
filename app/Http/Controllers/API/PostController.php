@@ -38,7 +38,7 @@ class PostController extends Controller
 			return view('api.post.individual')->withPost(Post::find($postId));
 		} else {
 			Redirect::guest(route('login'))
-				->withErrors(['warning' => Lang::get('login.login_required', [
+				->withErrors(['warning' => __('login.login_required', [
 					'process' => 'Post Viewing',
 				]),]);
 		}

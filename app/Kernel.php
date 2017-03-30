@@ -15,6 +15,9 @@ class Kernel extends HttpKernel
 	 */
 	protected $middleware = [
 		\Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
+		\Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+		\App\Http\Middleware\TrimStrings::class,
+		\Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
 	];
 
 	/**
@@ -27,6 +30,7 @@ class Kernel extends HttpKernel
 			\App\Http\Middleware\EncryptCookies::class,
 			\Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
 			\Illuminate\Session\Middleware\StartSession::class,
+			// \Illuminate\Session\Middleware\AuthenticateSession::class,
 			\Illuminate\View\Middleware\ShareErrorsFromSession::class,
 			\App\Http\Middleware\VerifyCsrfToken::class,
 			\Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -52,11 +56,11 @@ class Kernel extends HttpKernel
 		'can' => \Illuminate\Auth\Middleware\Authorize::class,
 		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 		'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-		'active' => \App\Http\Middleware\ActiveVerify::class,
-		'admin' => \App\Http\Middleware\AdminVerify::class,
-		'vote' => \App\Http\Middleware\VoteVerify::class,
-		'file' => \App\Http\Middleware\FileVerify::class,
-		'vote_group' => \App\Http\Middleware\GroupVerify::class,
-	    'vote_result' => \App\Http\Middleware\ResultVerify::class,
+		'active' => \App\Http\Middleware\VerifyActive::class,
+		'admin' => \App\Http\Middleware\VerifyAdmin::class,
+		'vote' => \App\Http\Middleware\VerifyVote::class,
+		'file' => \App\Http\Middleware\VerifyFile::class,
+		'vote_group' => \App\Http\Middleware\VerifyGroup::class,
+		'vote_result' => \App\Http\Middleware\VerifyResult::class,
 	];
 }

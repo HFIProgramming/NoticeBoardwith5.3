@@ -18,7 +18,6 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             // 帖子基本信息
             $table->string('user_id');
-            $table->string('last_user')->nullable();  // 最后回复的用户
             $table->string('title');
             $table->longText('content');
             // $table->string('tags');  no need, https://github.com/rtconner/laravel-tagging does the same job
@@ -31,7 +30,7 @@ class CreatePostsTable extends Migration
             $table->string('reason')->nullable();
             // 额外信息
             $table->string('background')->nullable();
-            $table->string('club')->nullable();  // 对应数字代表了社团的编号
+            $table->string('club_id')->nullable();  // 对应数字代表了社团的编号
 
             $table->timestamps();
         });
