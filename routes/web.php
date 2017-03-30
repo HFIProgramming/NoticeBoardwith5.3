@@ -15,23 +15,21 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
 // 认证结束
 
-// @TODO 国际日结束之后主页改回HomeController
-//Route::get('/', 'HomeController@index');
-Route::get('/', function () {
-	return redirect('/about');
-});
-
+// 关于我们
 Route::get('/about', function () {
 	return view('about');
 });
-// @TODO 关于我们界面
 
+// 国际日跳转
 Route::get('/intl/{ticket}', function ($ticket) {
 	return redirect('/vote/ticket/' . $ticket);
 });
 
 // ** 访客区域 **
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
+Route::get('/', 'HomeController@index');
+
+// 访客页面结束
 
 // Vote 区域
 Route::group(['prefix' => 'vote'], function () {

@@ -60,6 +60,8 @@ class User extends Authenticatable
 
 	// Relationship
 
+
+
 	/**
 	 * List the Posts from a specific user
 	 *

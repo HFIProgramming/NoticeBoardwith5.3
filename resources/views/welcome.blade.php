@@ -69,7 +69,7 @@
                             </div>
                             <div class="card-stacked">
                                 <div class="card-content">
-                                    <p>{{$post->hasManyComments->first()->content}}</p>
+                                    <p>{{$post->comment->first->content}}</p>
                                 </div>
                             </div>
                         </div>

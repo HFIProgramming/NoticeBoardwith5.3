@@ -23,10 +23,11 @@ class Post extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 *
 	 */
-	public function hasManyComments()
+	public function comments()
 	{
 		return $this->hasMany('App\Comment', 'post_id', 'id');
 	}
+
 
 	/**
 	 * Get Author of specific post
