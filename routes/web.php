@@ -105,16 +105,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		//票据结束
 
 		//Ticket状态管理
-		Route::get('/ticket/status','Admin\VoteController@checkStatus');
-		Route::post('/ticket/status','Admin\VoteController@searchTicket');
-		Route::get('/ticket/toggle/{id}','Admin\VoteController@toggleTicketStatus');
-		Route::get('/ticket/activate/{noneOrAll}','Admin\VoteController@toggleAllTickets');
-		Route::get('/ticket/clearallvote/{id}','Admin\VoteController@clearVoteRecord');
-		Route::post('/ticket/toggle/with/range','Admin\VoteController@toggleTicketStatusWithRange');
+		Route::get('/ticket/status', 'Admin\VoteController@checkStatus');
+		Route::post('/ticket/status', 'Admin\VoteController@searchTicket');
+		Route::get('/ticket/toggle/{id}', 'Admin\VoteController@toggleTicketStatus');
+		Route::get('/ticket/activate/{noneOrAll}', 'Admin\VoteController@toggleAllTickets');
+		Route::get('/ticket/clearallvote/{id}', 'Admin\VoteController@clearVoteRecord');
+		Route::post('/ticket/toggle/with/range', 'Admin\VoteController@toggleTicketStatusWithRange');
 	});
 
 });
 
+// 社团区域
+Route::group(['prefix' => 'club'], function () {
+	Route::get('/', 'ClubController@index');
+	Route::get('/{id}', 'Controller@showIndividualClub');
+});
 // 错误信息
 Route::get('/errocustom', function () {
 	return response()->view('errors.custom');

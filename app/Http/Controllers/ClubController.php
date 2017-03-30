@@ -27,8 +27,13 @@ class ClubController extends Controller
 		$club = Club::Id($id);
 		if ($this->checkPermission($club)) {
 			return view('club.individual')->withClub($club);
+		}else{
+			return redirect('/login')->withErrors(['warning' => __('login.login_required', [
+				'process' => 'Viewing Club'
+			]),]);
 		}
 	}
+
 
 	public function createUserApplication(Request $request)
 	{
@@ -55,18 +60,16 @@ class ClubController extends Controller
 					default:
 						abort(500, __('error.500'));
 				}
-			}else{
-				$club->users()
+			} else {
+				$club->users()->attach($this->user->id, ['status' => 'pending']);
+				return redirect()->back()->withMessage(__('club.apply_success'));
 			}
 
 		}
 
-		abort(500);
+		abort(500, __('error.500'));
 
 	}
-
-	//@TODO CLUB MASTER APPLICATION VERIFY
-
 
 	protected function checkPermission($club)
 	{
@@ -81,6 +84,7 @@ class ClubController extends Controller
 							return true;
 						}
 				}
+				return false;
 				break;
 		}
 
