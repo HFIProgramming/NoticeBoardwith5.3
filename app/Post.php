@@ -23,8 +23,7 @@ class Post extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
 	 *
 	 */
-
-	public function comments()
+	public function hasManyComments()
 	{
 		return $this->hasMany('App\Comment', 'post_id', 'id');
 	}
@@ -41,6 +40,17 @@ class Post extends Model
 	}
 
 	/**
+	 * Find who make the last reply of current Post
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 *
+	 */
+	public function getLastUser()
+	{
+		return $this->belongsTo('App\User', 'last_user', 'id');
+	}
+
+	/**
 	 * Popular search Id
 	 *
 	 * @param $query
@@ -51,6 +61,5 @@ class Post extends Model
 	{
 		return $query->where('id', $Id)->firstOrFail();
 	}
-
 
 }

@@ -91,7 +91,7 @@
                         <td>{{($ticket->active) ? '是' : '否'}}</td>
                         <td><?php foreach($ticket->usedForVote() as $voteid){ echo $voteid.', ';}?></td>
                         <td>
-                            <button class="btn waves-effect waves-light pink no-shadow" onclick="toggle_confirmation({{$ticket->id}},'/admin/vote/clearAnswers/ticket/')">清空</button>
+                            <button class="btn waves-effect waves-light pink no-shadow" onclick="toggle_confirmation({{$ticket->id}},'/admin/vote/ticket/clearallvote/')">清空</button>
                         </td>
                         <td>
                             <button class="btn waves-effect waves-light orange no-shadow" onclick="toggle_confirmation({{$ticket->id}}, '/admin/vote/ticket/toggle/')">{{($ticket->active) ? '禁用' : '启用'}}</button>

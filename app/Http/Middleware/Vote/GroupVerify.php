@@ -6,7 +6,7 @@ use Closure;
 use App\Ticket;
 use Illuminate\Support\Facades\Lang;
 
-class VerifyGroup
+class GroupVerify
 {
 	/**
 	 * Handle an incoming request.
