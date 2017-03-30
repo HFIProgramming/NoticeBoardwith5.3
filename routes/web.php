@@ -15,21 +15,23 @@ Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
 // 认证结束
 
-// 关于我们
+// @TODO 国际日结束之后主页改回HomeController
+//Route::get('/', 'HomeController@index');
+Route::get('/', function () {
+	return redirect('/about');
+});
+
 Route::get('/about', function () {
 	return view('about');
 });
+// @TODO 关于我们界面
 
-// 国际日跳转
 Route::get('/intl/{ticket}', function ($ticket) {
 	return redirect('/vote/ticket/' . $ticket);
 });
 
 // ** 访客区域 **
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
-Route::get('/', 'HomeController@index');
-
-// 访客页面结束
 
 // Vote 区域
 Route::group(['prefix' => 'vote'], function () {
@@ -101,25 +103,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		Route::get('/ticket', 'Admin\VoteController@viewTickets');
 		Route::post('/ticket', 'Admin\VoteController@generateTickets');
 		//票据结束
-
+		
 		//Ticket状态管理
-		Route::get('/ticket/status', 'Admin\VoteController@checkStatus');
-		Route::post('/ticket/status', 'Admin\VoteController@searchTicket');
-		Route::get('/ticket/toggle/{id}', 'Admin\VoteController@toggleTicketStatus');
-		Route::get('/ticket/activate/{noneOrAll}', 'Admin\VoteController@toggleAllTickets');
-		Route::get('/ticket/clearAnswers/ticket/{id}', 'Admin\VoteController@clearVoteRecord');
-		Route::post('/ticket/toggle/with/range', 'Admin\VoteController@toggleTicketStatusWithRange');
+		Route::get('/ticket/status','Admin\VoteController@checkStatus');
+		Route::post('/ticket/status','Admin\VoteController@searchTicket');
+		Route::get('/ticket/toggle/{id}','Admin\VoteController@toggleTicketStatus');
+		Route::get('/ticket/activate/{noneOrAll}','Admin\VoteController@toggleAllTickets');
+		Route::get('/ticket/clearallvote/{id}','Admin\VoteController@clearVoteRecord');
+		Route::post('/ticket/toggle/with/range','Admin\VoteController@toggleTicketStatusWithRange');
 	});
 
 });
 
-// 社团区域
-Route::group(['prefix' => 'club'], function () {
-	Route::get('/', 'ClubController@index');
-	Route::get('/{id}', 'Controller@showIndividualClub');
-});
 // 错误信息
-Route::get('/error/custom', function () {
+Route::get('/errocustom', function () {
 	return response()->view('errors.custom');
 });
 

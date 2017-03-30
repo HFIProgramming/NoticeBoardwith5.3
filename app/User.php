@@ -20,17 +20,13 @@ class User extends Authenticatable
 
 	/**
 	 * The attributes that should be hidden for arrays.
-	 *
 	 * @TODO Think about this: should user phone number and wechat be leaked?
 	 *
 	 * @var array
 	 */
 	protected $hidden = [
-		'password', 'remember_token', 'email', 'powerschool_id', 'role', 'id', 'active', 'created_at', 'updated_at'
+		'password', 'remember_token', 'email','powerschool_id','role','id','active','created_at','updated_at'
 	];
-
-
-	// Attribute
 
 	/**
 	 * default avatar
@@ -40,12 +36,9 @@ class User extends Authenticatable
 	 */
 	public function getAvatarAttribute($value)
 	{
-		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : 'https://hfinotice-images.nos-eastchina1.126.net/%2Favatar%2F' . $value;
+		return empty($value) ? 'https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg' : 'https://hfinotice-images.nos-eastchina1.126.net/%2Favatar%2F'.$value;
 	}
 
-
-	// Query
-  
 	/**
 	 * scope username with this function
 	 *
@@ -58,8 +51,6 @@ class User extends Authenticatable
 		return $query->where($type, $username);
 	}
 
-	// Relationship
-  
 	/**
 	 * List the Posts from a specific user
 	 *
@@ -68,7 +59,7 @@ class User extends Authenticatable
 	 */
 	public function posts()
 	{
-		return $this->hasMany('App\Post', 'user_id', 'id');
+		return $this->hasMany('App\Post', 'user_id' , 'id');
 	}
 
 	/**
@@ -102,18 +93,6 @@ class User extends Authenticatable
 	}
 
 	/**
-	 * Link User to clubs
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-	 */
-	public function clubs()
-	{
-		return $this->belongsToMany('App\Club', 'club_users', 'user_id','club_id')->withPivot('role','status')->withTimestamps();
-	}
-
-	// Function
-
-	/**
 	 * Check if User has voted in specific Vote
 	 *
 	 * @param $voteId
@@ -121,11 +100,21 @@ class User extends Authenticatable
 	 */
 	public function isUserVoted($voteId)
 	{
-
-		return $this->answers->map(function ($answer) {
+		if ($this->answers->map(function ($answer) {
 				return $answer->option->question->vote->id;
-			})->flatten()->search($voteId) === false;
-
+			})->flatten()->search($voteId) === false
+		) {
+			return false;
+		}
+		return true;
 	}
+
+	public function clubs()
+	{
+		$this->belongsToMany('App\Club', 'club_users', 'user_id', 'club_id')->withTimestamps();
+	}
+
+
+
 
 }

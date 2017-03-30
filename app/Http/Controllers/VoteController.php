@@ -6,7 +6,7 @@ use App\Answer;
 
 use App\Events\UpdateModelIPAddress;
 use Illuminate\Http\Response;
-use App\VoteGroup;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Ticket;
 use App\Vote;
@@ -29,9 +29,9 @@ class VoteController extends Controller
 	 * @TODO 研究一下预加载
 	 * @return mixed
 	 */
-	public function index()
+	public function showVotes()
 	{
-		$votes = VoteGroup::with('votes')->orderBy('created_at', 'desc')->get();
+		$votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
 
 		return view('vote.index')->withVotes($votes);
 	}
@@ -44,7 +44,7 @@ class VoteController extends Controller
 	 */
 	public function showVoteGroup(Request $request)
 	{
-		$ticket = Ticket::ticket($request->ticket)->with('votes');
+		$ticket = Ticket::ticket($request->ticket);
 
 		return view('vote.landing')->withTicket($ticket);
 	}
@@ -60,7 +60,7 @@ class VoteController extends Controller
 	{
 		$id = $request->id;
 
-		return view('vote.individual')->withVote(Vote::Id($id)->with('questions', 'questions.options')); //Else show vote page
+		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
 	}
 
 	/**
@@ -78,15 +78,19 @@ class VoteController extends Controller
 		$answers = collect(json_decode($request->selected));
 		$vote = Vote::Id($request->id);
 		$voteIsValid = false;
+		// @TODO 简化流程 将结果转为数字后处理，因为一开始进入的数据是字符串 diff功能不生效
+		if($this->checkIfRepeatingOptions($answers) == false){ //如果没有重复的元素
+			if($this->checkIfAllFilled($answers, $vote)){ //并且所有的选项填完了
+				if($this->checkIfOptionsFilledMatch($answers,$vote)){
+					$voteIsValid = true;
+				}
+			}
+			else{
+				return redirect()->back()->withErrors(['warning' => Lang::get('vote.option_left_not_filled')]);
+			}
+		}
 
-		if (!$this->checkIfAllFilled($answers, $vote)) { //并且所有的选项填完了
-			return redirect()->back()->withErrors(['warning' => __('vote.option_left_not_filled')]);
-		}
-		if ($this->checkIfRepeatingOptions($answers) && $this->checkIfOptionsFilledMatch($answers, $vote)) {
-			$voteIsValid = true;
-		}
-		
-		if ($voteIsValid) {  // Safety First :)
+		if ($voteIsValid === true) {  // Safety First :)
 			switch ($request->type) {  // Start Dash!
 				case 'ticket':
 					foreach ($answers as $answer) {
@@ -114,7 +118,7 @@ class VoteController extends Controller
 					break;
 			}
 		} else {
-			return redirect('/error/custom')->withErrors(['warning' => __('vote.checksum_fail')]);
+			return redirect('/error/custom')->withErrors(['warning' => Lang::get('vote.checksum_fail')]);
 		}
 	}
 
@@ -139,9 +143,10 @@ class VoteController extends Controller
 		$answers = $answers->toArray();
 		$origin = $answers;
 		$answers = array_unique($answers);
-		if (count($origin) == count($answers)) { //答案中没有重复： If two arrays have the same number of values, this means that there is no repetition within answers.
+		if (count($origin) == count($answers)){ //答案中没有重复： If two arrays have the same number of values, this means that there is no repetition within answers.
 			return false;
-		} else { //答案中有重复: 如果两个数组的有不同数量的元素，说明array_unique()函数压缩了一些元素，也就是证明答案中有重复。
+		}
+		else{ //答案中有重复: 如果两个数组的有不同数量的元素，说明array_unique()函数压缩了一些元素，也就是证明答案中有重复。
 			return true;
 		}
 	}

@@ -8,7 +8,6 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
-
 require('bootstrap-sass');
 
 /**
@@ -18,19 +17,19 @@ require('bootstrap-sass');
  */
 
 window.Vue = require('vue');
+require('vue-resource');
 
 /**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
+ * We'll register a HTTP interceptor to attach the "CSRF" header to each of
+ * the outgoing requests issued by this application. The CSRF middleware
+ * included with Laravel will automatically verify the header's value.
  */
 
-window.axios = require('axios');
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
 
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest'
-};
+    next();
+});
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -38,9 +37,7 @@ window.axios.defaults.headers.common = {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
+// import Echo from "laravel-echo"
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',

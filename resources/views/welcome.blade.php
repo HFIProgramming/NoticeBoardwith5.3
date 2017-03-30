@@ -53,24 +53,23 @@
                         </p>
                     </div>
                     <div class="card-content post-comment-card">
-                        @if (($comment = $post->comments) != NULL)
-                            @php($comment = $comment->first())
+                        @if ($post->getLastUser != NULL)
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
-                                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png"/></div>
+                                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{$post->getLastUser->avatar}}" src="/assets/images/blank.png"/></div>
                                     <div class="post-header-container">
                                         <h6 class="header post-header">
-                                            <span>{{$comment->user_id}}
+                                            <span>{{$post->getLastUser->name}}
                                                 <span class="blue-text">commented</span>
-                                            </span>
+                                            </span> 
                                             <br>
-                                            <span>{{$comment->created_at}}</span>
+                                            <span>{{$post->updated_at}}</span>
                                         </h6>
                                     </div>
                             </div>
                             <div class="card-stacked">
                                 <div class="card-content">
-                                    <p>{{$comment->content}}</p>
+                                    <p>{{$post->hasManyComments->first()->content}}</p>
                                 </div>
                             </div>
                         </div>

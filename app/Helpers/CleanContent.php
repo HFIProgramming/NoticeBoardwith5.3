@@ -10,6 +10,7 @@ if (!function_exists('CleanContent') && true) {
 	 */
 	function CleanContent($content)
 	{
-		return strip_tags($content);
+		$antiXss = new \voku\helper\AntiXSS();
+		return $antiXss->xss_clean($content,array('HTML.Allowed' => ''));
 	}
 }
