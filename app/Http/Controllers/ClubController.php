@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ClubUser;
 use Illuminate\Http\Request;
 use App\Club;
 use App\User;
@@ -12,39 +13,66 @@ class ClubController extends Controller
 	//
 	public function __construct()
 	{
-		$this->middleware('auth', ['except' => ['showIndividualClub']]);
+		$this->middleware('auth', ['except' => ['index', 'showIndividualClub']]);
 		$this->user = Auth::user();
+	}
+
+	public function index()
+	{
+		return view('club.index')->withClub(Club::All());
 	}
 
 	public function showIndividualClub($id)
 	{
 		$club = Club::Id($id);
-		// @Todo permission check
+		if ($this->checkPermission($club)) {
 			return view('club.individual')->withClub($club);
+		}else{
+			return redirect('/login')->withErrors(['warning' => __('login.login_required', [
+				'process' => 'Viewing Club'
+			]),]);
+		}
 	}
 
-	public function creatClubApplication(Request $request)
+
+	public function createUserApplication(Request $request)
 	{
-		//@Todo permission check
-		if ($club = Club::Id($request->id)) {
-			if (Comment::create([
-				'user_id'  => $this->user->id,
-				'club_id'  => $request['id'],
-			])
-			) {
-				if ($club->save()) {
-					return redirect()->back()->withMessage('成功');
+
+		$clubId = $request->id;
+		if ($club = Club::Id($clubId)) {
+			if ($club = $this->user->clubs()->findOrFail($clubId)) {
+
+				switch ($club->pivot->status) {
+					case 'rejected':
+						$club->pivot->status = 'pending';
+						$club->saveOrFail();
+						return redirect()->back()->withMessage(__('club.apply_success'));
+						break;
+					case 'approved':
+						return redirect()->back()->withMessage(__('club.duplicate_approved_apply'));
+						break;
+					case 'blacklisted':
+						return redirect()->back()->withMessage(__('club.blacklisted'));
+						break;
+					case 'pending':
+						return redirect()->back()->withMessage(__('club.duplicate_pending_apply'));
+						break;
+					default:
+						abort(500, __('error.500'));
 				}
-				abort(500); // Something wrong with the club :(
+			} else {
+				$club->users()->attach($this->user->id, ['status' => 'pending']);
+				return redirect()->back()->withMessage(__('club.apply_success'));
 			}
 
-			return redirect()->back()->withInput()->withErrors('申请提交失败!');
 		}
-		abort(500); // club does not exist :(
+
+		abort(500, __('error.500'));
 
 	}
 
-	protected function checkPemission($club)
+	protected function checkPermission($club)
+
 	{
 		switch ($club->is_public) {
 			case 1:
@@ -52,21 +80,16 @@ class ClubController extends Controller
 				break;
 			case 0:
 				if (Auth::check()) {
-					$roles = explode("|", $club->is_hidden);
-					if (!in_array($this->user->role, $roles)) {
-						$grades = explode("|", $club->level_limitation);
-						if (!in_array($this->user->grade, $grades)) {
+					if (ExplodeExist($club->is_hidden, $this->user->role))
+						if (ExplodeExist($club->level_limitation, $this->user->grade)) {
 							return true;
 						}
-						abort(403, trans('auth.role_limitation'));
-					}
-
-					return false;
-					break;
 				}
-
 				return false;
+				break;
 		}
+
+		abort(403, __('auth.role_limitation'));
 	}
 
 }

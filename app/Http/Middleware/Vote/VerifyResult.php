@@ -8,7 +8,7 @@ use App\Ticket;
 use App\Vote;
 use Illuminate\Support\Facades\Lang;
 
-class ResultVerify
+class VerifyResult
 {
 	/**
 	 * Handle an incoming request.

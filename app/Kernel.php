@@ -56,11 +56,11 @@ class Kernel extends HttpKernel
 		'can' => \Illuminate\Auth\Middleware\Authorize::class,
 		'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
 		'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-		'active' => \App\Http\Middleware\ActiveVerify::class,
-		'admin' => \App\Http\Middleware\AdminVerify::class,
-		'vote' => \App\Http\Middleware\VoteVerify::class,
-		'file' => \App\Http\Middleware\FileVerify::class,
-		'vote_group' => \App\Http\Middleware\GroupVerify::class,
-		'vote_result' => \App\Http\Middleware\ResultVerify::class,
+		'active' => \App\Http\Middleware\VerifyActive::class,
+		'admin' => \App\Http\Middleware\VerifyAdmin::class,
+		'vote' => \App\Http\Middleware\VerifyVote::class,
+		'file' => \App\Http\Middleware\VerifyFile::class,
+		'vote_group' => \App\Http\Middleware\VerifyGroup::class,
+		'vote_result' => \App\Http\Middleware\VerifyResult::class,
 	];
 }

@@ -21,9 +21,9 @@ class CreateClubsTable extends Migration
             $table->string('avatar')->nullable();
             $table->text('self_intro');
             // 权限设定
-            $table->string('is_hidden');  // 只对指定人员开放
+            $table->string('role_limitation');  // 只对指定人员开放,多个年级用"|"分离
             $table->string('is_public')->default(1); // 是否对外开放，1 无限制，0 需要登录
-            $table->string('level_limitation')->nullable(); // 限制年级，多个年级用"|"分离
+            $table->string('level_limitation')->nullable(); // 只对指定年级，多个年级用"|"分离
             // 额外信息
             $table->string('background')->nullable();
 
