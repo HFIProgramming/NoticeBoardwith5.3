@@ -6,7 +6,7 @@ use App\Answer;
 
 use App\Events\UpdateModelIPAddress;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Validator;
+use App\VoteGroup;
 use Illuminate\Http\Request;
 use App\Ticket;
 use App\Vote;
@@ -29,9 +29,9 @@ class VoteController extends Controller
 	 * @TODO 研究一下预加载
 	 * @return mixed
 	 */
-	public function showVotes()
+	public function index()
 	{
-		$votes = Vote::with('questions')->orderBy('ended_at', 'desc')->get();
+		$votes = VoteGroup::with('votes')->orderBy('created_at', 'desc')->get();
 
 		return view('vote.index')->withVotes($votes);
 	}
@@ -44,7 +44,7 @@ class VoteController extends Controller
 	 */
 	public function showVoteGroup(Request $request)
 	{
-		$ticket = Ticket::ticket($request->ticket);
+		$ticket = Ticket::ticket($request->ticket)->with('votes');
 
 		return view('vote.landing')->withTicket($ticket);
 	}
@@ -60,7 +60,7 @@ class VoteController extends Controller
 	{
 		$id = $request->id;
 
-		return view('vote.individual')->withVote(Vote::Id($id)); //Else show vote page
+		return view('vote.individual')->withVote(Vote::Id($id)->with('questions','questions.options')); //Else show vote page
 	}
 
 	/**

@@ -13,15 +13,11 @@ class Club extends Model
 	 */
 	protected $table = 'club_user';
 
+	// Relationship
 
 	public function users()
 	{
 		return $this->belongsToMany('App\User', 'club_users', 'club_id','user_id')->withPivot('role','status')->withTimestamps();
-	}
-
-	public function getBlacklistApplicants()
-	{
-
 	}
 
 	public function scopeId($query, $Id)

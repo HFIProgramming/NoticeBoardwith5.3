@@ -40,16 +40,6 @@ class Post extends Model
 		return $this->belongsTo('App\User', 'user_id', 'id');
 	}
 
-	/**
-	 * Find who make the last reply of current Post
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-	 *
-	 */
-	public function getLastUser()
-	{
-		return $this->belongsTo('App\User', 'last_user', 'id');
-	}
 
 	/**
 	 * Popular search Id

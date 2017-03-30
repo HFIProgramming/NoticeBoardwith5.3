@@ -107,7 +107,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 		Route::post('/ticket/status', 'Admin\VoteController@searchTicket');
 		Route::get('/ticket/toggle/{id}', 'Admin\VoteController@toggleTicketStatus');
 		Route::get('/ticket/activate/{noneOrAll}', 'Admin\VoteController@toggleAllTickets');
-		Route::get('/ticket/clearallvote/{id}', 'Admin\VoteController@clearVoteRecord');
+		Route::get('/ticket/clearAnswers/ticket/{id}', 'Admin\VoteController@clearVoteRecord');
 		Route::post('/ticket/toggle/with/range', 'Admin\VoteController@toggleTicketStatusWithRange');
 	});
 
@@ -119,7 +119,7 @@ Route::group(['prefix' => 'club'], function () {
 	Route::get('/{id}', 'Controller@showIndividualClub');
 });
 // 错误信息
-Route::get('/errocustom', function () {
+Route::get('/error/custom', function () {
 	return response()->view('errors.custom');
 });
 

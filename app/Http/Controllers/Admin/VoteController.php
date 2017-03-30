@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\GenerateTicket;
 use App\Option;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,17 +36,8 @@ class VoteController extends Controller
 	 * @param Request $request
 	 * @return $this|\Illuminate\Http\RedirectResponse
 	 */
-	public function generateTickets(Request $request)
+	public function generateTickets(GenerateTicket $request)
 	{
-		$validator = Validator::make($request->all(), [
-			'prefix'  => 'nullable|string',
-			'length'  => 'required|numeric',
-			'vote_group_id' => 'required|numeric',
-			'number'  => 'required|numeric',
-		]);
-		if ($validator->fails()){
-			return redirect()->back()->withErrors($validator)->withInput();  // When Validator fails, return errors
-		}
 		for ($i = 1; $i <= $request->number; $i++) {
 			$ticket_string = randomString($request->length, $request->prefix);
 			$vote_group_id = $request->vote_group_id;
@@ -60,30 +52,6 @@ class VoteController extends Controller
 		return redirect()->back();
 	}
 
-	public function showVoteResult(Request $request)
-	{
-		$vote = Vote::find($request->id);
-		$counts = array_count_values($vote->questions->map(function ($question) {
-			return $question->options->map(function ($option) {
-				return $option->answers->map(function ($answer) {
-					return $answer->option_id;  // Escape Numeric
-				})->flatten();
-			})->flatten();
-		})->flatten()->toArray());
-		// fallback :(
-		$results = [];
-		foreach ($counts as $key => $count) {
-			$results[$key] = ['questionId' => Option::find($key)->question->id, 'count' => $count];
-		}
-
-		uasort($results, function ($question1, $question2) {
-		    return ($question1['count'] > $question2['count']) ? -1 : 1;
-        });
-
-		return view('vote.result')->withResults($results)->withVote($vote);
-	}
-
-
 	/**
 	 * show tickets for admin
 	 *
@@ -91,7 +59,7 @@ class VoteController extends Controller
 	 */
 	public function checkStatus(){
 		$ticket = Ticket::get();
-		return view('vote/ticketstatus')->withTicket($ticket);
+		return view('vote.admin.status')->withTicket($ticket);
 	}
 
 	/**
@@ -102,7 +70,7 @@ class VoteController extends Controller
 	public function searchTicket(Request $request){
 		$id = $request->ticketid;
 		$ticket = Ticket::where('id',$id)->get();
-		return view('vote/ticketstatus')->withTicket($ticket);
+		return view('vote.admin.status')->withTicket($ticket);
 	}
 
 	/**
@@ -171,7 +139,7 @@ class VoteController extends Controller
 	 * @param $id:Int
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
 	 */
-	function clearVoteRecord(Request $request){
+	function clearAnswers(Request $request){
 		$id = $request->id;
 		$data = Ticket::find($id)->clearAnswers();
 		return redirect('/admin/vote/ticket/status');
