@@ -189,7 +189,7 @@ return [
          * IDE Helper
          */
         \Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-    ], 
+    ],
 
     /*
     |--------------------------------------------------------------------------
