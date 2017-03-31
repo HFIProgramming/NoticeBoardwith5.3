@@ -53,8 +53,7 @@
                         </p>
                     </div>
                     <div class="card-content post-comment-card">
-                        @if (($comment = $post->comments) != NULL)
-                            @php($comment = $comment->first())
+                        @if (($comment = $post->comments->first()) != NULL)
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
                                     <div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png"/></div>
