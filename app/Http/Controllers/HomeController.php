@@ -27,7 +27,7 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$posts = Post::with(['comments' => function ($query) {
+		$posts = Post::with(['comments.user' => function ($query) {
 			$query->orderBy('created_at', 'desc');
 		}], 'tagged')->orderBy('updated_at', 'desc')->get();
 

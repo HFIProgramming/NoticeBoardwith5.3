@@ -22,11 +22,11 @@
         <div class="card vertical post-card-content">
             <div class="card-action">
                 <div class="row post-card-heading no-margin">
-                    <div class="col s12 subheader" align="left"><h6>{{$vote->getAuthor->name}} at {{date('Y/n/j G:i', strtotime($vote->created_at))}}</h6></div>
+                    <div class="col s12 subheader" align="left"><h6>{{$vote->user->name}} at {{date('Y/n/j G:i', strtotime($vote->created_at))}}</h6></div>
                 </div>
             </div>
             <div class="post-user-profile">
-                <div class="card-image"><img class="circle" src="{{ url($vote->getAuthor->avatar) }}"/></div>
+                <div class="card-image"><img class="circle" src="{{ url($vote->user->avatar) }}"/></div>
                 <div class="post-header-container">
                     <h5 class="header post-header">{{$vote->title}}</h5>
                 </div>

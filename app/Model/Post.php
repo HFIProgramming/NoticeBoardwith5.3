@@ -35,7 +35,7 @@ class Post extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 *
 	 */
-	public function getAuthor()
+	public function user()
 	{
 		return $this->belongsTo('App\User', 'user_id', 'id');
 	}

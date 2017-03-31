@@ -17,7 +17,7 @@ class PostController extends Controller
 	 */
 	public function getPosts(Request $request)
 	{
-		$post = Post::with('hasManyComments', 'tagged','getAuthor')->orderBy('updated_at', 'desc');
+		$post = Post::with('comments', 'tagged','user')->orderBy('updated_at', 'desc');
 		$numberPerPage = (intval($request->numberPerPage) != 0) ? intval($request->numberPerPage) : null; //This line is to prevent invalid non-numeric string arguments.	
 		if (isset($numberPerPage)) {
 			return response()->json($post->paginate($numberPerPage));

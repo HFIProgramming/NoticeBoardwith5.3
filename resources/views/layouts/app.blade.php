@@ -80,18 +80,12 @@
 <div class="navbar" id="navbar-container">
     <nav style="box-shadow: none">
         <div class="nav-wrapper" id="navbar">
-            {{--
-            @TODO Disabled for International Day,Removed when finished
                 <a href="#" data-activates="slide-out-panel" class="button-collapse push-l3 menu-button"><i
                         class="material-icons">menu</i></a>
-            --}}
             <a href="/"><img class="nb-logo brand-logo center" src="https://hfinotice-web.nos-eastchina1.126.net/black_logo.png"></img></a>
-            {{--
-            @TODO Disabled for International Day,Removed when finished
                 <ul id="nav-mobile" class="right">
                     <li><a href="#new-post"><i class="material-icons add-button">add</i></a></li>
                 </ul>
-            --}}
         </div>
     </nav>
 </div>

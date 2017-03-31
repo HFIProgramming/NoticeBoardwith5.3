@@ -9,7 +9,7 @@
         <div class="card vertical post-card-content">
             <div class="card-action">
                 <div class="row post-card-heading no-margin">
-                    <div class="col s5 subheader" align="left"><h6>By {{$vote->getAuthor->name}}</h6></div>
+                    <div class="col s5 subheader" align="left"><h6>By {{$vote->user->name}}</h6></div>
                     @if (!$ticket->isTicketUsed($vote->id))
                         @if (strtotime($vote->started_at) - strtotime('now') > 0)
                             <div class="col s7 right"><a href="#">@lang('vote.vote_not_started_button')</a></div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="post-user-profile">
-                <div class="card-image"><img class="circle" src="{{ url($vote->getAuthor->avatar) }}" /></div>
+                <div class="card-image"><img class="circle" src="{{ url($vote->user->avatar) }}" /></div>
                 <div class="post-header-container">
                     <h5 class="header post-header">{{$vote->title}}</h5>
                 </div>

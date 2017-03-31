@@ -27,9 +27,9 @@ class ClubController extends Controller
 		$club = Club::Id($id);
 		if ($this->checkPermission($club)) {
 			return view('club.individual')->withClub($club);
-		}else{
+		} else {
 			return redirect('/login')->withErrors(['warning' => __('login.login_required', [
-				'process' => 'Viewing Club'
+				'process' => 'Club Viewing'
 			]),]);
 		}
 	}
@@ -80,16 +80,15 @@ class ClubController extends Controller
 				break;
 			case 0:
 				if (Auth::check()) {
-					if (ExplodeExist($club->is_hidden, $this->user->role))
-						if (ExplodeExist($club->level_limitation, $this->user->grade)) {
+					if (!ExplodeExist($club->is_hidden, $this->user->role))
+						if (!ExplodeExist($club->level_limitation, $this->user->grade)) {
 							return true;
 						}
+					abort(403, __('auth.role_limitation'));
 				}
-				return false;
 				break;
 		}
-
-		abort(403, __('auth.role_limitation'));
+		return false;
 	}
 
 }

@@ -24,12 +24,12 @@
             <div class="card vertical post-card-content">
                 <div class="card-action">
                     <div class="row post-card-heading no-margin">
-                        <div class="col l8 hide-on-med-and-down subheader" align="left"><h6>{{$post->getAuthor->name}} on {{$post->created_at}}</h6></div>
+                        <div class="col l8 hide-on-med-and-down subheader" align="left"><h6>{{$post->user->name}} on {{$post->created_at}}</h6></div>
                         <div class="col l4 right"><a href="{{url('/post/'.$post->id)}}">Full article</a></div>
                     </div>
                 </div>
                 <div class="post-user-profile">
-                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{ url($post->getAuthor->avatar) }}" src="/assets/images/blank.png"/></div>
+                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{ url($post->user->avatar) }}" src="/assets/images/blank.png"/></div>
                     <div class="post-header-container">
                         <h5 class="header post-header">{{$post->title}}</h5>
                     </div>
@@ -43,7 +43,7 @@
                                 @break($loop->iteration == 3)
                             @endforeach
                         </div>
-                        <h6 class="subheader post-header hide-on-large-only">{{$post->getAuthor->name}} on {{$post->created_at}}</h6>
+                        <h6 class="subheader post-header hide-on-large-only">{{$post->user->name}} on {{$post->created_at}}</h6>
                         <p class="flow-text">
                             @if (strlen($clean = CleanContent($post->content))<=150)
                                 {!! $clean !!}
@@ -56,10 +56,10 @@
                         @if (($comment = $post->comments->first()) != NULL)
                         <div class="card vertical post-card-content">
                             <div class="post-user-profile">
-                                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->getAuthor->avatar}}" src="/assets/images/blank.png"/></div>
+                                    <div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->user->avatar}}" src="/assets/images/blank.png"/></div>
                                     <div class="post-header-container">
                                         <h6 class="header post-header">
-                                            <span>{{$comment->user_id}}
+                                            <span>{{$comment->user->name}}
                                                 <span class="blue-text">commented</span>
                                             </span>
                                             <br>

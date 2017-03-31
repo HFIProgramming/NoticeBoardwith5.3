@@ -11,6 +11,7 @@ if (!function_exists('explodeExist') && true) {
 	 */
 	function explodeExist($data, $target)
 	{
+		if ($data == NULL) return false;
 		$collect = collect(explode("|", $data));
 		return $collect->flatten()->search($target) !== false;
 	}

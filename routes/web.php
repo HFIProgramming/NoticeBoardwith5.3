@@ -28,6 +28,7 @@ Route::get('/intl/{ticket}', function ($ticket) {
 // ** 访客区域 **
 // 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
 Route::get('/', 'HomeController@index');
+Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
 
 // 访客页面结束
 
@@ -89,7 +90,6 @@ Route::group(['middleware' => 'auth'], function () {
 			return view('post/create');
 		});
 		Route::post('/post', 'PostController@createNewPost');
-		Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
 
 	});
 });
