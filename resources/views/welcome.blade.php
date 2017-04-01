@@ -83,6 +83,14 @@
             </div>
         </div>
     @endforeach
+
+    <div class="post-card">
+        <div class="card vertical post-card-content">
+            <div class="card-content no-padding">  
+                {{$posts->links()}}
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')

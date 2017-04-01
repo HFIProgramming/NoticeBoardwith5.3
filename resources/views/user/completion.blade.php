@@ -19,7 +19,7 @@
                             <label for="name">Nick Name</label>
 
                             @if ($errors->has('name'))
-                                <strong class="red-text">{{$error->first('name')}}</strong>
+                                <strong class="red-text">{{$errors->first('name')}}</strong>
                             @endif
                         </div>
 

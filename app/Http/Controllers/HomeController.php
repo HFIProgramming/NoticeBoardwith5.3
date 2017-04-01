@@ -29,7 +29,7 @@ class HomeController extends Controller
 	{
 		$posts = Post::with(['comments.user' => function ($query) {
 			$query->orderBy('created_at', 'desc');
-		}], 'tagged')->orderBy('updated_at', 'desc')->get();
+		}], 'tagged')->orderBy('updated_at', 'desc')->Paginate(15);
 
 		return view('welcome')->withPosts($posts);
 	}
