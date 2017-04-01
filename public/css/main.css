@@ -83,6 +83,9 @@ body {
 	background: #000;
 	opacity: 0.9;
 }
+.side-nav {
+	overflow-x: hidden;
+}
 
 .nb-logo {
 	height: 4rem;
