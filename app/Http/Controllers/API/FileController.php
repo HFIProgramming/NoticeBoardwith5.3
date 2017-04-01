@@ -38,8 +38,8 @@ class FileController extends Controller
 		return Response()->json(
 			[
 				"bucketName" => $bucket,
-			    "objectName" => $request->object,
-			    "token" => $result,
+				"objectName" => $request->object,
+				"token" => $result,
 
 			]
 		);

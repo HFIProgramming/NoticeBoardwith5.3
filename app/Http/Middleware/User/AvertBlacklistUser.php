@@ -16,11 +16,12 @@ class AvertBlacklistUser
 	 */
 	public function handle($request, Closure $next)
 	{
-		if (Auth::check() && Auth::user()->blacklisted == false) {
-			return $next($request);
+		if ($request->user()->blacklisted != false) {
+			abort(403, __('auth.blacklisted'));
 		}
 
-		abort(403, __('auth.blacklisted'));
+		return $next($request);
+
 
 	}
 }
