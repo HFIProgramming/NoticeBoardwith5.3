@@ -32,3 +32,5 @@ Route::get('now', function () {
 // @TODO Improve naming and stuffs?
 Route::get('/post/for/{numberPerPage?}', 'API\PostController@getPosts');
 Route::get('/post/id/{id}','API\PostController@loadIndividualPost');
+
+Route::get('/image/upload/token', 'API\FileController@generateKeys');
