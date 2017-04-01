@@ -10,6 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// ** 访客区域 **
+// 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
+
 // 认证路由
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout'); // maybe not a good idea :(
@@ -25,12 +29,8 @@ Route::get('/intl/{ticket}', function ($ticket) {
 	return redirect('/vote/ticket/' . $ticket);
 });
 
-// ** 访客区域 **
-// 以下页面部分需要验证，但是需要做方法过滤，请注意保护！
 Route::get('/', 'HomeController@index');
 Route::get('/post/{id}', 'PostController@showIndividualPost')->where(['id' => '[0-9]+']);
-
-// 访客页面结束
 
 // Vote 区域
 Route::group(['prefix' => 'vote'], function () {
@@ -56,9 +56,18 @@ Route::group(['prefix' => 'vote'], function () {
 
 });
 
+// 社团区域
+Route::group(['prefix' => 'club'], function () {
+	Route::get('/', 'ClubController@index');
+	Route::get('/{id}', 'Controller@showIndividualClub');
+});
+
+
+// 访客页面结束
+
 // ** 登录区域 **
 // 以下页面都需要登录才能访问
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'blacklist']], function () {
 
 	// 补全信息页
 	Route::get('/completion', 'HomeController@showCompletionForm');
@@ -113,11 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
 });
 
-// 社团区域
-Route::group(['prefix' => 'club'], function () {
-	Route::get('/', 'ClubController@index');
-	Route::get('/{id}', 'Controller@showIndividualClub');
-});
+
 // 错误信息
 Route::get('/error/custom', function () {
 	return response()->view('errors.custom');

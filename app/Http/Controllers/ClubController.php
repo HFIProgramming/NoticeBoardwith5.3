@@ -71,6 +71,7 @@ class ClubController extends Controller
 
 	}
 
+
 	protected function checkPermission($club)
 
 	{

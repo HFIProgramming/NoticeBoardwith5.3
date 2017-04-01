@@ -32,6 +32,7 @@ class CreateUsersTable extends Migration
             $table->text('self_intro')->nullable();
             // 激活状态
             $table->string('active')->default('0');
+            $table->integer('blacklisted')->default(0); // 黑名单
             // 用户角色
             $table->string('role')->default('student'); // student,teacher,admin
             $table->rememberToken();

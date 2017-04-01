@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
 		'file' => \App\Http\Middleware\VerifyFile::class,
 		'vote_group' => \App\Http\Middleware\VerifyGroup::class,
 		'vote_result' => \App\Http\Middleware\VerifyResult::class,
+	    'blacklist' => \App\Http\Middleware\AvertBlacklistUser::class,
 	];
 }
