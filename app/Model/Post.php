@@ -18,6 +18,18 @@ class Post extends Model
 	];
 
 	/**
+	 * Content censor
+	 *
+	 * @param $value
+	 * @return string
+	 */
+	public function getContentAttribute($value)
+	{
+		return $this->is_prohibited ? (empty($this->reason) ? __('post.is_prohibited_general') : __('post.is_prohibited', ['reason' => $this->reason])) : $value;
+	}
+
+
+	/**
 	 * Attached comments to the post
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
