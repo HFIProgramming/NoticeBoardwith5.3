@@ -29,7 +29,7 @@
 		</div>
 	</div>
 	<!--Comment placeholder-->
-	@if ($post->getLastUser == NULL)
+	@if (($comment = $post->comments->first()) == NULL)
 		<div class="article-card comment">
 			<div class="post-header-container comment-caption">
 				<h5 class="header post-header railway">No Comments Yet</h5>
@@ -43,8 +43,8 @@
 		</div>
 	</div>
 	<div class="post-card article-card comment-card">
-		@foreach($post->hasManyComments as $comment)
-		<div class="card vertical post-card-content">
+		@foreach($post->comments as $comment)
+		<div class="card vertical post-card-content post-comment-card">
 			<div class="post-user-profile">
 				<div class="card-image"><img class="circle scroll-load-image" data-url="{{$comment->user->avatar}}" src="/assets/images/blank.png" /></div>
 				<div class="post-header-container">
