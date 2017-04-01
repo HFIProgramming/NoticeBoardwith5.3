@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 
-class ActiveVerify
+class AvertBlacklistUser
 {
 	/**
 	 * Handle an incoming request.
@@ -16,10 +16,11 @@ class ActiveVerify
 	 */
 	public function handle($request, Closure $next)
 	{
-		if ($request->user()->active == 0) { // Limits access to login page as well as check completion
-			return redirect('/completion');
+		if (Auth::check() && Auth::user()->blacklisted == false) {
+			return $next($request);
 		}
 
-		return $next($request);
+		abort(403, __('auth.blacklisted'));
+
 	}
 }
