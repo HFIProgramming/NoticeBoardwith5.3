@@ -67,7 +67,12 @@ Route::group(['prefix' => 'club'], function () {
 
 // ** 登录区域 **
 // 以下页面都需要登录才能访问
-Route::group(['middleware' => ['auth', 'blacklist']], function () {
+Route::group(['middleware' => ['auth','blacklist']], function () {
+
+	// AJAX 请求处理
+	Route::group(['prefix' => 'ajax'], function () {
+		Route::post('/image/upload/token', 'API\FileController@generateKeys');
+	});
 
 	// 补全信息页
 	Route::get('/completion', 'HomeController@showCompletionForm');

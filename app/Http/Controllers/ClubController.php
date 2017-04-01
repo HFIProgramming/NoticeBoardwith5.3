@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\ClubUser;
 use Illuminate\Http\Request;
 use App\Club;
 use App\User;
