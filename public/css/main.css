@@ -83,6 +83,9 @@ body {
 	background: #000;
 	opacity: 0.9;
 }
+.side-nav {
+	overflow-x: hidden;
+}
 
 .nb-logo {
 	height: 4rem;
@@ -274,7 +277,8 @@ nav {
 }
 
 .post-comment-card .circle {
-	width: 4rem!important;
+	width: 4.5rem !important;
+	height: 4.5rem !important;
 }
 
 /*Article Cards*/

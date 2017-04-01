@@ -51,21 +51,16 @@
                 <a href="/me"><span class="white-text name">{{$user->name}}</span></a>
                 <span class="white-text email">{{$user->email}}</span>
             @else
-                <a href="/login"><img class="circle" src="https://ww4.sinaimg.cn/small/006dLiLIgw1fawexxhv3hj31hc1hcdzh.jpg"></a>
                 <a href="/login"><span class="white-text name">Please Login and Enjoy.</span></a>
             @endif
             {{--<img class="background" src="assets/images/avatar-background.jpg">--}}
         </div>
     </li>
-    <li><a href="/me/notification" class="waves-effect"><i class="material-icons">view_stream</i>My Notification</a></li>
-    <li><a href="/powerschool" class="waves-effect"><i class="material-icons">school</i>Powerschool</a></li>
-    <li><a href="/more/selling-books" class="waves-effect"><i class="material-icons">shop_basket</i>Marketplace</a></li>
-    <li><a href="/clubs" class="waves-effect"><i class="material-icons">cloud</i>Clubs</a></li>
-    <li><a href="/more/danmaku" class="waves-effect"><i class="material-icons">comment</i>Danmaku</a></li>
-    <li>
-    <li>
+    <li><a href="/" class="waves-effect"><i class="material-icons">view_stream</i>Posts</a></li>
+    {{--<li><a href="/powerschool" class="waves-effect"><i class="material-icons">school</i>Powerschool</a></li>--}}
+    {{--<li><a href="/clubs" class="waves-effect"><i class="material-icons">cloud</i>Clubs</a></li>--}}
+    {{--<li><a href="/more/danmaku" class="waves-effect"><i class="material-icons">comment</i>Danmaku</a></li>--}}
         <div class="divider"></div>
-    </li>
     @if ($user = Auth::user())
         <li><a class="subheader">Account</a></li>
         <li><a class="waves-effect" href="/me"><i class="material-icons">settings</i>Settings</a></li>
@@ -73,7 +68,7 @@
     @else
         <li><a class="subheader">Actions</a></li>
         <li><a class="waves-effect" href="/login"><i class="material-icons">open_in_browser</i>Login</a></li>
-        <li><a class="waves-effect" href="/aboutus"><i class="material-icons">info_outline</i>About us</a></li>
+        <li><a class="waves-effect" href="/about"><i class="material-icons">info_outline</i>About us</a></li>
     @endif
 </ul>
 <!--Nav bar-->
