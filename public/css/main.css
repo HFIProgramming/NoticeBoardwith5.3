@@ -274,7 +274,8 @@ nav {
 }
 
 .post-comment-card .circle {
-	width: 4rem!important;
+	width: 4rem !important;
+	height: 4rem !important;
 }
 
 /*Article Cards*/
