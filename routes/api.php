@@ -27,7 +27,6 @@ Route::get('now', function () {
 	return date("Y-m-d H:i:s");
 });
 
-
 // Public APIs
 // @TODO Improve naming and stuffs?
 Route::get('/post/for/{numberPerPage?}', 'API\PostController@getPosts');
@@ -35,3 +34,4 @@ Route::get('/post/id/{id}','API\PostController@loadIndividualPost');
 
 // Storage APIs
 Route::get('/storage/token/{token}/echo/filename/{filename}', 'API\FileController@handleEcho');
+
