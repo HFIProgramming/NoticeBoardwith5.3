@@ -10,6 +10,8 @@ use App\Comment;
 
 class PostController extends Controller
 {
+	protected $user;
+
 	public function __construct()
 	{
 		$this->middleware('auth', ['except' => ['showIndividualPost', 'encodePost']]);

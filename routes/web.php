@@ -59,7 +59,8 @@ Route::group(['prefix' => 'vote'], function () {
 // 社团区域
 Route::group(['prefix' => 'club'], function () {
 	Route::get('/', 'ClubController@index');
-	Route::get('/{id}', 'Controller@showIndividualClub');
+	Route::get('/{id}', 'ClubController@showIndividualClub')->where(['id' => '[0-9]+']);
+	Route::get('/{id}/member', 'ClubController@showClubMember')->where(['id' => '[0-9]+']);
 });
 
 
@@ -71,7 +72,11 @@ Route::group(['middleware' => ['auth','blacklist']], function () {
 
 	// AJAX 请求处理
 	Route::group(['prefix' => 'ajax'], function () {
-		Route::post('/image/upload/token', 'API\FileController@generateKeys');
+		Route::get('upload/type/{type}/token','API\FileController@handleUpload');
+		Route::group(['prefix' => 'file'], function(){
+			Route::get('image','API\FileController@listImage');
+			Route::get('id/{id}/link', 'API\FileController@handleDownload');
+		});
 	});
 
 	// 补全信息页
@@ -105,6 +110,15 @@ Route::group(['middleware' => ['auth','blacklist']], function () {
 		});
 		Route::post('/post', 'PostController@createNewPost');
 
+		// 社团登陆相关
+		Route::group(['prefix' => 'club'], function () {
+			Route::get('/{id}/member', 'ClubController@showClubMember')->where(['id' => '[0-9]+']);
+		});
+
+		Route::group(['prefix' => 'file'], function(){
+			Route::get('/', 'FileController@index');
+			Route::get('/id/{id}', 'FileController@showIndividualFile');
+		});
 	});
 });
 
