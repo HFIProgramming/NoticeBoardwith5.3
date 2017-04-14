@@ -5,118 +5,44 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\VerifyFile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\File;
 
 class FileController extends Controller
 {
 	//
-	protected $expiredAt;
-	protected $filePath;
-	protected $secretKey;
-
-	public function __construct()
+	function __construct()
 	{
-		$this->filePath = env('FILE_PATH', 'https://storage.hfi.me/file');
-		$this->expiredAt = (string)env('TOKEN_EXPIRE', '300'); // unit:second
-		$this->secretKey = env('STORAGE_SECRET_KEY');
-		if (empty($this->secretKey)) abort(500, __('errors.service_internal_error'));
+		$this->accessKey = env('OBJECT_STORAGE_ACCESS_KEY', NULL);
+		$this->secretKey = env('OBJECT_STORAGE_SECRET_KEY', NULL);
+		$this->imageBucketName = env('OBJECT_STORAGE_IMAGE_BUCKET_NAME', NULL);
+		$this->expire = env('OBJECT_STORAGE_TOKEN_EXPIRE', 400);
 	}
 
-	public function handleDownload(Request $request)
+	public function generateKeys(VerifyFile $request)
 	{
-		$file = File::findOrFail($request->id);
-		$address = $this->filePath . '/download?';
-		$time = (string)time();
-		$result = $address . 'filename=' . $file->filename . '&timestamp=' . $time . '&expired_at=' . $this->expiredAt . '&download_name=' . $file->real_name . '&signature=' . $this->generateDownloadToken($file, $time, $this->expiredAt);
-
-		return response()->json(['status' => 200, 'link' => $result]);
-	}
-
-	public function listImage(Request $request)
-	{
-		$filename = File::where('user_id', $request->user()->id)->where('type', 'image')->map(function ($file) {
-			return $address = $this->filePath . '/image?' . 'filename=' . $file->filename;
-		});
-
-		return response()->json(['status' => 200, 'data' =>$filename]);
-	}
-
-	public function handleUpload(VerifyFile $request)
-	{
-		$file = new File();
-		$file->real_name = $request->real_name;
 		switch ($request->type) {
-			case 'file':
-				$address = $this->filePath . '/upload?';
-				$filename = $this->generateFilename('file');
-				$file->type = 'file';
-				break;
-			case 'image':
-				$address = $this->filePath . '/upload/image?';
-				$filename = $this->generateFilename('image');
-				$file->type = 'image';
+			case  'image':
+				$bucket = $this->imageBucketName;
 				break;
 			default:
-				return response()->json('type No Found', 404);
-		}
-		$file->filename = $filename;
-		$file->user_id = $request->user()->id;
-		$file->saveOrFail();
-		$time = (string)time();
-		$result = $address . 'filename=' . $file->filename . '&timestamp=' . $time . '&expired_at=' . $this->expiredAt . '&download_name=' . $file->real_name . '&signature=' . $this->generateDownloadToken($file, $time, $this->expiredAt);
-
-		return response()->json(['status' => 200, 'link' => $result]);
-	}
-
-	public function handleEcho(Request $request)
-	{
-		$file = File::where('filename', $request->filename)->firstOrFail();
-		$file->valid = 1;
-		$file->saveOrFail();
-
-		return response()->json(['status' => 200]);
-
-	}
-
-	protected function generateFilename($prefix = '')
-	{
-		$filename = '';
-		while (true) {
-			$filename = randomString(25, $prefix) . time();
-			if (empty(File::where('real_name', $filename)->first()->get())) {
-				break;
-			}
+				abort(422, __('auth.illegal_request'));
 		}
 
-		return $filename;
-	}
+		$json = json_encode(["Bucket" => $bucket, "Object" => $request->object, "Expires" => time() + $this->expire]);
 
-	protected function generateDownloadToken($file, $time, $expiredAt)
-	{
-		$raw = collect(['filename'      => $file->filename,
-		                'timestamp'     => $time,
-		                'expired_at'    => $expiredAt,
-		                'download_name' => $file->real_name,
+		$base64 = base64_encode($json);
+
+		$sign = hash_hmac('sha256', $base64, $this->secretKey);
+
+		$result = base64_encode($sign);
+
+		return Response()->json(
+			[
+				"bucketName" => $bucket,
+				"objectName" => $request->object,
+				"token" => $result,
+
 			]
-		)->toJson();
-		$signAwait = base64_encode($raw);
-		$sign = hash_hmac('sha256', $signAwait, $this->secretKey);
-		$signEncoded = base64_encode($sign);
+		);
 
-		return $signEncoded;
-	}
-
-	protected function generateUploadToken($file, $time, $expiredAt)
-	{
-		$raw = collect(['filename'   => $file->filename,
-		                'timestamp'  => $time,
-		                'expired_at' => $expiredAt,
-			]
-		)->toJson();
-		$signAwait = base64_encode($raw);
-		$sign = hash_hmac('sha256', $signAwait, $this->secretKey);
-		$signEncoded = base64_encode($sign);
-
-		return $signEncoded;
 	}
 }

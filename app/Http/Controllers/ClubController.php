@@ -10,25 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class ClubController extends Controller
 {
 	//
-	protected $user;
-
 	public function __construct()
 	{
 		$this->middleware('auth', ['except' => ['index', 'showIndividualClub']]);
+		$this->user = Auth::user();
 	}
-
 
 	public function index()
 	{
-		return Club::all();
 		return view('club.index')->withClub(Club::All());
 	}
 
 	public function showIndividualClub($id)
 	{
 		$club = Club::Id($id);
-		if ($this->checkPermission($club)){
-			return Response()->json($club);
+		if ($this->checkPermission($club)) {
 			return view('club.individual')->withClub($club);
 		} else {
 			return redirect('/login')->withErrors(['warning' => __('login.login_required', [
@@ -75,38 +71,7 @@ class ClubController extends Controller
 	}
 
 
-	public function showApplication(Request $request)
-	{
-		$clubId = $request->id;
-		if ($this->checkRole($clubId,'charger')) {
-		   return view('club.application')->withClub(Club::Id($clubId)->users->wherePivot('status', 'pending')->withPivot)->firstOrFail();
-		} else {
-			abort(403, __('auth.role_limitation'));
-		}
-	}
-
-
-	public function replyApplication(Request $request)
-	{
-		$clubId = $request->id;
-		if ($this->checkRole($clubId,'charger')) {
-			//@TODO
-		} else {
-			abort(403, __('auth.role_limitation'));
-		}
-	}
-
-	public function showClubMember($id)
-	{
-		if ($this->checkRole($id,'member')) {
-			return Club::Id($id)->users('status','approved')->get(); //->pivot->where('status', 'approved')->withPivot()->firstOrFail();
-		} else {
-			abort(403, __('auth.role_limitation'));
-		}
-	}
-
-
-	public function checkPermission($club)
+	protected function checkPermission($club)
 
 	{
 		switch ($club->is_public) {
@@ -124,40 +89,6 @@ class ClubController extends Controller
 				break;
 		}
 		return false;
-	}
-
-	public function checkRole($clubId,$role)
-	{
-		$userRole = Auth::user()->clubs()->findOrFail($clubId)->pivot->role;
-		switch ($role){
-			case 'master':
-				if ($userRole === 'master'){
-					return true;
-				}else{
-					return false;
-				}
-				break;
-
-			case 'charger':
-				if (($userRole === 'master')||($userRole === 'charger')){
-					return true;
-				}else{
-					return false;
-				}
-				break;
-
-			case 'member':
-				if ($userRole !== 'applicant'){
-					return true;
-				}else{
-					return false;
-				}
-				break;
-
-			default:
-				abort(500, __('error.500'));;
-		}
-
 	}
 
 }
