@@ -73,7 +73,9 @@ Route::group(['middleware' => ['auth','blacklist']], function () {
 	// AJAX 请求处理
 	Route::group(['prefix' => 'ajax'], function () {
 		Route::group(['prefix' => 'file'], function(){
-			Route::get('{type}/id/{id}/link', 'FileController@handleDownload');
+			Route::get('image','FileController@listImage');
+			Route::get('id/{id}/link', 'FileController@handleDownload');
+			Route::get('upload/type/{type}');
 		});
 	});
 

@@ -25,23 +25,23 @@ class FileController extends Controller
 	public function handleDownload(Request $request)
 	{
 		$file = File::findOrFail($request->id);
-		switch ($request->type) {
-			case 'download':
-				$address = $this->filePath . '/download?';
-				break;
-			case 'image':
-				$address = $this->filePath . '/image?';
-				break;
-			default:
-				return response()->json('type No Found', 404);
-		}
+		$address = $this->filePath . '/download?';
 		$time = (string)time();
 		$result = $address . 'filename=' . $file->filename . '&timestamp=' . $time . '&expired_at=' . $this->expiredAt . '&download_name=' . $file->real_name . '&signature=' . $this->generateDownloadToken($file, $time, $this->expiredAt);
 
 		return response()->json(['status' => 200, 'link' => $result]);
 	}
 
-	public function handleUpload(Request $request)
+	public function listImage(Request $request)
+	{
+		$filename = File::where('user_id', $request->user()->id)->where('type', 'image')->map(function ($file) {
+			return $address = $this->filePath . '/image?' . 'filename=' . $file->filename;
+		});
+
+		return response()->json(['status' => 200, 'data' =>$filename]);
+	}
+
+	public function handleUpload(VerifyFile $request)
 	{
 		$file = new File();
 		$file->real_name = $request->real_name;
