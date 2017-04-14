@@ -32,6 +32,18 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+        parent::report($exception);
+    }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Exception $exception)
+    {
 	    if ($exception instanceof ModelNotFoundException) {
 		    switch ($exception->getModel()) {
 			    case "App\Ticket":
@@ -47,18 +59,7 @@ class Handler extends ExceptionHandler
 				    break;
 		    }
 	    }
-        parent::report($exception);
-    }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, Exception $exception)
-    {
         return parent::render($request, $exception);
     }
 
