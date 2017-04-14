@@ -45,6 +45,15 @@ class FileController extends Controller
 	{
 		$file = new File();
 		$file->real_name = $request->real_name;
+		$file_extension = strtolower(substr(strrchr($request->real_name,"."),1));
+
+		switch( $file_extension ) {
+			case "gif": $ctype="image/gif"; break;
+			case "png": $ctype="image/png"; break;
+			case "jpeg":
+			case "jpg": $ctype="image/jpeg"; break;
+			default:
+		}
 		switch ($request->type) {
 			case 'file':
 				$address = $this->filePath . '/upload?';
@@ -63,7 +72,7 @@ class FileController extends Controller
 		$file->user_id = $request->user()->id;
 		$file->saveOrFail();
 		$time = (string)time();
-		$result = $address . 'filename=' . $file->filename . '&timestamp=' . $time . '&expired_at=' . $this->expiredAt . '&download_name=' . $file->real_name . '&signature=' . $this->generateDownloadToken($file, $time, $this->expiredAt);
+		$result = $address . 'filename=' . $file->filename . '&timestamp=' . $time . '&expired_at=' . $this->expiredAt . '&signature=' . $this->generateUploadToken($file, $time, $this->expiredAt);
 
 		return response()->json(['status' => 200, 'link' => $result]);
 	}
@@ -83,7 +92,7 @@ class FileController extends Controller
 		$filename = '';
 		while (true) {
 			$filename = randomString(25, $prefix) . time();
-			if (empty(File::where('real_name', $filename)->first()->get())) {
+			if (empty(File::where('real_name', $filename)->first())) {
 				break;
 			}
 		}

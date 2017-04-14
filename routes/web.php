@@ -72,10 +72,10 @@ Route::group(['middleware' => ['auth','blacklist']], function () {
 
 	// AJAX 请求处理
 	Route::group(['prefix' => 'ajax'], function () {
+		Route::get('upload/type/{type}/token','API\FileController@handleUpload');
 		Route::group(['prefix' => 'file'], function(){
 			Route::get('image','API\FileController@listImage');
 			Route::get('id/{id}/link', 'API\FileController@handleDownload');
-			Route::post('upload/token/type/{type}','API\FileController@handleUpload');
 		});
 	});
 
