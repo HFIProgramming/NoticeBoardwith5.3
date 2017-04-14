@@ -71,5 +71,5 @@ class HomeController extends Controller
 		])
 		) return redirect('/notice'); // Success! turn to notice
 	}
-	
+
 }
