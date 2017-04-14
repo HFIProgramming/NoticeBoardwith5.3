@@ -111,6 +111,15 @@ class User extends Authenticatable
 		return $this->belongsToMany('App\Club', 'club_users', 'user_id','club_id')->withPivot('role','status')->withTimestamps();
 	}
 
+	/**
+	 * Link File User
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
+	public function file(){
+		return $this->hasMany('App\File','user_id','id');
+	}
+
 	// Function
 
 	/**

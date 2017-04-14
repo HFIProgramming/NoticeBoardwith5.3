@@ -11,14 +11,18 @@ class Club extends Model
 	/*
 	 * table name
 	 */
-	protected $table = 'club_user';
+	protected $table = 'clubs';
 
 	// Relationship
 
-	public function users()
+	public function users($status = NULL, $data = NULL)
 	{
-		return $this->belongsToMany('App\User', 'club_users', 'club_id','user_id')->withPivot('role','status')->withTimestamps();
+		if (empty($status) || empty($data)) {
+			return $this->belongsToMany('App\User', 'club_users', 'club_id', 'user_id')->withPivot('role', 'status')->withTimestamps();
+		}
+		return $this->belongsToMany('App\User', 'club_users', 'club_id', 'user_id')->wherePivot($status, $data)->withPivot('role', 'status')->withTimestamps();
 	}
+
 
 	public function scopeId($query, $Id)
 	{

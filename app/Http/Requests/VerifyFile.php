@@ -26,8 +26,7 @@ class VerifyFile extends FormRequest
 	{
 		return [
 			'type' => 'required|string',
-			'object' => 'required|string',
-			//
+			'real_name' => 'required|max:256'
 		];
 	}
 }
